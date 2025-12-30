@@ -92,3 +92,4 @@ Update: 2025-12-29T10:43:35.845Z - chore: update lockfile
 Update: 2025-12-29T07:59:45.845Z - chore: update dependencies
 Update: 2025-12-29T08:57:41.845Z - perf: improve initial load time
 Update: 2025-12-30T06:56:58.845Z - fix: handle edge case in data parser
+Update: 2025-12-30T06:56:52.845Z - docs: update README.md
