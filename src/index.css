@@ -1,0 +1,365 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap');
+
+/* Mahajan Imaging Clinics - Gen-Z Clean Aesthetic */
+
+@layer base {
+  :root {
+    --background: 160 20% 99%;
+    --foreground: 200 25% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 200 25% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 200 25% 12%;
+
+    --primary: 175 60% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 170 20% 96%;
+    --secondary-foreground: 200 25% 20%;
+
+    --muted: 170 15% 96%;
+    --muted-foreground: 200 10% 45%;
+
+    --accent: 205 70% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 170 15% 90%;
+    --input: 170 15% 90%;
+    --ring: 175 60% 40%;
+
+    --radius: 0.75rem;
+
+    /* Clean Colors */
+    --highlight: 175 60% 70%;
+    --highlight-soft: 175 60% 95%;
+    --success: 160 80% 45%;
+    --success-soft: 160 80% 95%;
+
+    /* Shadows - Soft and minimal */
+    --shadow-soft: 0 2px 10px -2px hsl(200 25% 12% / 0.05);
+    --shadow-medium: 0 4px 20px -4px hsl(200 25% 12% / 0.08);
+    --shadow-card: 0 1px 8px -2px hsl(200 25% 12% / 0.04);
+    --shadow-elevated: 0 8px 30px -8px hsl(200 25% 12% / 0.12);
+    --shadow-glow: 0 0 40px -10px hsl(175 60% 40% / 0.3);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 200 20% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 200 15% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 200 15% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 175 60% 45%;
+    --primary-foreground: 200 20% 8%;
+
+    --secondary: 200 15% 18%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 200 15% 18%;
+    --muted-foreground: 200 10% 60%;
+
+    --accent: 205 70% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 200 15% 20%;
+    --input: 200 15% 20%;
+    --ring: 175 60% 45%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+  }
+}
+
+@layer components {
+  .heading-display {
+    font-family: 'Sora', sans-serif;
+    @apply font-semibold tracking-tight;
+  }
+
+  .text-body {
+    font-family: 'DM Sans', sans-serif;
+    @apply font-normal leading-relaxed;
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glass-effect {
+    @apply bg-background/80 backdrop-blur-md;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 px-4 md:px-8;
+  }
+
+  .container-narrow {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .card-clean {
+    @apply bg-card rounded-2xl p-6 md:p-8 border border-border transition-all duration-300;
+  }
+
+  .card-clean:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+  }
+
+  .card-highlight {
+    @apply relative overflow-hidden;
+  }
+
+  .card-highlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: hsl(var(--primary) / 0);
+    transition: background 0.3s ease;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .card-highlight:hover::before {
+    background: hsl(var(--primary) / 0.03);
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-xl font-medium transition-all duration-300 border border-border;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-muted;
+    transform: translateY(-1px);
+  }
+
+  .text-highlight {
+    @apply relative inline-block;
+  }
+
+  .text-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.35em;
+    background: hsl(var(--highlight) / 0.4);
+    z-index: -1;
+    border-radius: 2px;
+  }
+
+  .glow-text {
+    @apply transition-all duration-300;
+  }
+
+  .glow-text:hover {
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .link-underline {
+    @apply relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: hsl(var(--primary));
+    transition: width 0.3s ease;
+  }
+
+  .link-underline:hover::after {
+    width: 100%;
+  }
+
+  .stat-card {
+    @apply bg-card rounded-2xl p-6 border border-border text-center transition-all duration-300;
+  }
+
+  .stat-card:hover {
+    @apply border-primary/30;
+    box-shadow: 0 0 30px -10px hsl(var(--primary) / 0.2);
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .nav-link {
+    @apply relative px-4 py-2 text-muted-foreground font-medium transition-all duration-300;
+  }
+
+  .nav-link:hover {
+    @apply text-foreground;
+  }
+
+  .nav-link.active {
+    @apply text-primary;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: hsl(var(--primary));
+    transition: width 0.3s ease;
+    border-radius: 1px;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 60%;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.4);
+}
