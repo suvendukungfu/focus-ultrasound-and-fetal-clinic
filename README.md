@@ -5,8 +5,58 @@
 ![GitHub Logic](https://img.shields.io/badge/Logic-Startup--Grade-blueviolet?style=for-the-badge)
 ![Tech Stack](https://img.shields.io/badge/Stack-React_|_TS_|_Vite_|_Tailwind-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![CI](https://github.com/suvendukungfu/focus-ultrasound-and-fetal-clinic/actions/workflows/ci.yml/badge.svg)
 
 Focus Ultrasound is a production-grade diagnostic platform designed to provide world-class fetal imaging and ultrasound services. Built with a focus on speed, clarity, and patient trust, this application serves as the digital gateway for the Focus Ultrasound & Fetal Clinic.
+
+---
+
+## 🏥 Enterprise Architecture Overview
+
+Our system is built on a robust, scalable architecture designed for high availability and security.
+
+- **Modular Design**: Decoupled services for authentication, patient management, and notifications.
+- **High Availability**: Redundant infrastructure with load balancing.
+- **Scalability**: Horizontal scaling capabilities for all stateless services.
+
+For detailed architecture diagrams and data flow, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+---
+
+## 🔐 Security Practices
+
+Security is our top priority. We implement defense-in-depth strategies.
+
+- **Data Encryption**: AES-256 for data at rest, TLS 1.2+ for data in transit.
+- **Access Control**: Strict RBAC and MFA for administrative access.
+- **Compliance**: Adherence to HIPAA and GDPR standards.
+
+Read our full security policy in [docs/SECURITY.md](docs/SECURITY.md).
+
+---
+
+## 🚀 Deployment Workflow
+
+We utilize a modern CI/CD pipeline for reliable deployments.
+
+1.  **Code Commit**: Developers push to feature branches.
+2.  **CI Pipeline**: Automated tests, linting, and build verification.
+3.  **Review**: Peer review and approval required.
+4.  **Staging**: Automatic deployment to staging environment for QA.
+5.  **Production**: Manual approval to deploy to production.
+
+See [docs/CONTRIBUTOR_WORKFLOW.md](docs/CONTRIBUTOR_WORKFLOW.md) for contribution guidelines.
+
+---
+
+## 📊 Admin Panel Overview
+
+The administrative interface provides comprehensive control over clinic operations.
+
+- **Dashboard**: Real-time analytics on appointments and patient flow.
+- **User Management**: Role-based user administration.
+- **Appointment Scheduling**: Calendar view and booking management.
+- **Reports**: Generate financial and operational reports.
 
 ---
 
@@ -114,7 +164,7 @@ Automated deployments are handled via GitHub Actions. Push to the `main` branch 
 
 ## 🤝 Contribution
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Please read [docs/CONTRIBUTOR_WORKFLOW.md](docs/CONTRIBUTOR_WORKFLOW.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## ⚖️ License
 

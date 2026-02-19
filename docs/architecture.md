@@ -1,34 +1,37 @@
-# Architecture
+# 🏥 Enterprise Architecture Overview
 
-## Overview
+Google Antigravity adheres to a modular, scalable architecture designed for high availability and maintainability.
 
-Focus Ultrasound & Fetal Clinic is built with a modern, scalable frontend architecture designed for performance, accessibility, and maintainability.
+## 🏗 High-Level Design
+
+```mermaid
+graph TD
+    User([Patient/User]) --> LB[Load Balancer]
+    LB --> FE[Frontend (React/Vite)]
+    FE --> API[API Gateway]
+    API --> S1[Auth Service]
+    API --> S2[Patient Service]
+    API --> S3[Appointment Service]
+    S1 --> DB[(PostgreSQL)]
+    S2 --> DB
+    S3 --> DB
+    S3 --> Notification[Notification Service]
+```
+
+## Layers
+
+1.  **Presentation Layer**: React + Tailwind CSS (Vite build)
+2.  **Application Layer**: Business logic and orchestrators
+3.  **Domain Layer**: Core entities and rules
+4.  **Infrastructure Layer**: Database access, external APIs
 
 ## Tech Stack
 
-- **Framework:** React 18 with TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS + Shadcn UI
-- **State Management:** React Query (TanStack Query)
-- **Routing:** React Router 6
-- **Animations:** Framer Motion / Tailwind Animate
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express (implied/future)
+- **Database**: PostgreSQL
+- **DevOps**: GitHub Actions, Docker
 
-## Project Structure
+## Data Flow
 
-```text
-src/
-├── components/     # Atomic UI components and feature-specific components
-├── pages/          # Page-level components and routing definitions
-├── hooks/          # Custom reusable logic
-├── services/       # API clients and external service integrations
-├── utils/          # Pure utility functions and helpers
-├── contexts/       # React Context providers for global state
-└── lib/            # Shared library configurations (e.g., shadcn/ui helpers)
-```
-
-## Key Architectural Decisions
-
-1. **TypeScript First:** Strict typing for data structures and component props to ensure build-time safety.
-2. **Component-Driven Development:** UI is broken down into small, testable, and reusable Shadcn-based components.
-3. **Language Context:** A dedicated `LanguageProvider` handles internationalization (English/Hindi) across the platform.
-4. **Performance:** Optimized asset loading and scroll-based animations for a smooth user experience.
+Data flows strictly from Presentation -> Application -> Domain -> Infrastructure. Dependencies point inwards.
