@@ -2,6 +2,7 @@ import { hash } from 'bcrypt';
 import { AppError } from '../../../../core/AppError';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 import { IUsersRepository } from '../../repositories/implementations/PrismaUsersRepository';
+import { EventBus } from '../../../../events/EventBus';
 
 export class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
@@ -25,6 +26,9 @@ export class CreateUserUseCase {
       password: passwordHash,
       role,
     });
+
+    // Enterprise FAANG pattern: Fire asynchronous event
+    EventBus.emit('user.created', user);
 
     return user;
   }

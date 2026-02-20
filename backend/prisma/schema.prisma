@@ -8,15 +8,18 @@ datasource db {
 }
 
 enum Role {
+  SUPER_ADMIN
   ADMIN
   EDITOR
+  STAFF
   VIEWER
 }
 
 enum LeadStatus {
   NEW
   CONTACTED
-  CONVERTED
+  BOOKED
+  COMPLETED
   CLOSED
 }
 
@@ -28,44 +31,73 @@ enum AppointmentStatus {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  password  String
-  role      Role     @default(VIEWER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id       String @id @default(uuid())
+  email    String @unique
+  name     String
+  password String
+  role     Role   @default(VIEWER)
 
+  // Enterprise fields
+  isActive  Boolean   @default(true)
+  version   Int       @default(1) // Optimistic locking
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  sessions  Session[]
   auditLogs AuditLog[]
 
   @@map("users")
 }
 
-model Lead {
-  id        String     @id @default(uuid())
-  name      String
-  email     String?
-  phone     String
-  message   String?
-  source    String     @default("website")
-  status    LeadStatus @default(NEW)
-  notes     String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  refreshToken String   @unique
+  fingerprint  String? // Device/IP fingerprint
+  expiresAt    DateTime
+  isRevoked    Boolean  @default(false)
+  createdAt    DateTime @default(now())
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Lead {
+  id            String     @id @default(uuid())
+  name          String
+  email         String?
+  phone         String
+  message       String?
+  source        String     @default("website")
+  status        LeadStatus @default(NEW)
+  priorityScore Int        @default(0) // AI or heuristic score
+  adminNotes    String?    @db.Text
+  followUpDate  DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([status, priorityScore(sort: Desc)])
   @@map("leads")
 }
 
 model Doctor {
-  id             String        @id @default(uuid())
+  id             String  @id @default(uuid())
   name           String
   specialization String
   bio            String?
   imageUrl       String?
-  isActive       Boolean       @default(true)
-  appointments   Appointment[]
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  isActive       Boolean @default(true)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  appointments Appointment[]
 
   @@map("doctors")
 }
@@ -77,8 +109,10 @@ model Service {
   price       Decimal?
   durationMin Int      @default(30)
   isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   appointments Appointment[]
 
@@ -86,67 +120,103 @@ model Service {
 }
 
 model Appointment {
-  id        String            @id @default(uuid())
-  date      DateTime
-  status    AppointmentStatus @default(PENDING)
-  notes     String?
-  
+  id     String            @id @default(uuid())
+  date   DateTime
+  status AppointmentStatus @default(PENDING)
+  notes  String?
+
   patientName  String
   patientPhone String
   patientEmail String?
 
-  doctorId  String?
-  doctor    Doctor?   @relation(fields: [doctorId], references: [id])
+  doctorId String?
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
 
   serviceId String?
-  service   Service?  @relation(fields: [serviceId], references: [id])
+  service   Service? @relation(fields: [serviceId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@map("appointments")
 }
 
 model BlogPost {
-  id              String   @id @default(uuid())
+  id              String    @id @default(uuid())
   title           String
-  slug            String   @unique
-  content         String   @db.Text
+  slug            String    @unique
+  content         String    @db.Text
   excerpt         String?
   metaTitle       String?
   metaDescription String?
   keywords        String[]
-  isPublished     Boolean  @default(false)
+  isPublished     Boolean   @default(false)
   publishedAt     DateTime?
   authorId        String?
-  locale          String   @default("en") // 'en' or 'hi'
+  locale          String    @default("en") // 'en' or 'hi'
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
+  @@index([slug])
+  @@index([isPublished, publishedAt])
   @@map("blog_posts")
 }
 
 model Review {
-  id        String   @id @default(uuid())
-  author    String
-  rating    Int
-  content   String?
+  id         String  @id @default(uuid())
+  author     String
+  rating     Int
+  content    String?
   isApproved Boolean @default(false)
-  createdAt DateTime @default(now())
 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([isApproved, rating(sort: Desc)])
   @@map("reviews")
 }
 
 model AuditLog {
-  id        String   @id @default(uuid())
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [id])
-  action    String
-  resource  String
-  ip        String?
-  metadata  Json?
+  id         String  @id @default(uuid())
+  userId     String?
+  user       User?   @relation(fields: [userId], references: [id])
+  action     String // e.g., "LEAD_STATUS_UPDATED"
+  entityId   String? // Target row ID
+  entityType String? // e.g., "Lead"
+  oldData    Json?
+  newData    Json?
+  ipAddress  String? @map("ip")
+
   createdAt DateTime @default(now())
 
+  @@index([entityType, entityId])
+  @@index([createdAt])
   @@map("audit_logs")
+}
+
+model EventLog {
+  id          String    @id @default(uuid())
+  eventName   String
+  payload     Json
+  processed   Boolean   @default(false)
+  error       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  processedAt DateTime?
+
+  @@index([eventName, processed])
+  @@map("event_logs")
+}
+
+model CacheInvalidation {
+  id            String   @id @default(uuid())
+  cacheKey      String
+  reason        String?
+  invalidatedAt DateTime @default(now())
+
+  @@index([cacheKey])
+  @@map("cache_invalidations")
 }
