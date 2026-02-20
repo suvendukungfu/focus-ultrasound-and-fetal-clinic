@@ -32,12 +32,33 @@ async function bootstrap() {
 if (cluster.isPrimary) {
   Logger.info(`👑 Primary cluster setting up ${numCPUs} workers...`);
 
-  // Activate Autonomous Defense Monitors ONLY on Master Node
-  selfHealingService.startAllMonitors();
+  // Boot the new Distributed Micro-Kernel
+  import('./kernel/Kernel').then(({ Kernel }) => {
+    
+    // Wrap existing SelfHealing in a Micro-Service Plugin Wrapper
+    Kernel.registry.register({
+      name: 'SelfHealingService',
+      init: async () => {},
+      start: async () => { selfHealingService.startAllMonitors(); },
+      stop: async () => {},
+      health: async () => ({ status: 'ONLINE' })
+    });
 
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+    // Register Distributed AI Orchestrator
+    import('./modules/ai/orchestrator/AIOrchestrator').then(({ aiOrchestrator }) => {
+      Kernel.registry.register(aiOrchestrator);
+      
+      Kernel.boot().then(() => {
+        Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
+        for (let i = 0; i < numCPUs; i++) {
+          cluster.fork();
+        }
+      }).catch(err => {
+        Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
+        process.exit(1);
+      });
+    });
+  });
 
   cluster.on('online', (worker) => {
     Logger.info(`👷 Worker ${worker.process.pid} is online`);

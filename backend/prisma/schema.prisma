@@ -271,3 +271,58 @@ model RecoveryLog {
   @@index([actionTaken, success])
   @@map("recovery_logs")
 }
+
+// ==========================================
+// V7: DISTRIBUTED MICRO-KERNEL PLATFORM
+// ==========================================
+
+model ServiceStatus {
+  id          String    @id @default(uuid())
+  serviceName String    @unique
+  status      String // "ONLINE", "DEGRADED", "OFFLINE"
+  uptime      Int
+  crashes     Int       @default(0)
+  lastCrashAt DateTime?
+  region      String    @default("GLOBAL")
+  updatedAt   DateTime  @updatedAt
+
+  @@index([region, status])
+  @@map("service_statuses")
+}
+
+model KernelEvent {
+  id        String   @id @default(uuid())
+  eventType String // "plugin.loaded", "service.crashed"
+  payload   Json?
+  region    String   @default("GLOBAL")
+  createdAt DateTime @default(now())
+
+  @@index([eventType, region])
+  @@map("kernel_events")
+}
+
+model RegionMetric {
+  id            String   @id @default(uuid())
+  region        String
+  activeNodes   Int
+  queuePressure Float
+  totalRequests BigInt   @default(0)
+  recordedAt    DateTime @default(now())
+
+  @@index([region, recordedAt(sort: Desc)])
+  @@map("region_metrics")
+}
+
+model AIProviderStats {
+  id           String   @id @default(uuid())
+  providerName String // "OpenAI", "Anthropic", "Local-Llama"
+  modelUsed    String
+  tokensUsed   Int
+  costEstimate Float    @default(0.0)
+  successful   Boolean  @default(true)
+  region       String   @default("GLOBAL")
+  createdAt    DateTime @default(now())
+
+  @@index([providerName, region])
+  @@map("ai_provider_stats")
+}
