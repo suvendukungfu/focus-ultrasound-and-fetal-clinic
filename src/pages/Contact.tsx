@@ -125,11 +125,18 @@ const ContactContent = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="card-clean h-48 flex items-center justify-center bg-secondary/50">
-                  <div className="text-center">
-                    <MapPin className="w-8 h-8 text-primary mx-auto mb-2" />
-                    <p className="text-muted-foreground font-body text-sm">Map Integration</p>
-                  </div>
+                <div className="card-clean h-80 p-0 overflow-hidden relative group">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.4396289761557!2d77.4398322!3d28.586585300000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cef9b638e2207%3A0xca82e787d7e4cfbb!2sFocus%20Ultrasound%20and%20Fetal%20Clinic%E2%94%82Digital%20X-RAY%E2%94%82ECG%E2%94%823D%204D%20Pregnancy%20Ultrasound%E2%94%82Fetal%20Echo%E2%94%82Lab%20Tests%E2%94%82Fetal%20Medicine!5e0!3m2!1sen!2sin!4v1771586072762!5m2!1sen!2sin"
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Focus Ultrasound and Fetal Clinic Location"
+                    className="grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
+                  ></iframe>
                 </div>
               </div>
             </div>
