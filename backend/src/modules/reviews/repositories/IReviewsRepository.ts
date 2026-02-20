@@ -1,5 +1,5 @@
 import { Review } from '@prisma/client';
-import { ICreateReviewDTO } from '../../dtos/ICreateReviewDTO';
+import { ICreateReviewDTO } from '../dtos/ICreateReviewDTO';
 
 export interface IReviewsRepository {
   create(data: ICreateReviewDTO): Promise<Review>;

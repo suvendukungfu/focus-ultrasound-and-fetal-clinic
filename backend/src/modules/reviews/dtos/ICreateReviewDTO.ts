@@ -1,5 +1,5 @@
 export interface ICreateReviewDTO {
   author: string;
   rating: number;
-  content?: string;
+  [key: string]: any;
 }

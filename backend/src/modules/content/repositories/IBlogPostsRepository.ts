@@ -1,5 +1,5 @@
 import { BlogPost } from '@prisma/client';
-import { ICreateBlogPostDTO } from '../../dtos/ICreateBlogPostDTO';
+import { ICreateBlogPostDTO } from '../dtos/ICreateBlogPostDTO';
 
 export interface IBlogPostsRepository {
   create(data: ICreateBlogPostDTO): Promise<BlogPost>;

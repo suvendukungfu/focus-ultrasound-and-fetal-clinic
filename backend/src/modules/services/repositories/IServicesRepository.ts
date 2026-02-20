@@ -1,5 +1,5 @@
 import { Service } from '@prisma/client';
-import { ICreateServiceDTO } from '../../dtos/ICreateServiceDTO';
+import { ICreateServiceDTO } from '../dtos/ICreateServiceDTO';
 
 export interface IServicesRepository {
   create(data: ICreateServiceDTO): Promise<Service>;

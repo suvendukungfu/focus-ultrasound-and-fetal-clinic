@@ -1,6 +1,8 @@
+import 'dotenv/config';
 import { app } from './shared/infra/http/app';
 import { Logger } from './core/Logger';
 import { prisma } from './shared/infra/database/prismaClient';
+import { selfHealingService } from './modules/selfHealing/services/SelfHealingService';
 
 import cluster from 'cluster';
 import os from 'os';
@@ -29,6 +31,9 @@ async function bootstrap() {
 // Enterprise Scale: Unlimited concurrent users using Cluster module
 if (cluster.isPrimary) {
   Logger.info(`👑 Primary cluster setting up ${numCPUs} workers...`);
+
+  // Activate Autonomous Defense Monitors ONLY on Master Node
+  selfHealingService.startAllMonitors();
 
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();

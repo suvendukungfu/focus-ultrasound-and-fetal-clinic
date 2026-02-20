@@ -23,6 +23,16 @@ class AppEventBus extends EventEmitter {
       Logger.info(`[Event] user.logged_in fired for ${userData.id}`);
       // Send login alert, track metrics, etc
     });
+
+    // V6 SELF-HEALING HOOKS
+    this.on('api.latency.spike', (data) => {
+      Logger.error(`[Telemetry] API Latency Spike detected: ${data.latency}ms`);
+      // RuleEngine could process this anomaly separately
+    });
+    
+    this.on('db.slow_query', (data) => {
+      Logger.error(`[Telemetry] Slow DB Query detected on ${data.table}`);
+    });
   }
 }
 

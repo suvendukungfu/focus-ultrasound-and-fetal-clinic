@@ -27,7 +27,9 @@ app.use(auditLogger);
 
 // API Routes
 import { routes } from './routes';
+import { systemRoutes } from './routes/system.routes'; // Added import for systemRoutes
 app.use('/api/v1', routes);
+app.use('/api/v1/system', systemRoutes); // Added systemRoutes mapping
 
 // Health check
 app.get('/api/v1/health', (req: Request, res: Response) => {

@@ -220,3 +220,54 @@ model CacheInvalidation {
   @@index([cacheKey])
   @@map("cache_invalidations")
 }
+
+// ==========================================
+// V6: SELF-HEALING ARCHITECTURE TABLES
+// ==========================================
+
+model SystemMetric {
+  id         String   @id @default(uuid())
+  metricName String // e.g. "queueLoad", "apiLatency", "memoryUsage"
+  value      Float
+  unit       String? // e.g. "ms", "mb", "%"
+  recordedAt DateTime @default(now())
+
+  @@index([metricName, recordedAt(sort: Desc)])
+  @@map("system_metrics")
+}
+
+model SystemAlert {
+  id            String    @id @default(uuid())
+  severity      String // "LOW", "MEDIUM", "HIGH", "CRITICAL"
+  triggerSource String // e.g. "QueueMonitor", "LatencyPredictor"
+  message       String
+  acknowledged  Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  resolvedAt    DateTime?
+
+  @@index([severity, acknowledged])
+  @@map("system_alerts")
+}
+
+model PredictiveInsight {
+  id         String   @id @default(uuid())
+  riskLevel  String // "SAFE", "WARNING", "HIGH_RISK"
+  reason     String
+  confidence Float // 0.0 to 1.0
+  createdAt  DateTime @default(now())
+
+  @@index([riskLevel])
+  @@map("predictive_insights")
+}
+
+model RecoveryLog {
+  id           String   @id @default(uuid())
+  actionTaken  String // e.g. "scaleWorkers", "flushRedis", "pauseQueue"
+  success      Boolean
+  targetSystem String?
+  executionMs  Int?
+  createdAt    DateTime @default(now())
+
+  @@index([actionTaken, success])
+  @@map("recovery_logs")
+}
