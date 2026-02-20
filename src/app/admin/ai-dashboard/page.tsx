@@ -1,7 +1,7 @@
 import React from 'react';
-import { AIInsightCard } from '../../components/admin/ai/AIInsightCard';
-import { LiveEventFeed } from '../../components/admin/realtime/LiveEventFeed';
-import { RoleGuard } from '../../components/admin/core/RoleGuard';
+import { AIInsightCard } from '../../../components/admin/ai/AIInsightCard';
+import { LiveEventFeed } from '../../../components/admin/realtime/LiveEventFeed';
+import { RoleGuard } from '../../../components/admin/core/RoleGuard';
 
 export default function AIDashboardPage() {
   return (
