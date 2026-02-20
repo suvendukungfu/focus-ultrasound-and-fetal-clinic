@@ -48,14 +48,19 @@ if (cluster.isPrimary) {
     import('./modules/ai/orchestrator/AIOrchestrator').then(({ aiOrchestrator }) => {
       Kernel.registry.register(aiOrchestrator);
       
-      Kernel.boot().then(() => {
-        Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
-        for (let i = 0; i < numCPUs; i++) {
-          cluster.fork();
-        }
-      }).catch(err => {
-        Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
-        process.exit(1);
+      // Register AI Lead Scoring Service
+      import('./modules/ai/services/LeadScoringService').then(({ leadScoringService }) => {
+        Kernel.registry.register(leadScoringService);
+
+        Kernel.boot().then(() => {
+          Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
+          for (let i = 0; i < numCPUs; i++) {
+            cluster.fork();
+          }
+        }).catch(err => {
+          Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
+          process.exit(1);
+        });
       });
     });
   });
