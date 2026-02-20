@@ -72,6 +72,12 @@ Wait times and diagnostic clarity are the two biggest stress factors for expecti
 - **High-Fidelity UI:** A premium interface that reflects the clinic's commitment to "Apple-level" precision and care.
 - **Scalable Architecture:** A foundation ready to integrate online booking, tele-consultation, and AI-driven diagnostics.
 
+## 📸 Screenshots
+
+|                                    Dashboard                                    |                                Mobile View                                |
+| :-----------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
+| ![Dashboard Placeholder](https://via.placeholder.com/800x400?text=Dashboard+UI) | ![Mobile Placeholder](https://via.placeholder.com/375x812?text=Mobile+UI) |
+
 ## ✨ Key Features
 
 - **🌍 Multi-lingual Support:** Seamless toggle between English and Hindi to serve a diverse patient base.
