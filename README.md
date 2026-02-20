@@ -11,7 +11,7 @@ Focus Ultrasound is a production-grade diagnostic platform designed to provide w
 
 ---
 
-## 🏥 Enterprise Architecture Overview
+## Enterprise Architecture Overview
 
 Our system is built on a robust, scalable architecture designed for high availability and security.
 
@@ -23,7 +23,7 @@ For detailed architecture diagrams and data flow, see [docs/ARCHITECTURE.md](doc
 
 ---
 
-## 🔐 Security Practices
+## Security Practices
 
 Security is our top priority. We implement defense-in-depth strategies.
 
@@ -35,7 +35,7 @@ Read our full security policy in [docs/SECURITY.md](docs/SECURITY.md).
 
 ---
 
-## 🚀 Deployment Workflow
+## Deployment Workflow
 
 We utilize a modern CI/CD pipeline for reliable deployments.
 
@@ -49,7 +49,7 @@ See [docs/CONTRIBUTOR_WORKFLOW.md](docs/CONTRIBUTOR_WORKFLOW.md) for contributio
 
 ---
 
-## 📊 Admin Panel Overview
+## Admin Panel Overview
 
 The administrative interface provides comprehensive control over clinic operations.
 
@@ -60,11 +60,11 @@ The administrative interface provides comprehensive control over clinic operatio
 
 ---
 
-## 🌟 Vision
+## Vision
 
 To revolutionize the patient experience in fetal medicine by combining state-of-the-art diagnostic technology with a seamless, accessible, and high-performance digital infrastructure.
 
-## 🔴 Why This Matters
+## Why This Matters
 
 Wait times and diagnostic clarity are the two biggest stress factors for expecting parents. Focus Ultrasound addresses this by:
 
@@ -80,15 +80,15 @@ Wait times and diagnostic clarity are the two biggest stress factors for expecti
 
 ## ✨ Key Features
 
-- **🌍 Multi-lingual Support:** Seamless toggle between English and Hindi to serve a diverse patient base.
-- **⚡ Advanced Performance:** Optimized for low-latency loading even on mobile networks.
-- **🎨 Premium UX/UI:** Built with Shadcn/UI and custom animations for a "startup-grade" feel.
-- **📱 Fluid Responsiveness:** Expertly crafted for every device—from desktops to smartphones.
-- **🏥 Expert Profiling:** Detailed medical qualifications and backgrounds for our leading specialists.
+- ** Multi-lingual Support:** Seamless toggle between English and Hindi to serve a diverse patient base.
+- ** Advanced Performance:** Optimized for low-latency loading even on mobile networks.
+- ** Premium UX/UI:** Built with Shadcn/UI and custom animations for a "startup-grade" feel.
+- ** Fluid Responsiveness:** Expertly crafted for every device—from desktops to smartphones.
+- ** Expert Profiling:** Detailed medical qualifications and backgrounds for our leading specialists.
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 The repository follows a clean, modular architecture designed for horizontal scaling.
 
@@ -106,7 +106,7 @@ The repository follows a clean, modular architecture designed for horizontal sca
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -141,7 +141,7 @@ The repository follows a clean, modular architecture designed for horizontal sca
 
 ---
 
-## 🛠 Usage
+## Usage
 
 - **Development:** `npm run dev` - Start Vite dev server on port 8080.
 - **Build:** `npm run build` - Generate production-ready assets.
@@ -150,7 +150,7 @@ The repository follows a clean, modular architecture designed for horizontal sca
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 Automated deployments are handled via GitHub Actions. Push to the `main` branch to trigger a production build.
 
@@ -159,7 +159,7 @@ Automated deployments are handled via GitHub Actions. Push to the `main` branch 
 
 ---
 
-## 🗺 Future Scope
+## Future Scope
 
 - **Online Booking:** Integration with a real-time scheduling engine.
 - **Patient Portal:** Secure access to digital imaging reports.
@@ -168,11 +168,11 @@ Automated deployments are handled via GitHub Actions. Push to the `main` branch 
 
 ---
 
-## 🤝 Contribution
+## Contribution
 
 Please read [docs/CONTRIBUTOR_WORKFLOW.md](docs/CONTRIBUTOR_WORKFLOW.md) for details on our code of conduct and the process for submitting pull requests.
 
-## ⚖️ License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
