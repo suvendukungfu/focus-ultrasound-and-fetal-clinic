@@ -1,4 +1,4 @@
-import { prisma } from '../../../../../shared/infra/database/prismaClient';
+import { prisma } from '../../../../shared/infra/database/prismaClient';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 import { User } from '@prisma/client';
 

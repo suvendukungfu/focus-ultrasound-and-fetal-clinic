@@ -14,7 +14,15 @@ const app: Express = express();
 // Security & utility middleware
 app.use(helmet());
 app.use(cors());
-app.use(express.json());
+
+// Enterprise Scale: Compression for payload size reduction
+import compression from 'compression';
+app.use(compression({ level: 6 }));
+
+// Enterprise Scale: Unlimited payload sizes allowed (up to 50mb per request)
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
 app.use(auditLogger);
 
 // API Routes

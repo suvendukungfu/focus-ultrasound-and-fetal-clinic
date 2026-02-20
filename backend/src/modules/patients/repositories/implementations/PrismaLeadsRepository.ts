@@ -1,6 +1,6 @@
 import { Lead } from '@prisma/client';
 import { ICreateLeadDTO } from '../../dtos/ICreateLeadDTO';
-import { prisma } from '../../../../../shared/infra/database/prismaClient';
+import { prisma } from '../../../../shared/infra/database/prismaClient';
 
 export interface ILeadsRepository {
   create(data: ICreateLeadDTO): Promise<Lead>;
