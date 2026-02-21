@@ -3,6 +3,9 @@ import { Logger } from '../../../../core/Logger';
 import { Prisma } from '@prisma/client';
 import { activityService } from './ActivityService';
 
+// Import to ensure Express Request augmentation (req.user) is available
+import './ensureAuthenticated';
+
 /**
  * Express middleware that captures and persists admin activity to the AuditLog table.
  * 
