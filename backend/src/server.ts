@@ -52,14 +52,34 @@ if (cluster.isPrimary) {
       import('./modules/ai/services/LeadScoringService').then(({ leadScoringService }) => {
         Kernel.registry.register(leadScoringService);
 
-        Kernel.boot().then(() => {
-          Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
-          for (let i = 0; i < numCPUs; i++) {
-            cluster.fork();
-          }
-        }).catch(err => {
-          Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
-          process.exit(1);
+        // Register AI Blog Draft Generator
+        import('./modules/ai/services/BlogDraftService').then(({ blogDraftService }) => {
+          Kernel.registry.register(blogDraftService);
+
+          // Register AI Meta Description Writer
+          import('./modules/ai/services/MetaDescriptionService').then(({ metaDescriptionService }) => {
+            Kernel.registry.register(metaDescriptionService);
+
+            // Register AI Keyword Suggestion Engine
+            import('./modules/ai/services/KeywordSuggestionService').then(({ keywordSuggestionService }) => {
+              Kernel.registry.register(keywordSuggestionService);
+
+              // Register AI Lead Reply Engine
+              import('./modules/ai/services/LeadReplyService').then(({ leadReplyService }) => {
+                Kernel.registry.register(leadReplyService);
+
+                Kernel.boot().then(() => {
+                  Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
+                  for (let i = 0; i < numCPUs; i++) {
+                    cluster.fork();
+                  }
+                }).catch(err => {
+                  Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
+                  process.exit(1);
+                });
+              });
+            });
+          });
         });
       });
     });

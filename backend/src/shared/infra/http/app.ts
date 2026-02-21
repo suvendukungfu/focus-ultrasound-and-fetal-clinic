@@ -25,14 +25,29 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(auditLogger);
 
+// Activity Audit Middleware — logs all state-changing admin operations
+import { activityLogger } from './middlewares/activityLogger';
+app.use(activityLogger);
+
 // API Routes
 import { routes } from './routes';
 import { systemRoutes } from './routes/system.routes'; 
 import { platformRoutes } from './routes/platform.routes';
+import { aiRoutes } from './routes/ai.routes';
 
 app.use('/api/v1', routes);
 app.use('/api/v1/system', systemRoutes); 
 app.use('/api/v1/platform', platformRoutes);
+app.use('/api/v1/ai', aiRoutes);
+
+import { activityRoutes } from './routes/activity.routes';
+app.use('/api/v1/activity', activityRoutes);
+
+// Integration Routes
+import { whatsappRoutes } from './routes/whatsapp.routes';
+import { googleRoutes } from './routes/google.routes';
+app.use('/api/v1/integrations/whatsapp', whatsappRoutes);
+app.use('/api/v1/integrations/google', googleRoutes);
 
 // Health check
 app.get('/api/v1/health', (req: Request, res: Response) => {
