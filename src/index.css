@@ -1,55 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap');
-
-/* Mahajan Imaging Clinics - Gen-Z Clean Aesthetic */
+/* Focus Ultrasound & Fetal Clinic - Clean Medical Aesthetic */
 
 @layer base {
   :root {
-    --background: 160 20% 99%;
-    --foreground: 200 25% 12%;
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 200 25% 12%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 25% 12%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 175 60% 40%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 187 100% 42%; /* Beautiful Teal */
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 170 20% 96%;
-    --secondary-foreground: 200 25% 20%;
+    --secondary: 199 89% 48%; /* Serene Blue */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 170 15% 96%;
-    --muted-foreground: 200 10% 45%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 205 70% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 199 89% 95%; /* Softest Blue */
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 170 15% 90%;
-    --input: 170 15% 90%;
-    --ring: 175 60% 40%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 187 100% 42%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Clean Colors */
-    --highlight: 175 60% 70%;
-    --highlight-soft: 175 60% 95%;
+    --highlight: 187 100% 70%;
+    --highlight-soft: 187 100% 97%;
     --success: 160 80% 45%;
     --success-soft: 160 80% 95%;
 
-    /* Shadows - Soft and minimal */
-    --shadow-soft: 0 2px 10px -2px hsl(200 25% 12% / 0.05);
-    --shadow-medium: 0 4px 20px -4px hsl(200 25% 12% / 0.08);
-    --shadow-card: 0 1px 8px -2px hsl(200 25% 12% / 0.04);
-    --shadow-elevated: 0 8px 30px -8px hsl(200 25% 12% / 0.12);
-    --shadow-glow: 0 0 40px -10px hsl(175 60% 40% / 0.3);
+    /* Shadows - Refined and deeper */
+    --shadow-soft: 0 4px 12px -2px hsl(222 47% 11% / 0.04), 0 2px 4px -1px hsl(222 47% 11% / 0.03);
+    --shadow-medium: 0 12px 24px -6px hsl(222 47% 11% / 0.08), 0 4px 6px -2px hsl(222 47% 11% / 0.05);
+    --shadow-card: 0 20px 40px -12px hsl(222 47% 11% / 0.1);
+    --shadow-elevated: 0 32px 64px -16px hsl(222 47% 11% / 0.16);
+    --shadow-glow: 0 0 50px -10px hsl(187 100% 42% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -62,57 +62,48 @@
   }
 
   .dark {
-    --background: 200 20% 8%;
-    --foreground: 0 0% 98%;
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
 
-    --card: 200 15% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 200 15% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 175 60% 45%;
-    --primary-foreground: 200 20% 8%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 200 15% 18%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 200 15% 18%;
-    --muted-foreground: 200 10% 60%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 205 70% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 187 100% 42%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 200 15% 20%;
-    --input: 200 15% 20%;
-    --ring: 175 60% 45%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 89% 48%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-200;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Sora', sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 }
 

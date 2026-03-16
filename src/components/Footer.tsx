@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import clinicLogo from '@/assets/clinic-logo.jpg';
+const clinicLogo = '/images/clinic-logo-new.png';
 
 const Footer = () => {
   const { t } = useLanguage();

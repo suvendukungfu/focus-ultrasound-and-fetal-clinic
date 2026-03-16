@@ -6,15 +6,35 @@ import BackgroundPattern from '@/components/BackgroundPattern';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Send, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { 
+  Send, MapPin, Phone, Mail, Clock, 
+  Baby, Calendar as CalendarIcon, User, 
+  Stethoscope, FileText, Info
+} from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { motion } from 'framer-motion';
 
 const ContactContent = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
-    name: '', phone: '', email: '', age: '', weight: '',
-    symptoms: '', medicalHistory: '', message: '',
+    name: '', 
+    phone: '', 
+    email: '', 
+    age: '', 
+    weeksOfPregnancy: '',
+    scanType: '',
+    preferredDate: '',
+    preferredTime: '',
+    doctorPreference: '',
+    message: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,121 +43,252 @@ const ContactContent = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     toast({
       title: "Appointment Request Submitted!",
       description: "We'll contact you within 24 hours to confirm your appointment.",
     });
-    setFormData({ name: '', phone: '', email: '', age: '', weight: '', symptoms: '', medicalHistory: '', message: '' });
+    setFormData({ 
+      name: '', phone: '', email: '', age: '', 
+      weeksOfPregnancy: '', scanType: '', 
+      preferredDate: '', preferredTime: '',
+      doctorPreference: '', message: '' 
+    });
     setIsSubmitting(false);
   };
+
+  const scanTypes = [
+    'NT Scan', 'Anomaly Scan (TIFFA)', 'Growth Scan', 
+    'Early Pregnancy Scan', 'Doppler Study', 'Fetal Echocardiography', 
+    'NIPT Screening', 'Liver Fibroscan', 'Small Parts Ultrasound', 'Other'
+  ];
+
+  const doctors = [
+    'Dr. Samar Surya Nirwal',
+    'Dr. Rahul Choudhary',
+    'Any Available Specialist'
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-20">
-        <section className="relative section-padding pb-8">
+        <section className="relative py-16 md:py-24 bg-primary/5 overflow-hidden">
           <BackgroundPattern />
-          <div className="relative z-10 container-narrow mx-auto text-center">
-            <span className="inline-block px-4 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-body font-medium mb-4 animate-fade-up">
-              Get in Touch
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+          <div className="relative z-10 container-narrow mx-auto px-4 text-center">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-block px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-6"
+            >
+              {language === 'en' ? 'Book Your Visit' : 'अपनी मुलाक़ात बुक करें'}
+            </motion.span>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6"
+            >
               {t('contact.title')}
-            </h1>
-            <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-muted-foreground font-body text-lg md:text-xl max-w-2xl mx-auto"
+            >
               {t('contact.subtitle')}
-            </p>
+            </motion.p>
           </div>
         </section>
 
-        <section className="section-padding pt-8">
+        <section className="py-20 px-4">
           <div className="container-narrow mx-auto">
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <form onSubmit={handleSubmit} className="card-clean animate-fade-up">
-                  <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-12 gap-12">
+              {/* Form Section */}
+              <div className="lg:col-span-8">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-card rounded-[3rem] border border-border shadow-elevated p-8 md:p-12"
+                >
+                  <form onSubmit={handleSubmit} className="space-y-8">
+                    {/* Patient Information */}
                     <div>
-                      <label className="block font-body font-medium text-foreground mb-2">{t('contact.name')} *</label>
-                      <Input type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="John Doe" className="bg-background" />
-                    </div>
-                    <div>
-                      <label className="block font-body font-medium text-foreground mb-2">{t('contact.phone')} *</label>
-                      <Input type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="+91 98704 75400" className="bg-background" />
-                    </div>
-                    <div>
-                      <label className="block font-body font-medium text-foreground mb-2">{t('contact.email')} *</label>
-                      <Input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="john@example.com" className="bg-background" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block font-body font-medium text-foreground mb-2">{t('contact.age')}</label>
-                        <Input type="number" name="age" value={formData.age} onChange={handleChange} placeholder="30" className="bg-background" />
+                      <h3 className="flex items-center gap-2 font-display text-xl font-bold text-foreground mb-6">
+                        <User className="w-5 h-5 text-primary" />
+                        Patient Information
+                      </h3>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">{t('contact.name')} *</label>
+                          <Input name="name" value={formData.name} onChange={handleChange} required placeholder="Full Name" className="h-12 rounded-xl bg-secondary/30 border-none focus:ring-2 focus:ring-primary" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">{t('contact.phone')} *</label>
+                          <Input type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="Contact Number" className="h-12 rounded-xl bg-secondary/30 border-none" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">Weeks of Pregnancy</label>
+                          <div className="relative">
+                            <Input type="number" name="weeksOfPregnancy" value={formData.weeksOfPregnancy} onChange={handleChange} placeholder="e.g. 12" className="h-12 rounded-xl bg-secondary/30 border-none pl-10" />
+                            <Baby className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">{t('contact.age')}</label>
+                          <Input type="number" name="age" value={formData.age} onChange={handleChange} placeholder="Age" className="h-12 rounded-xl bg-secondary/30 border-none" />
+                        </div>
                       </div>
-                      <div>
-                        <label className="block font-body font-medium text-foreground mb-2">{t('contact.weight')}</label>
-                        <Input type="number" name="weight" value={formData.weight} onChange={handleChange} placeholder="65" className="bg-background" />
+                    </div>
+
+                    {/* Appointment Details */}
+                    <div className="pt-8 border-t border-border/50">
+                      <h3 className="flex items-center gap-2 font-display text-xl font-bold text-foreground mb-6">
+                        <Stethoscope className="w-5 h-5 text-primary" />
+                        Scan & Appointment Details
+                      </h3>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">Select Scan Type *</label>
+                          <Select onValueChange={(v) => handleSelectChange('scanType', v)} required>
+                            <SelectTrigger className="h-12 rounded-xl bg-secondary/30 border-none">
+                              <SelectValue placeholder="Choose a scan type" />
+                            </SelectTrigger>
+                            <SelectContent className="rounded-xl border-border">
+                              {scanTypes.map(type => (
+                                <SelectItem key={type} value={type} className="rounded-lg">{type}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">Preferred Doctor</label>
+                          <Select onValueChange={(v) => handleSelectChange('doctorPreference', v)}>
+                            <SelectTrigger className="h-12 rounded-xl bg-secondary/30 border-none">
+                              <SelectValue placeholder="Select doctor preference" />
+                            </SelectTrigger>
+                            <SelectContent className="rounded-xl border-border">
+                              {doctors.map(doc => (
+                                <SelectItem key={doc} value={doc} className="rounded-lg">{doc}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">Preferred Date</label>
+                          <div className="relative">
+                            <Input type="date" name="preferredDate" value={formData.preferredDate} onChange={handleChange} className="h-12 rounded-xl bg-secondary/30 border-none pl-10" />
+                            <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground/80 ml-1">Preferred Time</label>
+                          <div className="relative">
+                            <Input type="time" name="preferredTime" value={formData.preferredTime} onChange={handleChange} className="h-12 rounded-xl bg-secondary/30 border-none pl-10" />
+                            <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="md:col-span-2">
-                      <label className="block font-body font-medium text-foreground mb-2">{t('contact.symptoms')} *</label>
-                      <textarea name="symptoms" value={formData.symptoms} onChange={handleChange} required rows={3} placeholder="Please describe your symptoms or the reason for your visit..." className="w-full px-3 py-2 rounded-md border border-input bg-background text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
+
+                    {/* Additional Notes */}
+                    <div className="pt-8 border-t border-border/50">
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80 ml-1">
+                          <FileText className="w-4 h-4 text-primary" />
+                          {t('contact.message')}
+                        </label>
+                        <textarea 
+                          name="message" 
+                          value={formData.message} 
+                          onChange={handleChange} 
+                          rows={4} 
+                          placeholder="Please share any specific symptoms, previous history, or questions..." 
+                          className="w-full px-4 py-3 rounded-2xl bg-secondary/30 border-none focus:ring-2 focus:ring-primary transition-all duration-300 min-h-[120px]" 
+                        />
+                      </div>
                     </div>
-                    <div className="md:col-span-2">
-                      <label className="block font-body font-medium text-foreground mb-2">{t('contact.medical')}</label>
-                      <textarea name="medicalHistory" value={formData.medicalHistory} onChange={handleChange} rows={2} placeholder={t('contact.medicalPlaceholder')} className="w-full px-3 py-2 rounded-md border border-input bg-background text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block font-body font-medium text-foreground mb-2">{t('contact.message')}</label>
-                      <textarea name="message" value={formData.message} onChange={handleChange} rows={2} placeholder="Any additional information you'd like to share..." className="w-full px-3 py-2 rounded-md border border-input bg-background text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" />
-                    </div>
-                  </div>
-                  <Button type="submit" disabled={isSubmitting} className="w-full mt-6 btn-primary">
-                    {isSubmitting ? 'Submitting...' : (<><Send className="w-4 h-4 mr-2" />{t('contact.submit')}</>)}
-                  </Button>
-                </form>
+
+                    <Button type="submit" disabled={isSubmitting} className="w-full py-7 rounded-2xl text-lg font-bold shadow-glow hover:scale-[1.01] active:scale-[0.99] transition-all">
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Confirming Request...
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Send className="w-5 h-5" />
+                          {t('contact.submit')}
+                        </span>
+                      )}
+                    </Button>
+                  </form>
+                </motion.div>
               </div>
 
-              <div className="space-y-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                <div className="card-clean">
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-4">Contact Information</h3>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground font-body text-sm">
-                        Shop No. 05 & 06, UGF,<br />Nirala Estate, Noida Extension,<br />Greater Noida West - 201306
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <Phone className="w-5 h-5 text-primary" />
-                      <a href="tel:+919870475400" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm">+91 98704 75400</a>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <Mail className="w-5 h-5 text-primary" />
-                      <a href="mailto:info.fufc@gmail.com" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm">info.fufc@gmail.com</a>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <Clock className="w-5 h-5 text-primary" />
-                      <span className="text-muted-foreground font-body text-sm">Mon - Sat: 9:00 AM - 8:00 PM</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="card-clean h-80 p-0 overflow-hidden relative group">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.4396289761557!2d77.4398322!3d28.586585300000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cef9b638e2207%3A0xca82e787d7e4cfbb!2sFocus%20Ultrasound%20and%20Fetal%20Clinic%E2%94%82Digital%20X-RAY%E2%94%82ECG%E2%94%823D%204D%20Pregnancy%20Ultrasound%E2%94%82Fetal%20Echo%E2%94%82Lab%20Tests%E2%94%82Fetal%20Medicine!5e0!3m2!1sen!2sin!4v1771586072762!5m2!1sen!2sin"
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    allowFullScreen 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Focus Ultrasound and Fetal Clinic Location"
-                    className="grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
-                  ></iframe>
-                </div>
+              {/* Info Sidebar */}
+              <div className="lg:col-span-4 space-y-8">
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-card rounded-[2.5rem] border border-border p-8 shadow-soft"
+                >
+                  <h3 className="font-display text-xl font-bold text-foreground mb-6">Clinic Information</h3>
+                  <div className="space-y-6">
+                    <div className="flex gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 text-primary" />
+                      </div>
+                      <p className="text-muted-foreground font-body text-sm leading-relaxed pt-1">
+                        Shop No. 05 & 06, UGF, Nirala Estate, Noida Extension, Greater Noida West - 201306
+                      </p>
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-5 h-5 text-primary" />
+                      </div>
+                      <a href="tel:+919870475400" className="text-foreground font-bold text-sm leading-relaxed pt-2 hover:text-primary transition-colors">
+                        +91 98704 75400
+                      </a>
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Clock className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-muted-foreground font-body text-sm leading-relaxed pt-1">
+                        <p className="text-foreground font-semibold mb-1">Modern Timings</p>
+                        <p>Mon–Sat: 9 AM – 3 PM</p>
+                        <p className="mb-2">& 5 PM – 8 PM</p>
+                        <p>Sun: 9 AM – 2 PM</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="bg-accent/5 rounded-[2.5rem] p-8 border border-accent/10"
+                >
+                  <div className="flex items-center gap-2 text-accent font-bold mb-4">
+                    <Info className="w-5 h-5" />
+                    Important Note
+                  </div>
+                  <p className="text-muted-foreground text-sm font-body leading-relaxed">
+                    Please bring your previous scan reports (if any) and doctor's prescription for the scan. For Anomaly Scans, we recommend having a light snack before the appointment.
+                  </p>
+                </motion.div>
               </div>
             </div>
           </div>

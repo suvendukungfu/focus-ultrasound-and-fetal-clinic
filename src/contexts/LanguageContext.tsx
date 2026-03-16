@@ -20,12 +20,12 @@ const translations: Translations = {
   'nav.book': { en: 'Book Appointment', hi: 'अपॉइंटमेंट बुक करें' },
 
   // Hero
-  'hero.badge': { en: 'Trusted Diagnostics Partner', hi: 'विश्वसनीय डायग्नोस्टिक्स पार्टनर' },
-  'hero.title': { en: 'Your Health,', hi: 'आपका स्वास्थ्य,' },
-  'hero.titleHighlight': { en: 'Our Priority', hi: 'हमारी प्राथमिकता' },
-  'hero.subtitle': { en: 'Advanced imaging & diagnostic services with care that feels personal.', hi: 'व्यक्तिगत देखभाल के साथ उन्नत इमेजिंग और डायग्नोस्टिक सेवाएं।' },
+  'hero.badge': { en: 'Advanced Fetal Medicine Center', hi: 'उन्नत भ्रूण चिकित्सा केंद्र' },
+  'hero.title': { en: 'Expert Fetal Medicine &', hi: 'विशेषज्ञ भ्रूण चिकित्सा और' },
+  'hero.titleHighlight': { en: 'Pregnancy Ultrasound', hi: 'गर्भावस्था अल्ट्रासाउंड' },
+  'hero.subtitle': { en: 'Leading-edge pregnancy diagnostics and maternal-fetal care with 10+ years of clinical excellence.', hi: '10+ वर्षों की नैदानिक उत्कृष्टता के साथ अत्याधुनिक गर्भावस्था डायग्नोस्टिक्स और मातृ-भ्रूण देखभाल।' },
   'hero.book': { en: 'Book Appointment', hi: 'अपॉइंटमेंट बुक करें' },
-  'hero.call': { en: 'Call Us', hi: 'कॉल करें' },
+  'hero.call': { en: 'Call Clinic', hi: 'क्लिनिक को कॉल करें' },
 
   // Stats
   'stats.experience': { en: 'Years Experience', hi: 'वर्षों का अनुभव' },
