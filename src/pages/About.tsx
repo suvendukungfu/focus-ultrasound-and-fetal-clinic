@@ -3,7 +3,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackgroundPattern from '@/components/BackgroundPattern';
 
-import { Award, Mail, GraduationCap, Stethoscope, Monitor } from 'lucide-react';
+import { Award, Mail, GraduationCap, Stethoscope } from 'lucide-react';
 const drSamar = '/images/dr-samar-photo.png';
 const drRahul = '/images/dr-rahul-photo.png';
 const drSamarDegree = '/images/dr-samar-cert.png';
@@ -327,102 +327,7 @@ const AboutContent = () => {
           </div>
         </section>
 
-        {/* Advanced Facilities & Technology */}
-        <section className="py-20 px-4 bg-secondary/10">
-          <div className="container-narrow mx-auto">
-            <div className="text-center mb-16">
-              <span className="inline-block px-4 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-display font-semibold uppercase tracking-widest mb-4">
-                {language === 'en' ? 'Our Technology' : 'हमारी तकनीक'}
-              </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-                {language === 'en' ? 'Advanced Diagnostic Equipment' : 'उन्नत नैदानिक उपकरण'}
-              </h2>
-              <p className="text-muted-foreground font-body text-base max-w-2xl mx-auto">
-                {language === 'en' 
-                  ? 'We invest in world-class imaging systems to ensure the highest accuracy in fetal and maternal diagnostics.' 
-                  : 'हम भ्रूण और मातृ निदान में उच्चतम सटीकता सुनिश्चित करने के लिए विश्व स्तरीय इमेजिंग सिस्टम में निवेश करते हैं।'}
-              </p>
-            </div>
 
-            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-stretch">
-              {/* High-End Diagnostic Suite */}
-              <div className="flex flex-col bg-white rounded-[3rem] overflow-hidden border border-border shadow-soft hover:shadow-elevated transition-all duration-500 group">
-                <div className="aspect-[16/10] overflow-hidden bg-muted/5 p-8 flex items-center justify-center">
-                  <img
-                    src="/images/hero-clinic-bg.jpg"
-                    alt="Premium Diagnostic Suite"
-                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-8 md:p-10 flex flex-col flex-1">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
-                      <Monitor className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-display text-2xl font-bold text-foreground">
-                      Boutique Scan Suites
-                    </h3>
-                  </div>
-                  <p className="text-muted-foreground font-body text-base leading-relaxed mb-6 flex-grow">
-                    {language === 'en'
-                      ? 'Our clinic features state-of-the-art diagnostic suites designed for maximum patient comfort and clinical precision. Each room provides a serene, private environment for your journey.'
-                      : 'हमारे क्लिनिक में अधिकतम रोगी आराम और नैदानिक सटीकता के लिए डिज़ाइन किए गए अत्याधुनिक डायग्नोस्टिक सुइट हैं। प्रत्येक कमरा आपकी यात्रा के लिए एक शांत, निजी वातावरण प्रदान करता है।'}
-                  </p>
-                  <ul className="space-y-3">
-                    {[
-                      language === 'en' ? 'Private & serene environment' : 'निजी और शांत वातावरण',
-                      language === 'en' ? 'Comfort-first ergonomics' : 'आराम-प्रथम एर्गोनॉमिक्स',
-                      language === 'en' ? 'Integrated viewing screens' : 'एकीकृत देखने की स्क्रीन'
-                    ].map((benefit, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm font-body text-foreground/80">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* GE Voluson E10 Expert */}
-              <div className="flex flex-col bg-white rounded-[3rem] overflow-hidden border border-border shadow-soft hover:shadow-elevated transition-all duration-500 group">
-                <div className="aspect-[16/10] overflow-hidden bg-muted/5 p-8 flex items-center justify-center">
-                  <img
-                    src="/images/ultrasound-machine.jpg"
-                    alt="Advanced Ultrasound System"
-                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-8 md:p-10 flex flex-col flex-1">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-colors duration-500">
-                      <Monitor className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-display text-2xl font-bold text-foreground">
-                      GE Voluson E10
-                    </h3>
-                  </div>
-                  <p className="text-muted-foreground font-body text-base leading-relaxed mb-6 flex-grow">
-                    {language === 'en'
-                      ? 'The GE Voluson™ E10 is the global gold standard in fetal medicine. It offers extraordinary image quality with HDlive™ and Radiantflow™ for the highest diagnostic confidence.'
-                      : 'GE Voluson™ E10 भ्रूण चिकित्सा में वैश्विक स्वर्ण मानक है। यह उच्चतम नैदानिक विश्वास के लिए एचडीलाइव™ और रेडिएंटफ्लो™ के साथ असाधारण इमेज क्वालिटी प्रदान करता है।'}
-                  </p>
-                  <ul className="space-y-3">
-                    {[
-                      language === 'en' ? 'Revolutionary HDlive™ 3D/4D' : 'क्रांतिकारी एचडीलाइव™ 3D/4D',
-                      language === 'en' ? 'Superior fetal cardiac imaging' : 'बेहतर फीटल कार्डियक इमेजिंग',
-                      language === 'en' ? 'Unmatched diagnostic precision' : 'बेजोड़ नैदानिक सटीकता'
-                    ].map((benefit, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm font-body text-foreground/80">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* redesigned Clinic Gallery */}
         <section className="py-24 px-4 bg-background overflow-hidden" id="clinic-gallery">

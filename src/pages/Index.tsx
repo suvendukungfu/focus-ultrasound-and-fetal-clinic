@@ -3,8 +3,6 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ServicesPreview from '@/components/ServicesPreview';
 import DoctorsSection from '@/components/DoctorsSection';
-import EquipmentSection from '@/components/EquipmentSection';
-import GalleryPreview from '@/components/GalleryPreview';
 import ClinicTimings from '@/components/ClinicTimings';
 import Footer from '@/components/Footer';
 
@@ -17,8 +15,6 @@ const Index = () => {
           <Hero />
           <ServicesPreview />
           <DoctorsSection />
-          <EquipmentSection />
-          <GalleryPreview />
           <ClinicTimings />
           <section className="relative w-full h-[450px] md:h-[650px] overflow-hidden group">
             <div className="absolute inset-0 z-0">
