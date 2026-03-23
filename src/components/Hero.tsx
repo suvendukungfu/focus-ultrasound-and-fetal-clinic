@@ -28,8 +28,8 @@ const Hero = () => {
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
-          src="/images/pregnancy-hero.png"
-          alt="Mother at Fetal ultrasound clinic"
+          src="/images/hero-clinic-bg.jpg"
+          alt="Focus Ultrasound and Fetal Clinic Lounge"
           className="w-full h-full object-cover object-center"
         />
         {/* Soft Sophisticated Gradient */}
@@ -46,20 +46,6 @@ const Hero = () => {
           
           {/* Content Column */}
           <div className="lg:col-span-7">
-            <MotionReveal direction="down" duration={0.8}>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {trustBadges.map((badge) => (
-                  <span
-                    key={badge.label}
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-xs font-semibold tracking-wide uppercase ${badge.color} shadow-sm backdrop-blur-sm`}
-                  >
-                    <badge.icon className="w-3.5 h-3.5" />
-                    {badge.label}
-                  </span>
-                ))}
-              </div>
-            </MotionReveal>
-
             <MotionReveal delay={0.2} duration={0.8}>
               <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-slate-900 leading-[1.05] mb-8">
                 {language === 'en' ? (
@@ -137,14 +123,14 @@ const Hero = () => {
                       <Activity className="w-6 h-6 text-medical-teal" />
                     </div>
                     <div>
-                      <h4 className="font-display font-bold text-slate-900 leading-tight">Expert Diagnosis</h4>
-                      <p className="text-xs text-slate-500">Real-time monitoring</p>
+                      <h4 className="font-display font-bold text-slate-900 leading-tight">Advanced Scanning</h4>
+                      <p className="text-xs text-slate-500">Elite Diagnostic Care</p>
                     </div>
                   </div>
-                  <img src="/images/fetal-ultrasound.png" alt="Clinical Screen" className="rounded-2xl mb-4 w-full aspect-video object-cover" />
+                  <img src="/images/ultrasound-machine.jpg" alt="Advanced Ultrasound System" className="rounded-2xl mb-4 w-full aspect-video object-cover" />
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-medical-blue bg-medical-blue/10 px-3 py-1 rounded-full uppercase tracking-wider">High Fidelity</span>
-                    <span className="text-xs font-semibold text-slate-400 italic">Samsung V7 Elite</span>
+                    <span className="text-xs font-bold text-medical-blue bg-medical-blue/10 px-3 py-1 rounded-full uppercase tracking-wider">Premium Tech</span>
+                    <span className="text-xs font-semibold text-slate-400 italic">GE Voluson E10</span>
                   </div>
                </motion.div>
             </MotionReveal>

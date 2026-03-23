@@ -65,6 +65,35 @@ He completed a Fellowship in Fetal Imaging from the University of Barcelona and 
   },
 ];
 
+const certificationsData = [
+  {
+    name: 'Dr. Rahul Choudhary',
+    degree: 'MBBS, MD (Radiodiagnosis)',
+    role: 'Consultant Radiologist & Fetal Medicine',
+    university: '(University of Barcelona)',
+    registration: ['UPMC No - 103538'],
+    experience: '10+ Years Experience',
+    formerly: [
+      'Safdarjung Hospital, New Delhi',
+      'AIIMS, Patna',
+    ],
+    avatar: drRahul 
+  },
+  {
+    name: 'Dr. Samar Surya Nirwal',
+    degree: 'MBBS, MD, DNB (Radiodiagnosis)',
+    role: 'Consultant Radiologist & Fetal Medicine',
+    university: '(University of Barcelona)',
+    registration: ['UPMC No - 84598', 'DMC No - 94287'],
+    experience: '10+ Years Experience',
+    formerly: [
+      'King George’s Medical University, Lucknow',
+      'Safdarjung Hospital, New Delhi',
+    ],
+    avatar: drSamar
+  }
+];
+
 const AboutContent = () => {
   const { t, language } = useLanguage();
 
@@ -205,36 +234,92 @@ const AboutContent = () => {
         </section>
 
         {/* Degrees & Certifications */}
-        <section className="py-20 px-4 bg-background" id="certifications">
-          <div className="container-narrow mx-auto">
+        <section className="py-24 px-4 bg-[#0b1220] relative overflow-hidden" id="certifications">
+          {/* Subtle background glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-[#00c8ff]/10 blur-[120px] rounded-[100%] pointer-events-none" />
+
+          <div className="container mx-auto max-w-[1100px] relative z-10">
             <div className="text-center mb-16">
-              <span className="inline-block px-4 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-display font-semibold uppercase tracking-widest mb-4">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#00c8ff]/10 border border-[#00c8ff]/20 text-[#00c8ff] text-xs font-display font-bold uppercase tracking-widest mb-4">
                 {language === 'en' ? 'Credentials' : 'प्रमाणपत्र'}
               </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 text-center">
+              <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-6">
                 {language === 'en' ? 'Degrees & Certifications' : 'डिग्री और प्रमाणपत्र'}
               </h2>
-              <div className="w-16 h-1 bg-primary/30 mx-auto rounded-full" />
+              <div className="w-16 h-1 bg-[#00c8ff]/40 mx-auto rounded-full" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-10 lg:gap-14 max-w-5xl mx-auto">
-              {doctorsData.map((item, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+              {certificationsData.map((doc, index) => (
                 <div 
-                  key={index} 
-                  className="group flex flex-col items-center animate-fade-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  key={index}
+                  className="group relative flex flex-col p-8 md:p-10 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-[#00c8ff]/30 hover:bg-white/[0.05] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,200,255,0.15)] animate-fade-up"
+                  style={{ animationDelay: `${index * 0.15}s` }}
                 >
-                  <p className="font-display text-lg font-medium text-muted-foreground mb-6 transition-colors duration-300 group-hover:text-primary">
-                    {language === 'en' ? item.name : item.nameHi}
-                  </p>
-                  <div className="w-full aspect-[16/10] bg-card rounded-[2.5rem] border border-border p-4 md:p-6 transition-all duration-500 hover:border-primary/30 hover:shadow-elevated hover:-translate-y-2">
-                    <div className="w-full h-full rounded-[2rem] overflow-hidden border border-border bg-white shadow-inner">
-                      <img
-                        src={item.degreeImage}
-                        alt={`${item.name} - Degree Certificate`}
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
-                      />
+                  {/* Subtle top inner glow */}
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="flex items-start justify-between mb-8">
+                    <div className="flex items-center gap-5">
+                      <div className="w-20 h-20 rounded-full bg-slate-800 border-2 border-white/10 p-1 flex-shrink-0 relative overflow-hidden group-hover:border-[#00c8ff]/50 transition-colors duration-500">
+                        <img src={doc.avatar} alt={doc.name} className="w-full h-full object-cover rounded-full" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-2xl font-bold text-white mb-1.5">{doc.name}</h3>
+                        <p className="text-[#00c8ff] font-display font-semibold text-sm tracking-wide">
+                          {doc.degree}
+                        </p>
+                      </div>
                     </div>
+                  </div>
+
+                  <div className="mb-8">
+                    <p className="text-slate-200 font-medium text-lg leading-snug mb-1">
+                      {doc.role}
+                    </p>
+                    <p className="text-slate-400 font-body text-sm italic">
+                      {doc.university}
+                    </p>
+                  </div>
+
+                  <div className="w-full h-px bg-white/10 mb-8" />
+
+                  <div className="space-y-6 flex-1">
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00c8ff]/10 group-hover:text-[#00c8ff] text-slate-400 transition-colors duration-300">
+                        <span className="text-sm">📄</span>
+                      </div>
+                      <div>
+                        <h4 className="text-slate-300 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Registration</h4>
+                        {doc.registration.map(reg => (
+                          <div key={reg} className="text-slate-400 text-sm font-body">{reg}</div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00c8ff]/10 group-hover:text-[#00c8ff] text-slate-400 transition-colors duration-300">
+                        <span className="text-sm">🏥</span>
+                      </div>
+                      <div>
+                        <h4 className="text-slate-300 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Formerly At</h4>
+                        <ul className="space-y-1">
+                          {doc.formerly.map(hospital => (
+                            <li key={hospital} className="text-slate-400 text-sm font-body flex items-baseline gap-2">
+                              <span className="w-1.5 h-1.5 bg-[#00c8ff]/50 rounded-full flex-shrink-0"></span>
+                              {hospital}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-white/10">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 text-xs font-semibold uppercase tracking-wider">
+                      <Award className="w-4 h-4 text-[#00c8ff]" />
+                      {doc.experience}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -260,13 +345,13 @@ const AboutContent = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-stretch">
-              {/* Samsung V7 */}
+              {/* High-End Diagnostic Suite */}
               <div className="flex flex-col bg-white rounded-[3rem] overflow-hidden border border-border shadow-soft hover:shadow-elevated transition-all duration-500 group">
                 <div className="aspect-[16/10] overflow-hidden bg-muted/5 p-8 flex items-center justify-center">
                   <img
-                    src={clinicSamsung}
-                    alt="Samsung V7 Ultrasound System"
-                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    src="/images/hero-clinic-bg.jpg"
+                    alt="Premium Diagnostic Suite"
+                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-8 md:p-10 flex flex-col flex-1">
@@ -275,19 +360,19 @@ const AboutContent = () => {
                       <Monitor className="w-6 h-6" />
                     </div>
                     <h3 className="font-display text-2xl font-bold text-foreground">
-                      Samsung V7
+                      Boutique Scan Suites
                     </h3>
                   </div>
                   <p className="text-muted-foreground font-body text-base leading-relaxed mb-6 flex-grow">
                     {language === 'en'
-                      ? 'State-of-the-art ultrasound technology featuring crystal-clear 3D/4D fetal imaging. It utilizes Intelligent Assist features to provide highly accurate measurements and early detection of fetal anomalies.'
-                      : 'क्रिस्टल-क्लियर 3D/4D फीटल इमेजिंग की विशेषता वाली अत्याधुनिक अल्ट्रासाउंड तकनीक। यह अत्यधिक सटीक माप और असामान्यताओं का जल्दी पता लगाने के लिए इंटेलिजेंट असिस्ट सुविधाओं का उपयोग करता है।'}
+                      ? 'Our clinic features state-of-the-art diagnostic suites designed for maximum patient comfort and clinical precision. Each room provides a serene, private environment for your journey.'
+                      : 'हमारे क्लिनिक में अधिकतम रोगी आराम और नैदानिक सटीकता के लिए डिज़ाइन किए गए अत्याधुनिक डायग्नोस्टिक सुइट हैं। प्रत्येक कमरा आपकी यात्रा के लिए एक शांत, निजी वातावरण प्रदान करता है।'}
                   </p>
                   <ul className="space-y-3">
                     {[
-                      language === 'en' ? 'Crystal-clear 3D/4D rendering' : 'क्रिस्टल-क्लियर 3D/4D रेंडरिंग',
-                      language === 'en' ? 'Intelligent fetal measurement assist' : 'बुद्धिमान भ्रूण माप सहायता',
-                      language === 'en' ? 'Advanced cardiac imaging' : 'उन्नत कार्डियक इमेजिंग'
+                      language === 'en' ? 'Private & serene environment' : 'निजी और शांत वातावरण',
+                      language === 'en' ? 'Comfort-first ergonomics' : 'आराम-प्रथम एर्गोनॉमिक्स',
+                      language === 'en' ? 'Integrated viewing screens' : 'एकीकृत देखने की स्क्रीन'
                     ].map((benefit, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm font-body text-foreground/80">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -298,12 +383,12 @@ const AboutContent = () => {
                 </div>
               </div>
 
-              {/* GE Voluson E8 */}
+              {/* GE Voluson E10 Expert */}
               <div className="flex flex-col bg-white rounded-[3rem] overflow-hidden border border-border shadow-soft hover:shadow-elevated transition-all duration-500 group">
                 <div className="aspect-[16/10] overflow-hidden bg-muted/5 p-8 flex items-center justify-center">
                   <img
-                    src="/images/ge-voluson-e8.jpg"
-                    alt="GE Voluson E8 Expert"
+                    src="/images/ultrasound-machine.jpg"
+                    alt="Advanced Ultrasound System"
                     className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
@@ -313,19 +398,19 @@ const AboutContent = () => {
                       <Monitor className="w-6 h-6" />
                     </div>
                     <h3 className="font-display text-2xl font-bold text-foreground">
-                      GE Voluson E8 Expert
+                      GE Voluson E10
                     </h3>
                   </div>
                   <p className="text-muted-foreground font-body text-base leading-relaxed mb-6 flex-grow">
                     {language === 'en'
-                      ? 'Renowned as the gold standard in women\'s health, the Voluson E8 provides extraordinary image quality. Its Radiantflow and SlowflowHD technologies allow exceptional visualization of tiny-vessel blood flow.'
-                      : 'महिला स्वास्थ्य में स्वर्ण मानक के रूप में प्रसिद्ध, Voluson E8 असाधारण इमेज क्वालिटी प्रदान करता है। इसकी तकनीकें नन्ही रक्त वाहिकाओं के प्रवाह का असाधारण दृश्य प्रदान करती हैं।'}
+                      ? 'The GE Voluson™ E10 is the global gold standard in fetal medicine. It offers extraordinary image quality with HDlive™ and Radiantflow™ for the highest diagnostic confidence.'
+                      : 'GE Voluson™ E10 भ्रूण चिकित्सा में वैश्विक स्वर्ण मानक है। यह उच्चतम नैदानिक विश्वास के लिए एचडीलाइव™ और रेडिएंटफ्लो™ के साथ असाधारण इमेज क्वालिटी प्रदान करता है।'}
                   </p>
                   <ul className="space-y-3">
                     {[
-                      language === 'en' ? 'Radiantflow for vascular clarity' : 'संवहनी स्पष्टता के लिए रेडिएंटफ्लो',
-                      language === 'en' ? 'Exceptional HDlive technology' : 'असाधारण एचडीलाइव तकनीक',
-                      language === 'en' ? 'Specialized women\'s health workflow' : 'विशेष महिला स्वास्थ्य कार्यप्रवाह'
+                      language === 'en' ? 'Revolutionary HDlive™ 3D/4D' : 'क्रांतिकारी एचडीलाइव™ 3D/4D',
+                      language === 'en' ? 'Superior fetal cardiac imaging' : 'बेहतर फीटल कार्डियक इमेजिंग',
+                      language === 'en' ? 'Unmatched diagnostic precision' : 'बेजोड़ नैदानिक सटीकता'
                     ].map((benefit, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm font-body text-foreground/80">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent" />
@@ -352,40 +437,40 @@ const AboutContent = () => {
               <div className="w-16 h-1 bg-primary/30 mx-auto rounded-full" />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            <div className="columns-1 md:columns-2 gap-6 md:gap-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
               {[
                 { 
                   src: '/images/clinic-exterior-new.jpg', 
                   label: language === 'en' ? 'Modern Exterior' : 'आधुनिक बाहरी हिस्सा',
-                  span: 'md:col-span-2 md:row-span-2'
+                  aspect: 'aspect-[1024/576]'
                 },
                 { 
                   src: '/images/clinic-waiting-new.jpg', 
                   label: language === 'en' ? 'Comfortable Waiting Lounge' : 'आरामदायक प्रतीक्षा कक्ष',
-                  span: 'md:col-span-2'
+                  aspect: 'aspect-[765/1020]'
                 },
                 { 
                   src: '/images/clinic-entry-new.png', 
                   label: language === 'en' ? 'Welcoming Reception' : 'स्वागत क्षेत्र',
-                  span: ''
+                  aspect: 'aspect-[512/310]'
                 },
                 { 
                   src: clinicSamsung, 
                   label: language === 'en' ? 'Diagnostic Suite' : 'डायग्नोस्टिक सूट',
-                  span: ''
+                  aspect: 'aspect-[816/1020]'
                 }
               ].map((item, index) => (
                 <div
                   key={index}
-                  className={`group relative overflow-hidden rounded-[2.5rem] border border-border shadow-soft transition-all duration-700 hover:shadow-elevated hover:-translate-y-2 animate-fade-up ${item.span}`}
-                  style={{ animationDelay: `${index * 0.15}s` }}
+                  className={`group relative overflow-hidden rounded-[2.5rem] border border-border shadow-soft transition-all duration-700 hover:shadow-elevated hover:-translate-y-2 animate-fade-up break-inside-avoid`}
+                  style={{ animationDelay: `${(index % 2) * 0.15}s` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                  <div className="w-full h-full min-h-[250px] overflow-hidden">
+                  <div className={`w-full ${item.aspect} relative bg-slate-50/50`}>
                     <img
                       src={item.src}
                       alt={item.label}
-                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
                     />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-8 z-20 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">

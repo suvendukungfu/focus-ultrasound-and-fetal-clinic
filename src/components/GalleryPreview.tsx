@@ -8,29 +8,25 @@ const images = [
     src: '/images/clinic-exterior-new.jpg',
     label: 'Modern Exterior',
     labelHi: 'आधुनिक बाहरी हिस्सा',
-    span: 'lg:col-span-2 lg:row-span-2',
-    height: 'min-h-[400px]',
+    aspect: 'aspect-[1024/576]',
   },
   {
     src: '/images/clinic-waiting-new.jpg',
     label: 'Comfortable Lounge',
     labelHi: 'आरामदायक प्रतीक्षा कक्ष',
-    span: 'lg:col-span-2',
-    height: 'min-h-[200px]',
+    aspect: 'aspect-[765/1020]',
   },
   {
     src: '/images/clinic-entry-new.png',
     label: 'Welcoming Reception',
     labelHi: 'स्वागत क्षेत्र',
-    span: '',
-    height: 'min-h-[200px]',
+    aspect: 'aspect-[512/310]',
   },
   {
     src: '/images/clinic-samsung-v7.jpg',
     label: 'Diagnostic Suite',
     labelHi: 'डायग्नोस्टिक सूट',
-    span: '',
-    height: 'min-h-[200px]',
+    aspect: 'aspect-[816/1020]',
   },
 ];
 
@@ -38,7 +34,7 @@ const GalleryPreview = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="py-24 md:py-32 px-4 bg-medical-soft/30 overflow-hidden">
+    <section className="py-24 md:py-32 px-4 bg-medical-soft/30 overflow-hidden text-slate-900">
       <div className="container-narrow mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -79,26 +75,26 @@ const GalleryPreview = () => {
           </motion.div>
         </div>
 
-        {/* Masonry-style Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {/* Balanced Masonry Grid */}
+        <div className="columns-1 md:columns-2 gap-6 md:gap-8 space-y-6 md:space-y-8">
           {images.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`group relative overflow-hidden rounded-[2.5rem] border border-white/50 shadow-soft hover:shadow-elevated transition-all duration-700 ${item.span} ${item.height}`}
+              transition={{ duration: 0.6, delay: (index % 2) * 0.1 }}
+              className={`group relative overflow-hidden rounded-[2.5rem] border border-white/50 shadow-soft hover:shadow-elevated transition-all duration-700 break-inside-avoid`}
             >
               {/* Sophisticated Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
               
-              {/* Image */}
-              <div className="absolute inset-0 w-full h-full">
+              {/* Image Container with Natural Aspect Ratio */}
+              <div className={`w-full ${item.aspect} bg-slate-50/50 relative`}>
                 <img
                   src={item.src}
                   alt={language === 'en' ? item.label : item.labelHi}
-                  className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
               </div>
 
