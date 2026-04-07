@@ -1,7 +1,6 @@
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import ServicesPreview from '@/components/ServicesPreview';
 import DoctorsSection from '@/components/DoctorsSection';
 import ClinicTimings from '@/components/ClinicTimings';
 import Footer from '@/components/Footer';
@@ -13,7 +12,6 @@ const Index = () => {
         <Header />
         <main>
           <Hero />
-          <ServicesPreview />
           <DoctorsSection />
           <ClinicTimings />
           <section className="relative w-full h-[450px] md:h-[650px] overflow-hidden group">

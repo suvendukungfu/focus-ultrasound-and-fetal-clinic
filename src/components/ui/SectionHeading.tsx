@@ -1,0 +1,67 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+interface SectionHeadingProps {
+  badge: string;
+  title: string;
+  subtitle?: string;
+  centered?: boolean;
+  light?: boolean;
+}
+
+const SectionHeading: React.FC<SectionHeadingProps> = ({ 
+  badge, title, subtitle, centered = true, light = false 
+}) => {
+  return (
+    <div className={`mb-16 md:mb-24 ${centered ? 'text-center' : 'text-left'}`}>
+      <motion.span
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className={`inline-block px-5 py-2 rounded-full border text-xs font-bold uppercase tracking-[0.3em] mb-6 shadow-soft ${
+          light 
+            ? 'bg-primary/5 border-primary/20 text-primary' 
+            : 'bg-primary/10 border-primary/20 text-primary'
+        }`}
+      >
+        {badge}
+      </motion.span>
+      
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-[1.1] ${
+          light ? 'text-foreground' : 'text-foreground'
+        }`}
+      >
+        {title}
+      </motion.h2>
+      
+      {subtitle && (
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className={`font-body text-lg md:text-xl max-w-3xl mb-8 ${centered ? 'mx-auto' : ''} ${
+            light ? 'text-muted-foreground' : 'text-muted-foreground'
+          }`}
+        >
+          {subtitle}
+        </motion.p>
+      )}
+      
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+        className={`w-24 h-1.5 bg-primary/30 rounded-full ${centered ? 'mx-auto' : ''}`}
+      />
+    </div>
+  );
+};
+
+export default SectionHeading;

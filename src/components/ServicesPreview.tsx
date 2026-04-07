@@ -147,19 +147,9 @@ const ServicesPreview = () => {
                   {language === 'en' ? service.name : service.nameHi}
                 </h3>
                 
-                <p className="text-[#9ca3af] font-body text-base leading-relaxed mb-8 flex-grow">
+                <p className="text-[#9ca3af] font-body text-base leading-relaxed flex-grow">
                   {language === 'en' ? service.desc : service.descHi}
                 </p>
-                
-                <Link
-                  to="/services"
-                  className="inline-flex items-center gap-2 text-[#00c8ff] font-bold text-xs uppercase tracking-[0.2em] group/link transition-all"
-                >
-                  {language === 'en' ? 'Learn More' : 'और जानें'}
-                  <div className="w-8 h-8 rounded-full bg-[#00c8ff]/10 flex items-center justify-center transition-all duration-300 group-hover/link:bg-[#00c8ff] group-hover/link:text-[#0b1220]">
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
-                  </div>
-                </Link>
               </div>
             </motion.div>
           ))}

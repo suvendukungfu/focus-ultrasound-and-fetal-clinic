@@ -28,8 +28,8 @@ const Hero = () => {
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
-          src="/images/hero-clinic-bg.jpg"
-          alt="Focus Ultrasound and Fetal Clinic Lounge"
+          src="/images/mother_baby_hero.png"
+          alt="Joyful mother lifting her baby in a sunlit room"
           className="w-full h-full object-cover object-center"
         />
         {/* Soft Sophisticated Gradient */}
