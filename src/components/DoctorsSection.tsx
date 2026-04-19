@@ -11,7 +11,7 @@ const doctors = [
     qualifications: 'MBBS, MD, DNB (Radiodiagnosis) · Postgraduate in Fetal Medicine (University of Barcelona) · Fellow in Fetal Imaging (UK-FMF)',
     email: 'samarsurya777@gmail.com',
     image: '/images/dr-samar-portrait.png',
-    credentials: '/images/dr-samar-credentials.png',
+    credentials: '/images/dr-samar-cert.png',
   },
   {
     name: 'Dr. Rahul Choudhary',
@@ -21,7 +21,7 @@ const doctors = [
     qualifications: 'MBBS, MD (Radio Diagnosis) · Imaging in Fetal Medicine (University of Barcelona)',
     email: 'rahul2choudhary.48@gmail.com',
     image: '/images/dr-rahul-icon.png',
-    credentials: '/images/dr-rahul-credentials.png',
+    credentials: '/images/dr-rahul-cert.png',
   },
 ];
 

@@ -2,7 +2,7 @@ import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CultureSection from '@/components/CultureSection';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useTheme } from '@/hooks/use-theme';
 import { Heart, Users, Sparkles, Shield, Coffee, Award, CheckCircle2, Star, TrendingUp, Calendar, Zap, MessageSquare } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -56,7 +56,7 @@ const CultureContent = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     initial: { opacity: 0 },
     whileInView: {
       opacity: 1,
@@ -64,7 +64,7 @@ const CultureContent = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
