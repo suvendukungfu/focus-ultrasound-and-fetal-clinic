@@ -9,7 +9,7 @@ jest.mock('../../src/modules/appointments/infra/queue/AppointmentQueue', () => (
 
 describe('CreateAppointmentUseCase', () => {
   let useCase: CreateAppointmentUseCase;
-  let mockRepo: any;
+  let mockRepo: Record<string, jest.Mock>;
 
   const mockAppointment = {
     id: 'appt-uuid-1',

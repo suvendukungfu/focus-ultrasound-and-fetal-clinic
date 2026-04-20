@@ -17,16 +17,21 @@ import {
   CheckCircle,
   Clock,
   TrendingUp,
-  WifiOff
+  WifiOff,
+  Star,
+  Activity,
+  CloudUpload
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface AdminAppointment {
   id: string;
   name: string;
   phone: string;
   service?: string;
-  serviceId?: string;
+  message?: string;
   date: string;
   status: string;
 }
@@ -51,11 +56,21 @@ const DEMO_APPOINTMENTS: AdminAppointment[] = [
   { id: '8', name: 'Pooja Tiwari', phone: '+91 21000 12345', service: 'Anomaly Scan', date: '2026-05-11T10:30:00Z', status: 'CANCELLED' },
 ];
 
+interface DashboardStats {
+  totalLeads: number;
+  newLeads: number;
+  totalServices: number;
+  totalReviews: number;
+  pendingReviews: number;
+}
+
 const Dashboard = () => {
   const { token } = useAuth();
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001/api/v1';
+  const { toast } = useToast();
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api/v1';
 
-  const { data: appointments, isError } = useQuery<AdminAppointment[]>({
+  // Fetch Appointments
+  const { data: appointments, refetch: refetchAppointments, isFetching: isFetchingAppts } = useQuery<AdminAppointment[]>({
     queryKey: ['appointments-stats'],
     queryFn: async () => {
       const response = await fetch(`${API_URL}/appointments`, {
@@ -65,21 +80,127 @@ const Dashboard = () => {
       if (!response.ok) throw new Error('Failed to fetch');
       return response.json() as Promise<AdminAppointment[]>;
     },
+    refetchInterval: 30000, // Live refresh every 30s
     retry: 1,
-    retryDelay: 1000,
   });
 
+  // Fetch Analytics
+  const { data: analytics, refetch: refetchAnalytics, isFetching: isFetchingAnalytics } = useQuery<DashboardStats>({
+    queryKey: ['dashboard-analytics'],
+    queryFn: async () => {
+      const response = await fetch(`${API_URL}/analytics/dashboard`, {
+        headers: { Authorization: `Bearer ${token}` },
+        signal: AbortSignal.timeout(4000),
+      });
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json() as Promise<DashboardStats>;
+    },
+    refetchInterval: 30000, // Live refresh every 30s
+    retry: 1,
+  });
+
+  const getLocalAppointments = () => {
+    try {
+      return JSON.parse(localStorage.getItem('local_appointments') || '[]');
+    } catch {
+      return [];
+    }
+  };
+
+  const getLocalLeads = () => {
+    try {
+      return JSON.parse(localStorage.getItem('local_leads') || '[]');
+    } catch {
+      return [];
+    }
+  };
+
   // Use real data if available, otherwise fall back to demo
-  const displayData = appointments && appointments.length > 0 ? appointments : DEMO_APPOINTMENTS;
+  const fallbackAppointments = [...getLocalAppointments(), ...DEMO_APPOINTMENTS];
+  const displayData = appointments && appointments.length > 0 ? appointments : fallbackAppointments;
   const isDemo = !appointments || appointments.length === 0;
+  const isRefreshing = isFetchingAppts || isFetchingAnalytics;
+  const [isSyncing, setIsSyncing] = React.useState(false);
+
+  const [lastUpdated, setLastUpdated] = React.useState(new Date());
+
+  const handleSync = async () => {
+    const localLeads = getLocalLeads();
+    const localAppointments = getLocalAppointments();
+
+    if (localLeads.length === 0 && localAppointments.length === 0) {
+      toast({ title: 'Sync Complete', description: 'No offline data to sync.' });
+      return;
+    }
+
+    setIsSyncing(true);
+    let successCount = 0;
+    try {
+      const ping = await fetch(`${API_URL}/analytics/dashboard`, {
+        headers: { Authorization: `Bearer ${token}` },
+        signal: AbortSignal.timeout(2000),
+      });
+      if (!ping.ok) throw new Error('Backend unreachable');
+
+      for (const lead of localLeads) {
+        await fetch(`${API_URL}/leads`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify(lead),
+        });
+        successCount++;
+      }
+
+      for (const appt of localAppointments) {
+        await fetch(`${API_URL}/appointments`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify(appt),
+        });
+        successCount++;
+      }
+
+      localStorage.removeItem('local_leads');
+      localStorage.removeItem('local_appointments');
+      
+      toast({ title: 'Sync Successful', description: `Synchronized ${successCount} records to cloud.` });
+      refetchAnalytics();
+      refetchAppointments();
+
+    } catch (e) {
+      toast({ 
+        variant: "destructive", 
+        title: 'Sync Failed', 
+        description: 'Could not connect to live backend. Please try again later.' 
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (!isRefreshing) {
+      setLastUpdated(new Date());
+    }
+  }, [isRefreshing]);
 
   const stats = React.useMemo(() => {
     const total = displayData.length;
-    const uniquePatients = new Set(displayData.map((a) => a.phone)).size;
     const confirmed = displayData.filter((a) => a.status === 'CONFIRMED').length;
     const pending = displayData.filter((a) => a.status === 'PENDING').length;
-    return { total, uniquePatients, confirmed, pending };
-  }, [displayData]);
+    
+    // Add local leads if offline
+    const extraLeads = isDemo ? getLocalLeads().length : 0;
+
+    return { 
+      total, 
+      confirmed, 
+      pending,
+      totalLeads: (analytics?.totalLeads || 2) + extraLeads, // 2 is from DEMO_LEADS
+      newLeads: analytics?.newLeads || 0,
+      totalReviews: analytics?.totalReviews || 0
+    };
+  }, [displayData, analytics, isDemo]);
 
   const chartData = [
     { name: 'Mon', appointments: 4 },
@@ -92,23 +213,48 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <header>
-        <h1 className="text-4xl font-display font-bold text-foreground mb-2">Clinic Dashboard</h1>
-        <p className="text-muted-foreground">Overview of your clinic's performance and appointment flow.</p>
-        {isDemo && (
-          <Badge variant="secondary" className="mt-3 gap-2 bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800">
-            <WifiOff className="w-3 h-3" /> Showing demo data — backend is offline
-          </Badge>
-        )}
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <h1 className="text-5xl font-display font-black tracking-tighter text-foreground mb-2">CLINIC CONSOLE</h1>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-primary font-bold uppercase tracking-[0.2em] text-[10px]">
+              <span className={`w-2 h-2 rounded-full bg-primary ${isRefreshing ? 'animate-ping' : ''}`} />
+              {isRefreshing ? 'Syncing Live Data...' : 'System Synchronized'}
+            </div>
+            <span className="text-muted-foreground/40 text-[10px] font-bold uppercase tracking-widest">
+              Last Updated: {lastUpdated.toLocaleTimeString()}
+            </span>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-4">
+           {isDemo && (getLocalLeads().length > 0 || getLocalAppointments().length > 0) && (
+             <Button onClick={handleSync} disabled={isSyncing} className="btn-primary rounded-full px-6 shadow-glow">
+               <CloudUpload className={`w-4 h-4 mr-2 ${isSyncing ? 'animate-pulse' : ''}`} />
+               {isSyncing ? 'Syncing...' : 'Sync Offline Data'}
+             </Button>
+           )}
+           <div className={`bg-card/50 backdrop-blur-sm border border-border p-4 rounded-3xl flex items-center gap-4 transition-all duration-500 ${isDemo ? 'border-amber-500/20 shadow-lg shadow-amber-500/5' : 'border-emerald-500/20 shadow-lg shadow-emerald-500/5'}`}>
+             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors duration-500 ${isDemo ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
+                {isDemo ? <WifiOff className="w-6 h-6" /> : <Activity className="w-6 h-6" />}
+             </div>
+             <div>
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground leading-none mb-1">Network Mode</p>
+               <p className={`text-sm font-bold uppercase tracking-tight ${isDemo ? 'text-amber-600' : 'text-emerald-600'}`}>
+                 {isDemo ? 'Resilient Cache' : 'Cloud Sync Active'}
+               </p>
+             </div>
+           </div>
+        </div>
       </header>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Total Appointments" value={stats.total} icon={Calendar} trend="+12%" color="bg-blue-500" />
-        <StatCard title="Unique Patients" value={stats.uniquePatients} icon={Users} trend="+5%" color="bg-purple-500" />
-        <StatCard title="Confirmed" value={stats.confirmed} icon={CheckCircle} trend="+18%" color="bg-green-500" />
-        <StatCard title="Pending Review" value={stats.pending} icon={Clock} trend="-2%" color="bg-amber-500" />
+        <StatCard title="Patient Visits" value={stats.total} icon={Calendar} trend="+12%" color="bg-blue-600" />
+        <StatCard title="Web Inquiries" value={stats.totalLeads} icon={Users} trend="+5%" color="bg-indigo-600" />
+        <StatCard title="Total Reviews" value={stats.totalReviews} icon={Star} trend="+8%" color="bg-amber-500" />
+        <StatCard title="Confirmed Cases" value={stats.confirmed} icon={CheckCircle} trend="+18%" color="bg-emerald-600" />
       </div>
 
       {/* Charts */}
@@ -183,11 +329,11 @@ const Dashboard = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm truncate">{appt.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{appt.service || appt.serviceId || 'General'}</p>
+                  <p className="text-xs text-muted-foreground truncate">{appt.service || 'General'}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-xs font-bold">{new Date(appt.date).toLocaleDateString()}</p>
-                  <p className="text-[10px] text-muted-foreground">{appt.status}</p>
+                  <p className="text-[10px] text-muted-foreground uppercase">{appt.status}</p>
                 </div>
               </div>
             ))}

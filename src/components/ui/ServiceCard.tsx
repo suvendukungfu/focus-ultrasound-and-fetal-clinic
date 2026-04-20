@@ -8,29 +8,25 @@ import { useWhatsApp } from '@/contexts/WhatsAppContext';
 interface ServiceCardProps {
   icon: LucideIcon;
   name: string;
-  nameHi: string;
   desc: string;
-  descHi: string;
   image: string;
   index: number;
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ 
-  icon: Icon, name, nameHi, desc, descHi, image, index 
+  icon: Icon, name, desc, image, index 
 }) => {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   const { theme } = useTheme();
   const { setService, buildUrl } = useWhatsApp();
 
   const handleBookClick = (e: React.MouseEvent) => {
-    // Set the service in context first so buildUrl picks it up
+    // Optional: context update if needed for other components
     setService(name);
   };
 
-  // Build a one-off URL for this specific service regardless of global state
-  const directUrl = `https://wa.me/918287655133?text=${encodeURIComponent(
-    `Hello, I want to book ${/^[aeiou]/i.test(name) ? 'an' : 'a'} ${name} appointment.`
-  )}`;
+  // Build a one-off URL for this specific service using the centralized context logic
+  const directUrl = buildUrl({ service: name });
 
   return (
     <motion.div
@@ -42,14 +38,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       className="group relative flex flex-col h-full rounded-[2rem] border overflow-hidden transition-all duration-700 bg-card border-border shadow-soft hover:border-primary/30 hover:shadow-elevated"
     >
       {/* Image Section with Consistency and Zoom */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-secondary/10 flex items-center justify-center">
         <img loading="lazy"
           src={image}
           alt={name}
-          className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all [transition-duration:1300ms] ease-out"
+          className="w-full h-full object-cover transition-all [transition-duration:1300ms] ease-out group-hover:scale-105"
         />
         {/* Modern Layered Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-75" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-75" />
         
         {/* Floating Icon Container */}
         <div className="absolute top-8 left-8 w-14 h-14 rounded-[1rem] flex items-center justify-center border transition-all duration-700 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground bg-background/80 backdrop-blur-xl border-border text-primary shadow-soft hover:border-primary">
@@ -63,11 +59,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-[60px] pointer-events-none group-hover:bg-primary/10 transition-colors" />
 
         <h2 className="font-display text-2xl md:text-3xl font-bold mb-5 tracking-tight group-hover:text-primary transition-colors leading-tight">
-          {language === 'en' ? name : nameHi}
+          {name}
         </h2>
         
         <p className="font-body text-base leading-relaxed transition-colors duration-500 text-muted-foreground mb-6">
-          {language === 'en' ? desc : descHi}
+          {desc}
         </p>
 
         {/* Book via WhatsApp CTA */}
@@ -83,7 +79,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
                        transition-all duration-300 group/btn"
           >
             <MessageCircle className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
-            {language === 'en' ? 'Book via WhatsApp' : 'WhatsApp पर बुक करें'}
+            {t('services.bookWhatsapp')}
           </a>
         </div>
       </div>

@@ -33,8 +33,9 @@ interface AdminAppointment {
   id: string;
   name: string;
   phone: string;
-  service?: string;
-  serviceId?: string;
+  service?: { name: string } | string;
+  notes?: string;
+  message?: string; // for backward compatibility if any
   date: string;
   status: string;
 }
@@ -55,7 +56,7 @@ const Appointments = () => {
   const { token } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001/api/v1';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api/v1';
 
   // Local state for demo mode status updates
   const [localOverrides, setLocalOverrides] = useState<Record<string, string>>({});
@@ -74,7 +75,18 @@ const Appointments = () => {
     retryDelay: 1000,
   });
 
-  const displayData = (appointments && appointments.length > 0 ? appointments : DEMO_APPOINTMENTS).map(
+  const getLocalAppointments = () => {
+    try {
+      return JSON.parse(localStorage.getItem('local_appointments') || '[]');
+    } catch {
+      return [];
+    }
+  };
+
+  const localAppointments = getLocalAppointments();
+  const fallbackAppointments = [...localAppointments, ...DEMO_APPOINTMENTS];
+
+  const displayData = (appointments && appointments.length > 0 ? appointments : fallbackAppointments).map(
     appt => ({ ...appt, status: localOverrides[appt.id] || appt.status })
   );
   const isDemo = !appointments || appointments.length === 0;
@@ -99,6 +111,14 @@ const Appointments = () => {
       } catch { /* fall through */ }
     }
 
+    try {
+      const storedAppts = JSON.parse(localStorage.getItem('local_appointments') || '[]');
+      const updated = storedAppts.map((l: AdminAppointment) => l.id === id ? { ...l, status } : l);
+      localStorage.setItem('local_appointments', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Failed to update local storage', e);
+    }
+
     // Local/demo mode update
     setLocalOverrides(prev => ({ ...prev, [id]: status }));
     toast({ title: "Status Updated", description: `Appointment marked as ${status.toLowerCase()}.` });
@@ -115,7 +135,7 @@ const Appointments = () => {
       appt.id,
       `"${appt.name}"`,
       `"${appt.phone}"`,
-      `"${appt.service || appt.serviceId || 'General'}"`,
+      `"${appt.service || 'General'}"`,
       `"${new Date(appt.date).toISOString()}"`,
       appt.status
     ]);
@@ -188,7 +208,7 @@ const Appointments = () => {
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-100 px-2 py-0.5 rounded-lg text-xs font-medium">
-                      {appt.service || appt.serviceId || 'General'}
+                      {typeof appt.service === 'object' ? appt.service.name : (appt.service || 'General')}
                     </Badge>
                   </TableCell>
                   <TableCell>

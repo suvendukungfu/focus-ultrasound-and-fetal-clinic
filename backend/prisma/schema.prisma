@@ -3,39 +3,21 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-enum Role {
-  SUPER_ADMIN
-  ADMIN
-  EDITOR
-  STAFF
-  VIEWER
-}
-
-enum LeadStatus {
-  NEW
-  CONTACTED
-  BOOKED
-  COMPLETED
-  CLOSED
-}
-
-enum AppointmentStatus {
-  PENDING
-  CONFIRMED
-  COMPLETED
-  CANCELLED
-}
+// Enums converted to Strings for SQLite compatibility
+// Role: SUPER_ADMIN, ADMIN, EDITOR, STAFF, VIEWER
+// LeadStatus: NEW, CONTACTED, BOOKED, COMPLETED, CLOSED
+// AppointmentStatus: PENDING, CONFIRMED, COMPLETED, CANCELLED
 
 model User {
   id       String @id @default(uuid())
   email    String @unique
   name     String
   password String
-  role     Role   @default(VIEWER)
+  role     String @default("VIEWER")
 
   // Enterprise fields
   isActive  Boolean   @default(true)
@@ -72,16 +54,16 @@ model Lead {
   phone         String
   message       String?
   source        String     @default("website")
-  status        LeadStatus @default(NEW)
+  status        String     @default("NEW")
   priorityScore Int        @default(0) // AI or heuristic score
-  adminNotes    String?    @db.Text
+  adminNotes    String?    
   followUpDate  DateTime?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  @@index([status, priorityScore(sort: Desc)])
+  @@index([status, priorityScore])
   @@map("leads")
 }
 
@@ -106,7 +88,7 @@ model Service {
   id          String   @id @default(uuid())
   name        String
   description String?
-  price       Decimal?
+  price       Float?
   durationMin Int      @default(30)
   isActive    Boolean  @default(true)
 
@@ -120,24 +102,20 @@ model Service {
 }
 
 model Appointment {
-  id     String            @id @default(uuid())
-  date   DateTime
-  status AppointmentStatus @default(PENDING)
-  notes  String?
-
-  name   String
-  phone  String
-  email  String?
-
-  doctorId String?
-  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  email     String?
+  date      DateTime
+  notes     String?
+  createdAt DateTime @default(now())
+  status    String   @default("pending")
 
   serviceId String?
   service   Service? @relation(fields: [serviceId], references: [id])
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  doctorId String?
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
 
   @@map("appointments")
 }
@@ -146,11 +124,11 @@ model BlogPost {
   id              String    @id @default(uuid())
   title           String
   slug            String    @unique
-  content         String    @db.Text
+  content         String    
   excerpt         String?
   metaTitle       String?
   metaDescription String?
-  keywords        String[]
+  keywords        String?   // SQLite doesn't support arrays, use comma-separated string
   isPublished     Boolean   @default(false)
   publishedAt     DateTime?
   authorId        String?
@@ -169,7 +147,7 @@ model Review {
   id         String  @id @default(uuid())
   name       String
   rating     Int
-  comment    String? @db.Text
+  comment    String? 
   isApproved Boolean @default(false)
   source     String  @default("manual") // "manual" | "google"
   externalId String? @unique // Google Places review ID for deduplication
@@ -178,7 +156,7 @@ model Review {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  @@index([isApproved, rating(sort: Desc)])
+  @@index([isApproved, rating])
   @@map("reviews")
 }
 
@@ -189,8 +167,8 @@ model AuditLog {
   action     String // e.g., "LEAD_STATUS_UPDATED"
   entityId   String? // Target row ID
   entityType String? // e.g., "Lead"
-  oldData    Json?
-  newData    Json?
+  oldData    String? // JSON stored as string
+  newData    String? // JSON stored as string
   ipAddress  String? @map("ip")
 
   createdAt DateTime @default(now())
@@ -203,9 +181,9 @@ model AuditLog {
 model EventLog {
   id          String    @id @default(uuid())
   eventName   String
-  payload     Json
+  payload     String    // JSON stored as string
   processed   Boolean   @default(false)
-  error       String?   @db.Text
+  error       String?   
   createdAt   DateTime  @default(now())
   processedAt DateTime?
 
@@ -234,7 +212,7 @@ model SystemMetric {
   unit       String? // e.g. "ms", "mb", "%"
   recordedAt DateTime @default(now())
 
-  @@index([metricName, recordedAt(sort: Desc)])
+  @@index([metricName, recordedAt])
   @@map("system_metrics")
 }
 
@@ -295,7 +273,7 @@ model ServiceStatus {
 model KernelEvent {
   id        String   @id @default(uuid())
   eventType String // "plugin.loaded", "service.crashed"
-  payload   Json?
+  payload   String?  // JSON stored as string
   region    String   @default("GLOBAL")
   createdAt DateTime @default(now())
 
@@ -308,10 +286,10 @@ model RegionMetric {
   region        String
   activeNodes   Int
   queuePressure Float
-  totalRequests BigInt   @default(0)
+  totalRequests Int      @default(0) // BigInt to Int for SQLite
   recordedAt    DateTime @default(now())
 
-  @@index([region, recordedAt(sort: Desc)])
+  @@index([region, recordedAt])
   @@map("region_metrics")
 }
 
@@ -328,3 +306,4 @@ model AIProviderStats {
   @@index([providerName, region])
   @@map("ai_provider_stats")
 }
+

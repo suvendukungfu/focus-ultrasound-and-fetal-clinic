@@ -10,10 +10,9 @@ export class RecoveryEngine {
     const startTime = Date.now();
     Logger.info(`[Recovery] Executing action: scaleWorkers`);
     
-    // In a real K8s environment, this might call the K8s API or auto-scaler.
-    // For BullMQ locally, we can increase worker concurrency dynamically if supported,
-    // or resume queued tasks.
-    worker.concurrency = 50; // Massively increase local concurrency 
+    if (worker) {
+      worker.concurrency = 50; // Massively increase local concurrency 
+    }
     
     await prisma.recoveryLog.create({
       data: {
@@ -30,7 +29,9 @@ export class RecoveryEngine {
   async flushStaleCache() {
     Logger.info(`[Recovery] Executing action: flushRedis`);
     // Clear potentially corrupted lock keys
-    await redisClient.flushall();
+    if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
+      await redisClient.flushall();
+    }
     
     await prisma.recoveryLog.create({
       data: {
@@ -45,7 +46,9 @@ export class RecoveryEngine {
 
   async pauseNonCriticalQueues() {
     Logger.warn(`[Recovery] Executing action: pauseNonCriticalQueues. Halting LeadQueue!`);
-    await queueLeadProcessing.pause();
+    if (queueLeadProcessing) {
+      await queueLeadProcessing.pause();
+    }
 
     await prisma.recoveryLog.create({
       data: {

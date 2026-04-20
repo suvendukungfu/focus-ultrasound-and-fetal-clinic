@@ -3,11 +3,12 @@ import { app } from './shared/infra/http/app';
 import { Logger } from './core/Logger';
 import { prisma } from './shared/infra/database/prismaClient';
 import { selfHealingService } from './modules/selfHealing/services/SelfHealingService';
+import { IKernelService } from './kernel/ServiceRegistry';
 
 import cluster from 'cluster';
 import os from 'os';
 
-const PORT = process.env.PORT || 4000;
+const PORT = Number(process.env.PORT || 4000);
 const numCPUs = os.cpus().length;
 
 async function bootstrap() {
@@ -26,92 +27,117 @@ async function bootstrap() {
     }
   }
 
-  try {
-    app.listen(PORT, () => {
-      Logger.info(`🚀 Server worker ${process.pid} running on port ${PORT}`);
-    });
-  } catch (error) {
-    Logger.error(`❌ Failed to start server worker ${process.pid}`);
-    process.exit(1);
-  }
+  const tryListen = (port: number) => {
+    try {
+      // Explicitly bind to localhost to avoid EPERM on restricted environments
+      const server = app.listen(port, 'localhost', () => {
+        const addr = server.address();
+        const actualPort = typeof addr === 'string' ? addr : addr?.port;
+        Logger.info(`🚀 Server worker ${process.pid} running on port ${actualPort}`);
+        Logger.info(`   Env: ${process.env.NODE_ENV}, Port Requested: ${port}`);
+      });
+
+      server.on('error', (err: Error & { code?: string }) => {
+        if (err.code === 'EPERM' || err.code === 'EADDRINUSE' || err.code === 'EACCES') {
+          Logger.warn(`⚠️ Port ${port} unavailable (${err.code}). Trying fallback...`);
+          if (port === 4000) tryListen(5174);
+          else if (port === 5174) tryListen(5175);
+          else if (port === 5175) tryListen(5176);
+          else if (port === 5176) tryListen(5177);
+          else if (port === 5177) tryListen(5178);
+          else if (port === 5178) tryListen(5179);
+          else if (port !== 0) tryListen(0);
+          else {
+            Logger.error('❌ All port binding attempts failed. Environment might be too restricted.');
+          }
+        } else {
+          Logger.error(`❌ Server error on port ${port}: ${err.message}`);
+        }
+      });
+    } catch (err: unknown) {
+      const error = err as Error;
+      Logger.error(`❌ Critical failure starting on port ${port}: ${error.message}`);
+    }
+  };
+
+  tryListen(PORT);
+}
+
+async function registerPlugins(Kernel: { registry: { register: (service: IKernelService) => void } }) {
+  // Wrap existing SelfHealing in a Micro-Service Plugin Wrapper
+  Kernel.registry.register({
+    name: 'SelfHealingService',
+    init: async () => {},
+    start: async () => { selfHealingService.startAllMonitors(); },
+    stop: async () => {},
+    health: async () => ({ status: 'ONLINE' as const })
+  });
+
+  // Dynamic imports for all enterprise plugins
+  const { aiOrchestrator } = await import('./modules/ai/orchestrator/AIOrchestrator');
+  Kernel.registry.register(aiOrchestrator);
+
+  const { leadScoringService } = await import('./modules/ai/services/LeadScoringService');
+  Kernel.registry.register(leadScoringService);
+
+  const { blogDraftService } = await import('./modules/ai/services/BlogDraftService');
+  Kernel.registry.register(blogDraftService);
+
+  const { metaDescriptionService } = await import('./modules/ai/services/MetaDescriptionService');
+  Kernel.registry.register(metaDescriptionService);
+
+  const { keywordSuggestionService } = await import('./modules/ai/services/KeywordSuggestionService');
+  Kernel.registry.register(keywordSuggestionService);
+
+  const { leadReplyService } = await import('./modules/ai/services/LeadReplyService');
+  Kernel.registry.register(leadReplyService);
+
+  const { reviewsCronService } = await import('./modules/reviews/services/ReviewsCronService');
+  Kernel.registry.register(reviewsCronService);
+
+  const { appointmentAutomationService } = await import('./modules/appointments/services/AppointmentAutomationService');
+  Kernel.registry.register(appointmentAutomationService);
 }
 
 // Enterprise Scale: Unlimited concurrent users using Cluster module
-if (cluster.isPrimary) {
+if (cluster.isPrimary && process.env.NODE_ENV !== 'development') {
   Logger.info(`👑 Primary cluster setting up ${numCPUs} workers...`);
 
-  // Boot the new Distributed Micro-Kernel
-  import('./kernel/Kernel').then(({ Kernel }) => {
+  import('./kernel/Kernel').then(async ({ Kernel }) => {
+    await registerPlugins(Kernel);
     
-    // Wrap existing SelfHealing in a Micro-Service Plugin Wrapper
-    Kernel.registry.register({
-      name: 'SelfHealingService',
-      init: async () => {},
-      start: async () => { selfHealingService.startAllMonitors(); },
-      stop: async () => {},
-      health: async () => ({ status: 'ONLINE' as const })
-    });
-
-    // Register Distributed AI Orchestrator
-    import('./modules/ai/orchestrator/AIOrchestrator').then(({ aiOrchestrator }) => {
-      Kernel.registry.register(aiOrchestrator);
-      
-      // Register AI Lead Scoring Service
-      import('./modules/ai/services/LeadScoringService').then(({ leadScoringService }) => {
-        Kernel.registry.register(leadScoringService);
-
-        // Register AI Blog Draft Generator
-        import('./modules/ai/services/BlogDraftService').then(({ blogDraftService }) => {
-          Kernel.registry.register(blogDraftService);
-
-          // Register AI Meta Description Writer
-          import('./modules/ai/services/MetaDescriptionService').then(({ metaDescriptionService }) => {
-            Kernel.registry.register(metaDescriptionService);
-
-            // Register AI Keyword Suggestion Engine
-            import('./modules/ai/services/KeywordSuggestionService').then(({ keywordSuggestionService }) => {
-              Kernel.registry.register(keywordSuggestionService);
-
-              // Register AI Lead Reply Engine
-              import('./modules/ai/services/LeadReplyService').then(({ leadReplyService }) => {
-                Kernel.registry.register(leadReplyService);
-
-                // Register Reviews Cron Service (BullMQ scheduler + worker)
-                import('./modules/reviews/services/ReviewsCronService').then(({ reviewsCronService }) => {
-                  Kernel.registry.register(reviewsCronService);
-
-                  // Register Appointment Automation Service (Confirmations + Reminders)
-                  import('./modules/appointments/services/AppointmentAutomationService').then(({ appointmentAutomationService }) => {
-                    Kernel.registry.register(appointmentAutomationService);
-
-                    Kernel.boot().then(() => {
-                      Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
-                      for (let i = 0; i < numCPUs; i++) {
-                        cluster.fork();
-                      }
-                    }).catch(err => {
-                      Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
-                      process.exit(1);
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
+    Kernel.boot().then(() => {
+      Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
+      for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+      }
+    }).catch(err => {
+      Logger.error(`[Cluster] Critical Kernel failure: ${err}`);
+      // In production primary, we might still want to fork workers if the kernel failure is non-fatal
+      for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+      }
     });
   });
 
-  cluster.on('online', (worker) => {
-    Logger.info(`👷 Worker ${worker.process.pid} is online`);
-  });
-
-  cluster.on('exit', (worker, code, signal) => {
-    Logger.warn(`⚠️ Worker ${worker.process.pid} died with code: ${code}, and signal: ${signal}`);
+  cluster.on('exit', (worker) => {
     Logger.info('🔄 Restarting worker...');
     cluster.fork();
   });
 } else {
+  // In development, or in a worker process, run the API immediately
   bootstrap();
+  
+  // Also try to boot kernel in dev without blocking the API
+  if (process.env.NODE_ENV === 'development') {
+    /* 
+    import('./kernel/Kernel').then(async ({ Kernel }) => {
+      await registerPlugins(Kernel);
+      Kernel.boot().catch(err => {
+        Logger.warn(`[Kernel] Background services failed: ${err.message}. API remains active.`);
+      });
+    });
+    */
+    Logger.info('ℹ️ Background services (Kernel) disabled in development to prevent Redis EPERM errors.');
+  }
 }

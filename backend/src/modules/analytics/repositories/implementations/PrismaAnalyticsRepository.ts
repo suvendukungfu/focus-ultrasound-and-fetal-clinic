@@ -1,4 +1,3 @@
-import { LeadStatus } from '@prisma/client';
 import { IAnalyticsRepository, IDashboardStats } from '../IAnalyticsRepository';
 import { prisma } from '../../../../shared/infra/database/prismaClient';
 
@@ -6,7 +5,7 @@ export class PrismaAnalyticsRepository implements IAnalyticsRepository {
   async getDashboardStats(): Promise<IDashboardStats> {
     const totalLeads = await prisma.lead.count();
     const newLeads = await prisma.lead.count({
-      where: { status: LeadStatus.NEW },
+      where: { status: "NEW" },
     });
     const totalServices = await prisma.service.count();
     const totalReviews = await prisma.review.count();

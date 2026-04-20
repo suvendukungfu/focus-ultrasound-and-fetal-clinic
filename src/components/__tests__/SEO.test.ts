@@ -71,11 +71,12 @@ describe('SEO Structured Data', () => {
     });
 
     it('should contain Question entities', () => {
-      faqSchema.mainEntity.forEach((entity: any) => {
+      faqSchema.mainEntity.forEach((entity) => {
         expect(entity['@type']).toBe('Question');
         expect(entity).toHaveProperty('name');
         expect(entity).toHaveProperty('acceptedAnswer');
-        expect(entity.acceptedAnswer['@type']).toBe('Answer');
+        const acceptedAnswer = entity.acceptedAnswer as { '@type': string };
+        expect(acceptedAnswer['@type']).toBe('Answer');
       });
     });
 

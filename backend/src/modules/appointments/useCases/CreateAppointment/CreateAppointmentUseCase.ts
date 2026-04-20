@@ -11,9 +11,12 @@ export class CreateAppointmentUseCase {
 
     // 1. Send Immediate Confirmation via BullMQ
     if (appointmentQueue) {
+      // Normalize phone for WhatsApp (no +, only numbers)
+      const normalizedPhone = appointment.phone.replace(/[^0-9]/g, '');
+      
       await appointmentQueue.add('send-confirmation', {
         type: 'confirmation',
-        phone: appointment.phone,
+        phone: normalizedPhone,
         name: appointment.name,
         date: appointment.date,
       });
@@ -26,7 +29,7 @@ export class CreateAppointmentUseCase {
       if (delay > 0) {
         await appointmentQueue.add('send-reminder', {
           type: 'reminder',
-          phone: appointment.phone,
+          phone: normalizedPhone,
           name: appointment.name,
           date: appointment.date,
         }, { delay });

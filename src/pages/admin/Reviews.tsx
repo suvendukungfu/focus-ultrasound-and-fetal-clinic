@@ -39,7 +39,7 @@ const AdminReviews = () => {
   const { token } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001/api/v1';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api/v1';
 
   // Local state for demo mode
   const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set());
@@ -103,17 +103,51 @@ const AdminReviews = () => {
     toast({ title: "Review Approved", description: "The review is now marked as approved." });
   };
 
+  const handleSyncGoogle = async () => {
+    try {
+      const response = await fetch(`${API_URL}/integrations/google/reviews`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        queryClient.invalidateQueries({ queryKey: ['admin-reviews'] });
+        toast({ 
+          title: "Sync Complete", 
+          description: `Successfully synced ${data.data?.reviews?.length || 0} reviews from Google.` 
+        });
+      } else {
+        throw new Error(data.error || 'Sync failed');
+      }
+    } catch (err) {
+      toast({ 
+        title: "Sync Failed", 
+        description: err instanceof Error ? err.message : "Could not reach Google API.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
-      <header>
-        <h1 className="text-4xl font-display font-bold text-foreground mb-2">Patient Reviews</h1>
-        <p className="text-muted-foreground">Manage testimonials and feedback from Google and internal sources.</p>
-        {isDemo && (
-          <Badge variant="secondary" className="mt-2 gap-2 bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800">
-            <WifiOff className="w-3 h-3" /> Demo data — changes are local only
-          </Badge>
-        )}
-      </header>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-display font-bold text-foreground mb-2">Patient Reviews</h1>
+          <p className="text-muted-foreground">Manage testimonials and feedback from Google and internal sources.</p>
+          {isDemo && (
+            <Badge variant="secondary" className="mt-2 gap-2 bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800">
+              <WifiOff className="w-3 h-3" /> Demo data — changes are local only
+            </Badge>
+          )}
+        </div>
+        <Button 
+          onClick={handleSyncGoogle}
+          variant="outline" 
+          className="rounded-xl gap-2 border-primary/20 hover:bg-primary/5"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Sync with Google
+        </Button>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {displayData.map((review) => (

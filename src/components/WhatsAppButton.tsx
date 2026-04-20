@@ -18,7 +18,7 @@ export const WhatsAppButton = () => {
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 bg-green-500 text-white rounded-full shadow-glow-green md:bottom-8 md:right-8 group"
       aria-label="Book via WhatsApp"
     >
-      <div className="absolute right-full mr-3 px-4 py-2 bg-white text-slate-900 rounded-xl shadow-elevated opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap font-display font-semibold text-sm border border-slate-100">
+      <div className="absolute right-full mr-3 px-4 py-2 bg-card text-foreground rounded-xl shadow-elevated opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap font-display font-semibold text-sm border border-border">
         {language === 'en' ? 'Book via WhatsApp' : 'व्हाट्सएप से बुक करें'}
       </div>
       <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">

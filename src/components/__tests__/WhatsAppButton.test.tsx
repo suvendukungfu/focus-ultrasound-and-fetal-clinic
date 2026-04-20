@@ -6,7 +6,7 @@ import { WhatsAppButton } from '@/components/WhatsAppButton';
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    a: ({ children, className, href, ...props }: any) => (
+    a: ({ children, className, href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
       <a className={className} href={href} aria-label={props['aria-label']} target={props.target} rel={props.rel}>
         {children}
       </a>

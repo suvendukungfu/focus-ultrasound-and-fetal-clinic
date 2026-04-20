@@ -36,6 +36,22 @@ interface SEOProps {
     }
     canonicalTag.setAttribute('href', canonicalUrl);
 
+    // Hreflang tags for en/hi
+    const hreflangs = [
+      { lang: 'en', href: canonicalUrl },
+      { lang: 'hi', href: canonicalUrl },
+      { lang: 'x-default', href: canonicalUrl },
+    ];
+    // Remove old hreflang tags
+    document.querySelectorAll('link[hreflang]').forEach(el => el.remove());
+    hreflangs.forEach(({ lang, href }) => {
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'alternate');
+      link.setAttribute('hreflang', lang);
+      link.setAttribute('href', href);
+      document.head.appendChild(link);
+    });
+
     // Update Meta Tags
     const updateMetaTag = (name: string, property: string, content: string) => {
       let tag = name 
@@ -152,14 +168,14 @@ interface SEOProps {
       const faqSchema = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": faqData.map(faq => ({
+        "mainEntity": Array.isArray(faqData) ? faqData.map(faq => ({
           "@type": "Question",
           "name": faq.question,
           "acceptedAnswer": {
             "@type": "Answer",
             "text": faq.answer
           }
-        }))
+        })) : []
       };
       
       const faqScript = document.createElement('script');

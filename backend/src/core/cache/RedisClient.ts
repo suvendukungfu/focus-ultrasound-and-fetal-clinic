@@ -5,6 +5,19 @@ class RedisCache {
   private client: Redis;
 
   constructor() {
+    if (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL) {
+      Logger.warn('[RedisCache] Skipping Redis connection in development (no REDIS_URL)');
+      this.client = {
+        on: () => {},
+        get: async () => null,
+        set: async () => 'OK',
+        del: async () => 0,
+        flushall: async () => 'OK',
+        status: 'end'
+      } as unknown as Redis;
+      return;
+    }
+
     this.client = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
       maxRetriesPerRequest: 3,
       retryStrategy(times) {

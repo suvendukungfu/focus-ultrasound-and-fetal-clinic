@@ -1,10 +1,11 @@
-const BackgroundPattern = () => {
+const BackgroundPattern = ({ opacity = 0.02 }: { opacity?: number }) => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Subtle grid pattern */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0"
         style={{
+          opacity,
           backgroundImage: `
             linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
             linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)

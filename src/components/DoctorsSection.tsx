@@ -1,107 +1,132 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Award, Mail, GraduationCap } from 'lucide-react';
+import { Award, Mail, GraduationCap, MapPin, Phone, CheckCircle2 } from 'lucide-react';
 import BackgroundPattern from './BackgroundPattern';
 import { motion } from 'framer-motion';
 
 const doctors = [
   {
-    name: 'Dr. Samar Surya Nirwal',
-    nameHi: 'डॉ. समर सूर्य निर्वल',
-    specialization: 'Consultant Radiologist & Fetal Medicine',
-    specializationHi: 'सलाहकार रेडियोलॉजिस्ट एवं फीटल मेडिसिन',
-    qualifications: 'MBBS, MD, DNB (Radiodiagnosis) · Postgraduate in Fetal Medicine (University of Barcelona) · Fellow in Fetal Imaging (UK-FMF)',
+    id: 'drSamar',
     email: 'samarsurya777@gmail.com',
     image: '/images/dr-samar-portrait.webp',
   },
   {
-    name: 'Dr. Rahul Choudhary',
-    nameHi: 'डॉ. राहुल चौधरी',
-    specialization: 'Consultant Radiologist & Fetal Medicine',
-    specializationHi: 'सलाहकार रेडियोलॉजिस्ट एवं फीटल मेडिसिन',
-    qualifications: 'MBBS, MD (Radio Diagnosis) · Imaging in Fetal Medicine (University of Barcelona)',
+    id: 'drRahul',
     email: 'rahul2choudhary.48@gmail.com',
-    image: '/images/dr-rahul-icon.webp',
+    image: '/images/dr-rahul-photo.webp',
   },
 ];
 
 const DoctorsSection = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
-    <section className="relative section-padding bg-medical-soft/20" id="doctors">
-      <BackgroundPattern />
-      <div className="relative z-10 container-narrow mx-auto px-4">
+    <section className="relative py-24 md:py-32 overflow-hidden bg-background" id="doctors">
+      {/* Premium Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+        <div className="absolute -top-[10%] -right-[5%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[5%] -left-[5%] w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px]" />
+      </div>
+      
+      <BackgroundPattern opacity={0.3} />
+      
+      <div className="relative z-10 container-narrow mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-16 md:mb-24">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-medical-teal/10 border border-medical-teal/20 text-medical-teal text-sm font-body font-semibold tracking-wide uppercase mb-4 shadow-sm">
-            Expert Team
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
-            {t('doctors.title')}
-          </h2>
-          <p className="text-slate-600 font-body text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            {t('doctors.subtitle')}
-          </p>
+        <div className="text-center mb-20 md:mb-28">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center"
+          >
+            <span className="px-5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm">
+              {t<string>('doctors.badge')}
+            </span>
+            <h2 className="font-display text-3xl md:text-6xl font-bold text-foreground mb-6 leading-tight tracking-tight">
+              {t<string>('doctors.title')}
+            </h2>
+            <div className="w-20 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full mb-8" />
+            <p className="text-muted-foreground font-body text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              {t<string>('doctors.subtitle')}
+            </p>
+          </motion.div>
         </div>
 
-        {/* Doctors Alternating Layout */}
-        <div className="flex flex-col gap-12 md:gap-20 max-w-6xl mx-auto">
+        {/* Doctors Layout */}
+        <div className="space-y-16 md:space-y-24 max-w-6xl mx-auto">
           {doctors.map((doctor, index) => {
             const isEven = index % 2 === 0;
             return (
               <motion.div
-                key={doctor.name}
-                initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                key={doctor.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className={`glass-effect relative overflow-hidden rounded-[2rem] shadow-xl p-8 md:p-12 border border-white/60 flex flex-col ${
-                  isEven ? 'md:flex-row' : 'md:flex-row-reverse'
-                } items-center gap-8 md:gap-16 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl bg-white/60 backdrop-blur-xl group`}
+                className={`group relative`}
               >
-                {/* Soft ambient background blob */}
-                <div className={`absolute top-0 ${isEven ? 'right-0' : 'left-0'} w-64 h-64 bg-gradient-to-br from-medical-teal/10 to-medical-blue/10 blur-[80px] rounded-full pointer-events-none`} />
+                {/* Decorative glow behind card */}
+                <div className={`absolute -inset-4 bg-gradient-to-br from-primary/10 to-secondary/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10`} />
+                
+                <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20 bg-card/40 backdrop-blur-sm border border-border/50 p-8 md:p-12 rounded-[2.5rem] shadow-soft hover:shadow-elevated transition-all duration-500`}>
+                  
+                  {/* Portrait Container */}
+                  <div className="w-full lg:w-1/3 flex justify-center">
+                    <div className="relative">
+                      {/* Photo Frame */}
+                      <div className="relative w-64 h-80 md:w-80 md:h-[26rem] rounded-[2rem] overflow-hidden border-8 border-card shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] group-hover:-rotate-1">
+                        <img
+                          src={doctor.image}
+                          alt={t<string>(`doctors.${doctor.id}.name`)}
+                          className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
+                      </div>
 
-                {/* Portrait Column */}
-                <div className="w-full md:w-2/5 flex justify-center relative z-10">
-                  <div className="relative w-56 h-64 md:w-72 md:h-80 rounded-[2rem] overflow-hidden border border-white shadow-elevated bg-white p-2 transition-transform duration-700 group-hover:rotate-2">
-                    <div className="w-full h-full rounded-[1.5rem] overflow-hidden bg-slate-100">
-                      <img
-                        src={doctor.image}
-                        alt={language === 'en' ? doctor.name : doctor.nameHi}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    {/* Specialist Badge */}
-                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full bg-medical-teal text-white text-xs font-display font-bold shadow-glow flex items-center gap-2 whitespace-nowrap z-20">
-                      <Award className="w-4 h-4" />
-                      Specialist
+                      {/* Floating Badge */}
+                      <motion.div 
+                        whileHover={{ scale: 1.1, rotate: 0 }}
+                        className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-display font-bold text-sm shadow-glow flex items-center gap-2 whitespace-nowrap z-20 border border-white/20"
+                      >
+                        <Award className="w-4 h-4" />
+                        {t<string>('doctors.specialist')}
+                      </motion.div>
                     </div>
                   </div>
-                </div>
 
-                {/* Content Column */}
-                <div className={`w-full md:w-3/5 flex flex-col relative z-10 ${isEven ? 'text-left' : 'text-left md:text-right'} items-start ${isEven ? '' : 'md:items-end'}`}>
-                  <h3 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-2">
-                    {language === 'en' ? doctor.name : doctor.nameHi}
-                  </h3>
-                  <p className="text-medical-teal font-body font-semibold text-lg md:text-xl mb-6 flex items-center gap-2">
-                    <GraduationCap className="w-5 h-5" />
-                    {language === 'en' ? doctor.specialization : doctor.specializationHi}
-                  </p>
-                  <p className={`text-slate-600 font-body text-base md:text-lg mb-8 leading-relaxed max-w-xl ${isEven ? '' : 'md:mr-0 md:ml-auto'}`}>
-                    {doctor.qualifications}
-                  </p>
-                  
-                  <a
-                    href={`mailto:${doctor.email}`}
-                    className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-white text-slate-700 border border-slate-200 hover:border-medical-blue hover:text-medical-blue hover:shadow-soft transition-all duration-300 font-body font-semibold text-sm"
-                  >
-                    <Mail className="w-4 h-4" />
-                    {doctor.email}
-                  </a>
+                  {/* Content Container */}
+                  <div className="w-full lg:w-2/3 flex flex-col">
+                    <div className="mb-6">
+                      <h3 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+                        {t<string>(`doctors.${doctor.id}.name`)}
+                      </h3>
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/10 text-secondary font-body font-bold text-base md:text-lg mb-6 border border-secondary/20">
+                        <GraduationCap className="w-5 h-5" />
+                        {t<string>(`doctors.${doctor.id}.specialization`)}
+                      </div>
+                    </div>
+
+                    <div className="space-y-6 mb-10">
+                      <p className="text-muted-foreground font-body text-base md:text-lg leading-relaxed border-l-4 border-primary/30 pl-6 italic">
+                          {t<string>(`doctors.${doctor.id}.qualifications`)}
+                      </p>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-4 mt-auto">
+                      <a
+                        href={`mailto:${doctor.email}`}
+                        className="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-foreground text-background font-bold text-sm hover:scale-105 transition-all shadow-lg hover:shadow-foreground/20"
+                      >
+                        <Mail className="w-4 h-4" />
+                        {doctor.email}
+                      </a>
+                      
+                      <div className="flex items-center gap-4 px-6 py-3.5 rounded-2xl bg-card border border-border text-muted-foreground font-body text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        {t<string>('doctors.verifiedBadge')}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             );
@@ -111,5 +136,6 @@ const DoctorsSection = () => {
     </section>
   );
 };
+
 
 export default DoctorsSection;

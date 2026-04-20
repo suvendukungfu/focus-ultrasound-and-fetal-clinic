@@ -63,24 +63,16 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ size = 'sm', className = '' }) =>
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className={`relative w-full h-full rounded-full overflow-hidden ${ringWidth[size]} border-white/80 dark:border-white/10 shadow-glow z-10 bg-white dark:bg-slate-900 flex items-center justify-center`}
+        className={`relative w-full h-full rounded-full overflow-hidden ${ringWidth[size]} border-white/80 dark:border-white/10 shadow-glow z-10 bg-card flex items-center justify-center`}
       >
         <img
-          src="/images/fetal-ultrasound.webp"
+          src="/images/clinic-logo-new.webp"
           alt="Focus Ultrasound & Fetal Clinic — Brand Logo"
           loading="lazy"
           decoding="async"
           width={size === 'lg' ? 160 : 96}
           height={size === 'lg' ? 160 : 96}
           className="w-[85%] h-[85%] object-contain"
-          onError={(e) => {
-            const img = e.currentTarget;
-            if (img.src.includes('fetal-ultrasound.webp')) {
-              img.src = '/images/fetal-ultrasound.png';
-            } else if (img.src.includes('fetal-ultrasound.png')) {
-              img.src = '/images/clinic-logo-new.webp';
-            }
-          }}
         />
       </motion.div>
 

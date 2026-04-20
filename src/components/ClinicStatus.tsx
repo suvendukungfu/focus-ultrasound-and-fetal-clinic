@@ -9,7 +9,7 @@ const ClinicStatus = () => {
   if (isLoading) return (
     <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-100 animate-pulse">
       <div className="w-2 h-2 rounded-full bg-slate-300" />
-      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Loading...</span>
+      <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-tight">{t('common.loading')}</span>
     </div>
   );
 
@@ -25,13 +25,13 @@ const ClinicStatus = () => {
     <motion.div 
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${current.bg} border border-white/50 shadow-sm`}
+      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${current.bg} border border-border/40 shadow-sm`}
     >
       <div className={`relative flex h-2 w-2`}>
         <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${current.color} opacity-75`}></span>
         <span className={`relative inline-flex rounded-full h-2 w-2 ${current.color}`}></span>
       </div>
-      <span className="text-[10px] font-bold text-slate-700 uppercase tracking-tight">
+      <span className="text-[10px] font-bold text-foreground uppercase tracking-tight">
         {t(current.text)}
       </span>
     </motion.div>

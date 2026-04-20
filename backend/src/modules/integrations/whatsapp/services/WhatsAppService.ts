@@ -10,6 +10,12 @@ export class WhatsAppService {
       return false;
     }
 
+    // Senior Developer Polish: Ensure country code for India if missing (10 digits)
+    let cleanTo = to.replace(/[^0-9]/g, '');
+    if (cleanTo.length === 10) {
+      cleanTo = `91${cleanTo}`;
+    }
+
     try {
       const response = await fetch(
         `https://graph.facebook.com/v18.0/${this.phoneNumberId}/messages`,
@@ -21,7 +27,7 @@ export class WhatsAppService {
           },
           body: JSON.stringify({
             messaging_product: 'whatsapp',
-            to,
+            to: cleanTo,
             type: 'text',
             text: { body: message },
           }),

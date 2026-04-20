@@ -13,34 +13,38 @@ const connectionOpts = {
 let appointmentQueue: Queue | null = null;
 let queueEvents: QueueEvents | null = null;
 
-try {
-  appointmentQueue = new Queue('AppointmentAutomation', { 
-    connection: connectionOpts,
-    defaultJobOptions: {
-      removeOnComplete: true,
-      attempts: 3,
-      backoff: {
-        type: 'exponential',
-        delay: 1000,
-      },
+if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
+  try {
+    appointmentQueue = new Queue('AppointmentAutomation', { 
+      connection: connectionOpts,
+      defaultJobOptions: {
+        removeOnComplete: true,
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 1000,
+        },
+      }
+    });
+
+    queueEvents = new QueueEvents('AppointmentAutomation', { connection: connectionOpts });
+
+    queueEvents.on('completed', ({ jobId }) => {
+      Logger.info(`[Queue] AppointmentAutomation Job ${jobId} completed.`);
+    });
+
+    queueEvents.on('failed', ({ jobId, failedReason }) => {
+      Logger.error(`[Queue] AppointmentAutomation Job ${jobId} failed: ${failedReason}`);
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    Logger.error(`[Queue] Failed to initialize AppointmentAutomation queue: ${errorMessage}`);
+    if (process.env.NODE_ENV === 'production') {
+      throw error;
     }
-  });
-
-  queueEvents = new QueueEvents('AppointmentAutomation', { connection: connectionOpts });
-
-  queueEvents.on('completed', ({ jobId }) => {
-    Logger.info(`[Queue] AppointmentAutomation Job ${jobId} completed.`);
-  });
-
-  queueEvents.on('failed', ({ jobId, failedReason }) => {
-    Logger.error(`[Queue] AppointmentAutomation Job ${jobId} failed: ${failedReason}`);
-  });
-} catch (error) {
-  const errorMessage = error instanceof Error ? error.message : String(error);
-  Logger.error(`[Queue] Failed to initialize AppointmentAutomation queue: ${errorMessage}`);
-  if (process.env.NODE_ENV === 'production') {
-    throw error;
   }
+} else {
+  Logger.warn('[AppointmentQueue] Skipping AppointmentAutomation initialization in development (no REDIS_URL)');
 }
 
 export { appointmentQueue, queueEvents };

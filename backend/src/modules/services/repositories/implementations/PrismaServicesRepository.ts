@@ -9,7 +9,7 @@ export class PrismaServicesRepository implements IServicesRepository {
       data: {
         name: data.name,
         description: data.description,
-        price: data.price,
+        price: data.price ? Number(data.price) : null,
         durationMin: data.durationMin,
         isActive: data.isActive,
       },

@@ -35,8 +35,8 @@ class ActivityService {
           action: input.action,
           entityId: input.entityId,
           entityType: input.entityType,
-          oldData: input.oldData || undefined,
-          newData: input.newData || undefined,
+          oldData: input.oldData ? JSON.stringify(input.oldData) : undefined,
+          newData: input.newData ? JSON.stringify(input.newData) : undefined,
           ipAddress: input.ipAddress,
         },
       });

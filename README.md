@@ -50,15 +50,33 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Admin & Clinical Console
+
+The portal includes a premium Admin Console for lead management and inquiry tracking.
+
+- **Admin URL**: `/admin`
+- **Default Credentials**: `admin@focusultrasound.in` / `Focus@Admin2026` (Change in `.env` for production)
+- **Features**: Live lead tracking, Status updates, and direct WhatsApp communication with patients.
+
+## WhatsApp Integration
+
+The project uses a dual WhatsApp strategy:
+1.  **Patient-Initiated (Frontend)**: Standard `wa.me` links pre-filled with appointment details.
+2.  **Clinic-Automated (Backend)**: Automated confirmation and reminder messages using the Meta WhatsApp Business API.
+
+### Configuration
+To enable automated backend notifications, set the following in your `.env`:
+- `WHATSAPP_PHONE_NUMBER_ID`: Your Meta App Phone ID
+- `WHATSAPP_ACCESS_TOKEN`: Your Meta Permanent Access Token
+- `REDIS_URL`: Required for background job processing (Confirmations/Reminders)
+
 ## What technologies are used for this project?
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Frontend**: Vite, React, TypeScript, Framer Motion, Tailwind CSS
+- **Backend**: Node.js (Express), Prisma (ORM), PostgreSQL, BullMQ (Task Queue)
+- **Design**: Premium Medical Aesthetic (Precision Teal & Trust Blue)
 
 ## How can I deploy this project?
 

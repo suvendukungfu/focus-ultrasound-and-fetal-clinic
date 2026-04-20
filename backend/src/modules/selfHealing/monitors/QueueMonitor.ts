@@ -9,6 +9,7 @@ export class QueueMonitor {
   start() {
     setInterval(async () => {
       try {
+        if (!queueLeadProcessing) return; // Skip if disabled in dev
         const counts = await queueLeadProcessing.getJobCounts();
         
         // Log telemetry

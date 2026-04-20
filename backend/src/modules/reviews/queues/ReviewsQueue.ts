@@ -24,27 +24,51 @@ export type ReviewJobName =
   | 'fetch-google-reviews'
   | 'rotate-testimonials';
 
-export const reviewsQueue = new Queue<Record<string, unknown>, unknown, ReviewJobName>(
-  REVIEWS_QUEUE_NAME,
-  {
-    connection: redisConnection,
-    defaultJobOptions: {
-      attempts: 3,
-      backoff: { type: 'exponential', delay: 5000 },
-      removeOnComplete: { count: 100 },
-      removeOnFail: { count: 50 },
-    },
+let _reviewsQueue: Queue<Record<string, unknown>, unknown, ReviewJobName> | null = null;
+let _reviewsQueueEvents: QueueEvents | null = null;
+
+export const getReviewsQueue = () => {
+  if (!_reviewsQueue) {
+    if (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL) {
+      Logger.warn('[ReviewsQueue] Skipping Redis connection in development (no REDIS_URL)');
+      return null;
+    }
+    
+    _reviewsQueue = new Queue<Record<string, unknown>, unknown, ReviewJobName>(
+      REVIEWS_QUEUE_NAME,
+      {
+        connection: redisConnection,
+        defaultJobOptions: {
+          attempts: 3,
+          backoff: { type: 'exponential', delay: 5000 },
+          removeOnComplete: { count: 100 },
+          removeOnFail: { count: 50 },
+        },
+      }
+    );
   }
-);
+  return _reviewsQueue;
+};
 
-export const reviewsQueueEvents = new QueueEvents(REVIEWS_QUEUE_NAME, {
-  connection: redisConnection,
-});
+export const getReviewsQueueEvents = () => {
+  if (!_reviewsQueueEvents) {
+    if (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL) return null;
+    
+    _reviewsQueueEvents = new QueueEvents(REVIEWS_QUEUE_NAME, {
+      connection: redisConnection,
+    });
 
-reviewsQueueEvents.on('completed', ({ jobId }) => {
-  Logger.info(`[ReviewsQueue] Job ${jobId} completed ✅`);
-});
+    _reviewsQueueEvents.on('completed', ({ jobId }) => {
+      Logger.info(`[ReviewsQueue] Job ${jobId} completed ✅`);
+    });
 
-reviewsQueueEvents.on('failed', ({ jobId, failedReason }) => {
-  Logger.error(`[ReviewsQueue] Job ${jobId} failed ❌: ${failedReason}`);
-});
+    _reviewsQueueEvents.on('failed', ({ jobId, failedReason }) => {
+      Logger.error(`[ReviewsQueue] Job ${jobId} failed ❌: ${failedReason}`);
+    });
+  }
+  return _reviewsQueueEvents;
+};
+
+// For backward compatibility while we refactor callers
+export const reviewsQueue = getReviewsQueue();
+export const reviewsQueueEvents = getReviewsQueueEvents();

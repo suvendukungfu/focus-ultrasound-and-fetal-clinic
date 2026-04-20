@@ -51,10 +51,15 @@ export const useTestimonials = () => {
           throw new Error('Failed to fetch testimonials');
         }
         const data = await response.json();
-        setTestimonials(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setTestimonials(data);
+        } else {
+          setTestimonials(STATIC_REVIEWS);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
-        console.error('Error fetching testimonials:', err);
+        console.warn('Error fetching testimonials, using static fallback:', err);
+        setTestimonials(STATIC_REVIEWS);
       } finally {
         setLoading(false);
       }

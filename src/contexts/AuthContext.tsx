@@ -24,28 +24,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('admin_token');
-    const storedUser = localStorage.getItem('admin_user');
+    const storedToken = localStorage.getItem('auth_token');
+    const storedUser = localStorage.getItem('auth_user');
 
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setToken(storedToken);
+        setUser(parsedUser);
+      } catch (e) {
+        // If parsing fails (e.g. storedUser is "undefined"), clear the invalid data
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('auth_user');
+      }
     }
   }, []);
 
   const login = (newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
-    localStorage.setItem('admin_token', newToken);
-    localStorage.setItem('admin_user', JSON.stringify(newUser));
+    localStorage.setItem('auth_token', newToken);
+    localStorage.setItem('auth_user', JSON.stringify(newUser));
     navigate('/admin/dashboard');
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('admin_token');
-    localStorage.removeItem('admin_user');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
     navigate('/admin/login');
   };
 

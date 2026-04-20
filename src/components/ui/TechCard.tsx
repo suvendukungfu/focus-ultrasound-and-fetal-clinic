@@ -2,78 +2,86 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { LucideIcon, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useTheme } from '@/hooks/use-theme';
 
 interface TechCardProps {
   icon: LucideIcon;
   name: string;
   image: string;
   desc: string;
-  descHi: string;
   url: string;
   index: number;
 }
 
-const TechCard: React.FC<TechCardProps> = ({ 
-  icon: Icon, name, image, desc, descHi, url, index 
+const TechCard: React.FC<TechCardProps> = ({
+  icon: Icon, name, image, desc, url, index
 }) => {
-  const { language } = useLanguage();
-  const { theme } = useTheme();
+  const { t } = useLanguage();
+  const isReversed = index % 2 === 1;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={`
-        flex flex-col lg:flex-row gap-12 lg:gap-20 items-center overflow-hidden rounded-[2rem] p-6 transition-all duration-700
-        ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}
-        bg-card border-border shadow-soft hover:shadow-elevated
-        border group
+        grid grid-cols-1 lg:grid-cols-2 gap-12 items-center
+        ${isReversed ? 'direction-rtl' : ''}
       `}
+      style={isReversed ? { direction: 'rtl' } : undefined}
     >
-      {/* Image Side with Scale-on-Hover */}
-      <div className="w-full lg:w-1/2 relative">
-        <div className="absolute -inset-4 bg-primary/5 rounded-[2rem] blur-2xl transition-all duration-700 group-hover:bg-primary/10" />
-        <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden border border-border/50 shadow-medium">
-          <img loading="lazy" 
-            src={image} 
+      {/* IMAGE */}
+      <div className="relative group/img" style={{ direction: 'ltr' }}>
+        {/* Soft glow behind image */}
+        <div className="absolute -inset-4 bg-primary/8 rounded-3xl blur-[60px] opacity-0 group-hover/img:opacity-50 transition-opacity duration-700 pointer-events-none" />
+
+        <div className="relative overflow-hidden rounded-2xl shadow-xl bg-gray-50 dark:bg-gray-900">
+          <img
+            loading="lazy"
+            src={image}
             alt={name}
-            className="w-full h-full object-cover transition-transform [transition-duration:1500ms] ease-out group-hover:scale-105"
+            className="w-full h-[340px] md:h-[420px] object-contain transition-transform duration-500 ease-out group-hover/img:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent group-hover:opacity-60 transition-opacity" />
+          {/* Glass badge on image */}
+          <div className="absolute top-4 right-4 z-10">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-sm">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-semibold tracking-wider uppercase text-gray-700 dark:text-gray-200">
+                Active System
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Content Side */}
-      <div className="w-full lg:w-1/2 lg:p-12">
-        <motion.div 
-          className="flex items-center gap-5 mb-8"
-          whileHover={{ x: 8 }}
-        >
-          <div className="w-16 h-16 rounded-[1rem] bg-primary/10 flex items-center justify-center border border-primary/20 shadow-soft group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
-            <Icon className="w-8 h-8 transition-transform group-hover:rotate-12" strokeWidth={1.5} />
+      {/* CONTENT */}
+      <div className="flex flex-col justify-center" style={{ direction: 'ltr' }}>
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/15">
+            <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
           </div>
-          <h3 className="font-display text-4xl md:text-5xl font-bold tracking-tight group-hover:text-primary transition-colors">
+          <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
             {name}
           </h3>
-        </motion.div>
-        
-        <p className="font-body text-xl leading-relaxed mb-12 transition-colors duration-500 text-muted-foreground">
-          {language === 'en' ? desc : descHi}
+        </div>
+
+        {/* Subtle divider */}
+        <div className="w-10 h-[2px] bg-primary/25 rounded-full mb-5" />
+
+        <p className="font-body text-base leading-[1.75] text-muted-foreground mb-8 max-w-md">
+          {desc}
         </p>
-        
+
+        {/* CTA — teal→cyan gradient with hover lift */}
         <motion.a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-primary text-primary-foreground border border-primary/20 px-10 py-5 rounded-[2rem] font-bold text-sm tracking-[0.2em] uppercase hover:shadow-glow hover:shadow-primary/40 transition-all duration-300 shadow-soft group"
+          whileTap={{ scale: 0.97 }}
+          className="self-start inline-flex items-center gap-2.5 bg-gradient-to-r from-primary to-cyan-500 text-white px-7 py-3.5 rounded-xl font-semibold text-sm tracking-wide shadow-sm hover:shadow-md hover:-translate-y-[2px] transition-all duration-300"
         >
-          Full Technical Specs
-          <ExternalLink className="w-5 h-5 transition-transform group-hover:rotate-12 group-hover:translate-x-1" />
+          {t<string>('services.tech.specs')}
+          <ExternalLink className="w-4 h-4" />
         </motion.a>
       </div>
     </motion.div>

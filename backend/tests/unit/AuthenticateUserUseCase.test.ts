@@ -16,7 +16,7 @@ jest.mock('jsonwebtoken', () => ({
 
 describe('AuthenticateUserUseCase', () => {
   let useCase: AuthenticateUserUseCase;
-  let mockUsersRepo: any;
+  let mockUsersRepo: Record<string, jest.Mock>;
 
   const hashedPassword = '$2b$10$mockhashedpassword';
 

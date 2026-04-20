@@ -6,7 +6,7 @@ import DoctorsSection from '@/components/DoctorsSection';
 import ClinicTimings from '@/components/ClinicTimings';
 import Footer from '@/components/Footer';
 import ReviewCarousel from '@/components/ReviewCarousel';
-import { useTestimonials, STATIC_REVIEWS } from '@/hooks/useTestimonials';
+import { useTestimonials } from '@/hooks/useTestimonials';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SEO from '@/components/SEO';
 import FAQSection from '@/components/FAQSection';
@@ -14,10 +14,8 @@ import FAQSection from '@/components/FAQSection';
 const LazyClinicMap = React.lazy(() => import('@/components/map/ClinicMap'));
 
 const Index = () => {
-  const { testimonials, loading, error } = useTestimonials();
+  const { testimonials, loading } = useTestimonials();
   const { language } = useLanguage();
-  
-  const displayReviews = error ? STATIC_REVIEWS : testimonials;
   
   const faqData = language === 'en' ? [
     {
@@ -79,9 +77,9 @@ const Index = () => {
           <ClinicTimings />
           <FAQSection />
           
-          {!loading && displayReviews.length > 0 && (
+          {!loading && testimonials.length > 0 && (
             <section className="bg-gradient-to-b from-primary/5 to-transparent">
-              <ReviewCarousel reviews={displayReviews.slice(0, 5)} />
+              <ReviewCarousel reviews={testimonials.slice(0, 5)} />
             </section>
           )}
 

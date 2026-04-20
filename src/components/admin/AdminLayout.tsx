@@ -25,6 +25,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
     { icon: Calendar, label: 'Appointments', path: '/admin/appointments' },
+    { icon: Users, label: 'Inquiries', path: '/admin/leads' },
     { icon: Star, label: 'Reviews', path: '/admin/reviews' },
     { icon: Users, label: 'Users', path: '/admin/users' },
   ];

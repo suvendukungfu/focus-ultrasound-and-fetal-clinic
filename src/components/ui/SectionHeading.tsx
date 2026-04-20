@@ -38,7 +38,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
       >
         <TitleTag
           className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-[1.1] ${
-            light ? 'text-foreground' : 'text-foreground'
+            light ? 'text-gray-900' : 'text-gray-900 dark:text-white'
           }`}
         >
           {title}
@@ -52,7 +52,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className={`font-body text-lg md:text-xl max-w-3xl mb-8 ${centered ? 'mx-auto' : ''} ${
-            light ? 'text-muted-foreground' : 'text-muted-foreground'
+            light ? 'text-gray-600' : 'text-gray-600 dark:text-gray-300'
           }`}
         >
           {subtitle}

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Phone, MessageCircle, Navigation, Clock, ExternalLink, Locate } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MapPin, Phone, MessageCircle, Navigation, Clock, Locate } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { clinicMapStyles } from './MapStyles';
 import {
   CLINIC_LAT,
@@ -53,6 +54,7 @@ const GeoSchema = () => (
 
 // ─── Main component ──────────────────────────────────────────────
 const ClinicMap: React.FC = () => {
+  const { t } = useLanguage();
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<google.maps.Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
@@ -85,10 +87,10 @@ const ClinicMap: React.FC = () => {
       map,
       title: 'Focus Ultrasound & Fetal Clinic',
       icon: {
-        url: '/images/fetal-ultrasound.webp',
-        scaledSize: new google.maps.Size(48, 48),
+        url: '/images/clinic-logo-new.png',
+        scaledSize: new google.maps.Size(54, 54),
         origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(24, 48),
+        anchor: new google.maps.Point(27, 27),
       },
       animation: google.maps.Animation.DROP,
     });
@@ -195,23 +197,23 @@ const ClinicMap: React.FC = () => {
               <div className="flex items-center gap-2">
                 <div className={`w-2.5 h-2.5 rounded-full ${open ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 <span className={`text-xs font-bold uppercase tracking-wider ${open ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                  {open ? 'Open Now' : 'Closed'}
+                  {open ? t('map.openNow') : t('map.closed')}
                 </span>
               </div>
               {distance !== null && (
                 <span className="text-xs font-semibold text-muted-foreground bg-muted/80 px-2.5 py-1 rounded-full">
-                  {distance < 1 ? `${Math.round(distance * 1000)} m` : `${distance.toFixed(1)} km`} away
+                  {distance < 1 ? `${Math.round(distance * 1000)} m` : `${distance.toFixed(1)} km`} {t('map.away')}
                 </span>
               )}
             </div>
 
             {/* Clinic info */}
             <h3 className="font-display font-bold text-lg text-foreground mb-1">
-              Focus Ultrasound & Fetal Clinic
+              {t('clinic.name')} {t('clinic.tagline')}
             </h3>
             <p className="text-muted-foreground text-xs font-body leading-relaxed mb-5 flex items-start gap-2">
               <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0 text-primary" />
-              {CLINIC_ADDRESS}
+              {t('footer.address')}
             </p>
 
             {/* Action buttons */}
@@ -223,14 +225,14 @@ const ClinicMap: React.FC = () => {
                 className="flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 group/btn"
               >
                 <Navigation className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
-                <span className="text-[10px] font-bold uppercase tracking-wider">Directions</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider">{t('map.directions')}</span>
               </a>
               <a
                 href={`tel:${CLINIC_PHONE}`}
                 className="flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-all duration-300 group/btn"
               >
                 <Phone className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
-                <span className="text-[10px] font-bold uppercase tracking-wider">Call</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider">{t('map.call')}</span>
               </a>
               <a
                 href={CLINIC_WHATSAPP_URL}
@@ -239,7 +241,7 @@ const ClinicMap: React.FC = () => {
                 className="flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-green-500/10 hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-all duration-300 group/btn"
               >
                 <MessageCircle className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
-                <span className="text-[10px] font-bold uppercase tracking-wider">WhatsApp</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider">{t('map.whatsapp')}</span>
               </a>
             </div>
 
@@ -250,7 +252,7 @@ const ClinicMap: React.FC = () => {
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-muted-foreground bg-muted/50 hover:bg-muted hover:text-foreground transition-all duration-300"
             >
               <Locate className={`w-3.5 h-3.5 ${locating ? 'animate-spin' : ''}`} />
-              {locating ? 'Locating...' : distance !== null ? 'Update Location' : 'Show My Distance'}
+              {locating ? t('map.locating') : distance !== null ? t('map.updateLocation') : t('map.showDistance')}
             </button>
           </div>
         </motion.div>
@@ -266,8 +268,8 @@ const ClinicMap: React.FC = () => {
           <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-lg border border-white/30 dark:border-white/10 flex items-center gap-3">
             <Clock className="w-4 h-4 text-primary" />
             <div className="text-xs">
-              <p className="font-bold text-foreground">Mon–Sat: 9AM–3PM, 5PM–8PM</p>
-              <p className="text-muted-foreground">Sunday: 9AM–2PM</p>
+              <p className="font-bold text-foreground">{t('timings.monSat')}: {t('timings.hours.monSat')}</p>
+              <p className="text-muted-foreground">{t('timings.sunday')}: {t('timings.hours.sunday')}</p>
             </div>
           </div>
         </motion.div>

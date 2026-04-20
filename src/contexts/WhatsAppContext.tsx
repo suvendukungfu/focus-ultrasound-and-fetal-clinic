@@ -16,8 +16,8 @@ interface WhatsAppContextValue extends WhatsAppState {
   setName: (name: string) => void;
   setPhone: (phone: string) => void;
   setWeeks: (weeks: string) => void;
-  buildMessage: () => string;
-  buildUrl: () => string;
+  buildMessage: (overrideState?: Partial<WhatsAppState>) => string;
+  buildUrl: (overrideState?: Partial<WhatsAppState>) => string;
 }
 
 const PHONE = '918287655133';
@@ -91,8 +91,8 @@ export function WhatsAppProvider({ children }: { children: ReactNode }) {
     setState((prev) => ({ ...prev, weeks }));
   }, []);
 
-  const buildMessage = useCallback(() => {
-    const { service, date, time, name, phone, weeks } = state;
+  const buildMessage = useCallback((overrideState?: Partial<WhatsAppState>) => {
+    const { service, date, time, name, phone, weeks } = overrideState || state;
 
     // Default fallback when nothing is selected
     if (!service && !date && !time && !name) {
@@ -119,8 +119,8 @@ export function WhatsAppProvider({ children }: { children: ReactNode }) {
     return msg;
   }, [state]);
 
-  const buildUrl = useCallback(() => {
-    const text = encodeURIComponent(buildMessage());
+  const buildUrl = useCallback((overrideState?: Partial<WhatsAppState>) => {
+    const text = encodeURIComponent(buildMessage(overrideState));
     return `https://wa.me/${PHONE}?text=${text}`;
   }, [buildMessage]);
 

@@ -13,10 +13,12 @@ class AppEventBus extends EventEmitter {
     this.on('lead.created', async (leadData) => {
       Logger.info(`[Event] lead.created fired for ${leadData.email}`);
       // Push to BullMQ queue for async processing without blocking the API response
-      await queueLeadProcessing.add('process-new-lead', leadData, {
-        attempts: 3,
-        backoff: { type: 'exponential', delay: 1000 }
-      });
+      if (queueLeadProcessing) {
+        await queueLeadProcessing.add('process-new-lead', leadData, {
+          attempts: 3,
+          backoff: { type: 'exponential', delay: 1000 }
+        });
+      }
     });
 
     this.on('user.logged_in', (userData) => {

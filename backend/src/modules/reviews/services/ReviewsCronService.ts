@@ -29,48 +29,55 @@ export const reviewsCronService = {
     Logger.info('[ReviewsCronService] Initialising repeatable jobs...');
 
     // Remove any stale repeatable jobs from a previous deployment
-    const existing = await reviewsQueue.getRepeatableJobs();
-    for (const job of existing) {
-      await reviewsQueue.removeRepeatableByKey(job.key);
-      Logger.info(`[ReviewsCronService] Removed stale job: ${job.name}`);
+    if (reviewsQueue) {
+      const existing = await reviewsQueue.getRepeatableJobs();
+      for (const job of existing) {
+        await reviewsQueue.removeRepeatableByKey(job.key);
+        Logger.info(`[ReviewsCronService] Removed stale job: ${job.name}`);
+      }
     }
   },
 
   async start() {
-    // Schedule: fetch Google reviews every 6 hours
-    await reviewsQueue.add(
-      'fetch-google-reviews',
-      {},
-      {
-        repeat: { pattern: GOOGLE_FETCH_CRON, tz: 'Asia/Kolkata' },
-        jobId: 'cron:fetch-google-reviews',
-      }
-    );
-    Logger.info(`[ReviewsCronService] Scheduled "fetch-google-reviews" → ${GOOGLE_FETCH_CRON} IST`);
+    if (reviewsQueue) {
+      // Schedule: fetch Google reviews every 6 hours
+      await reviewsQueue.add(
+        'fetch-google-reviews',
+        {},
+        {
+          repeat: { pattern: GOOGLE_FETCH_CRON, tz: 'Asia/Kolkata' },
+          jobId: 'cron:fetch-google-reviews',
+        }
+      );
+      Logger.info(`[ReviewsCronService] Scheduled "fetch-google-reviews" → ${GOOGLE_FETCH_CRON} IST`);
 
-    // Schedule: rotate testimonial cache every hour
-    await reviewsQueue.add(
-      'rotate-testimonials',
-      {},
-      {
-        repeat: { pattern: ROTATION_CRON, tz: 'Asia/Kolkata' },
-        jobId: 'cron:rotate-testimonials',
-      }
-    );
-    Logger.info(`[ReviewsCronService] Scheduled "rotate-testimonials" → ${ROTATION_CRON} IST`);
+      // Schedule: rotate testimonial cache every hour
+      await reviewsQueue.add(
+        'rotate-testimonials',
+        {},
+        {
+          repeat: { pattern: ROTATION_CRON, tz: 'Asia/Kolkata' },
+          jobId: 'cron:rotate-testimonials',
+        }
+      );
+      Logger.info(`[ReviewsCronService] Scheduled "rotate-testimonials" → ${ROTATION_CRON} IST`);
 
-    // Also trigger rotate-testimonials immediately on boot
-    // so the cache is warm before the first cron tick
-    await reviewsQueue.add('rotate-testimonials', {}, { jobId: 'boot:rotate-testimonials' });
-    Logger.info('[ReviewsCronService] Queued immediate boot rotation.');
+      // Also trigger rotate-testimonials immediately on boot
+      // so the cache is warm before the first cron tick
+      await reviewsQueue.add('rotate-testimonials', {}, { jobId: 'boot:rotate-testimonials' });
+      Logger.info('[ReviewsCronService] Queued immediate boot rotation.');
+    }
   },
 
   async stop() {
-    await reviewsQueue.close();
-    Logger.info('[ReviewsCronService] Queue closed.');
+    if (reviewsQueue) {
+      await reviewsQueue.close();
+      Logger.info('[ReviewsCronService] Queue closed.');
+    }
   },
 
   async health() {
+    if (!reviewsQueue) return { status: 'OFFLINE' as const };
     const counts = await reviewsQueue.getJobCounts();
     const status: 'ONLINE' | 'DEGRADED' = counts.failed > 10 ? 'DEGRADED' : 'ONLINE';
     return { status, metrics: { counts } };

@@ -1,108 +1,60 @@
-import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
+import GalleryPreview from '@/components/GalleryPreview';
 import Footer from '@/components/Footer';
 import BackgroundPattern from '@/components/BackgroundPattern';
 import SEO from '@/components/SEO';
+import { Award, Mail, GraduationCap, Stethoscope, FileText, Building2 } from 'lucide-react';
 
-import { Award, Mail, GraduationCap, Stethoscope } from 'lucide-react';
 const drSamar = '/images/dr-samar-photo.webp';
 const drRahul = '/images/dr-rahul-photo.webp';
-const drSamarDegree = '/images/dr-samar-cert.webp';
-const drRahulDegree = '/images/dr-rahul-cert.webp';
-const clinicExterior = '/images/clinic-exterior.webp';
-const clinicEntry = '/images/facilities-1.webp';
-const clinicWaiting = '/images/clinic-waiting.webp';
 const clinicSamsung = '/images/clinic-samsung-v7.webp';
 
-const doctorsData = [
-  {
-    name: 'Dr. Samar Surya Nirwal',
-    nameHi: 'डॉ. समर सूर्य निर्वल',
-    specialization: 'Consultant Radiologist & Fetal Medicine Specialist',
-    specializationHi: 'सलाहकार रेडियोलॉजिस्ट एवं फीटल मेडिसिन विशेषज्ञ',
-    qualifications: 'MBBS, MD, DNB (Radiodiagnosis)',
-    email: 'samarsurya777@gmail.com',
-    image: drSamar,
-    degreeImage: '/images/dr-samar-degree-final.webp',
-    bio: `Dr. Samar Surya Nirwal is a highly accomplished Radiologist and Fetal Medicine Specialist dedicated to delivering precise, ethical, and compassionate diagnostic care. With strong academic credentials and advanced subspecialty training, he brings a blend of clinical expertise and evidence-based practice to every patient he serves.
+interface Doctor {
+  name: string;
+  role: string;
+  qualifications: string;
+  bio: string[];
+  expertise: string[];
+  image: string;
+  email: string;
+}
 
-He completed his MBBS from King George's Medical University (KGMU), Lucknow, followed by MD Radiology from VMMC & Safdarjung Hospital, New Delhi, and later earned his DNB Radiology qualification.
+interface CredentialDoc {
+  name: string;
+  degree: string;
+  role: string;
+  university: string;
+  registration: string[];
+  experience: string;
+  formerly: string[];
+  avatar: string;
+}
 
-To further advance his expertise in maternal–fetal imaging, he completed a Fellowship in Obstetrics & Gynecology Imaging from The Fetal Clinic, Pondicherry, and is UK-FMF certified. He also completed his Postgraduate Degree in Fetal Medicine from the University of Barcelona.`,
-    expertise: [
-      'Advanced fetal ultrasound and Doppler studies',
-      'Level I & Level II anomaly scans',
-      'Growth scans and fetal surveillance',
-      'High-risk pregnancy imaging',
-      'Gynecological ultrasound',
-      'CT and MRI imaging',
-      'Comprehensive vascular Doppler studies',
-    ],
-    publications: 'Published research in the Journal of Clinical and Diagnostic Research (JCDR) with academic interest in fetal growth restriction prediction and placental evaluation.',
-  },
-  {
-    name: 'Dr. Rahul Choudhary',
-    nameHi: 'डॉ. राहुल चौधरी',
-    specialization: 'Consultant Radiologist & Fetal Medicine Specialist',
-    specializationHi: 'सलाहकार रेडियोलॉजिस्ट एवं फीटल मेडिसिन विशेषज्ञ',
-    qualifications: 'MBBS, MD (Radio Diagnosis)',
-    email: 'rahul2choudhary.48@gmail.com',
-    image: drRahul,
-    degreeImage: '/images/dr-rahul-degree-final.webp',
-    bio: `Dr. Rahul Choudhary is a highly experienced radiologist with a special interest in fetal medicine, obstetric ultrasound, and advanced diagnostic imaging. He is committed to delivering accurate, ethical, and patient-centered imaging services with a strong focus on quality and clinical excellence.
+const About = () => {
+  const { t } = useLanguage();
 
-He completed his postgraduate training in Radiodiagnosis from Safdarjung Hospital, followed by Senior Residency at VMMC & Safdarjung Hospital and AIIMS Patna.
+  // Map images and static data to translated doctor info
+  const doctorsData = t<Doctor[]>('about.doctors');
+  const doctors: Doctor[] = (Array.isArray(doctorsData) ? doctorsData : []).map((doc, index) => ({
+    ...doc,
+    image: index === 0 ? drSamar : drRahul,
+    email: index === 0 ? 'samarsurya777@gmail.com' : 'rahul2choudhary.48@gmail.com'
+  }));
 
-He completed a Fellowship in Fetal Imaging from the University of Barcelona and is FMF UK certified for first trimester screening. He is an active member of the Society of Fetal Medicine and Indian Radiological and Imaging Association (IRIA).`,
-    expertise: [
-      'NT scans',
-      'Level II anomaly scans',
-      'Fetal Doppler studies',
-      'Vascular Doppler examinations',
-      'Musculoskeletal ultrasound',
-      'Non-vascular interventions',
-    ],
-    publications: '',
-  },
-];
-
-const certificationsData = [
-  {
-    name: 'Dr. Rahul Choudhary',
-    degree: 'MBBS, MD (Radiodiagnosis)',
-    role: 'Consultant Radiologist & Fetal Medicine',
-    university: '(University of Barcelona)',
-    registration: ['UPMC No - 103538'],
-    experience: '10+ Years Experience',
-    formerly: [
-      'Safdarjung Hospital, New Delhi',
-      'AIIMS, Patna',
-    ],
-    avatar: drRahul 
-  },
-  {
-    name: 'Dr. Samar Surya Nirwal',
-    degree: 'MBBS, MD, DNB (Radiodiagnosis)',
-    role: 'Consultant Radiologist & Fetal Medicine',
-    university: '(University of Barcelona)',
-    registration: ['UPMC No - 84598', 'DMC No - 94287'],
-    experience: '10+ Years Experience',
-    formerly: [
-      'King George’s Medical University, Lucknow',
-      'Safdarjung Hospital, New Delhi',
-    ],
-    avatar: drSamar
-  }
-];
-
-const AboutContent = () => {
-  const { t, language } = useLanguage();
+  const doc1 = t<CredentialDoc>('about.credentials.doc1');
+  const doc2 = t<CredentialDoc>('about.credentials.doc2');
+  
+  const certificationsData: CredentialDoc[] = [
+    { ...doc1, avatar: drRahul },
+    { ...doc2, avatar: drSamar }
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Expert Fetal Medicine Specialists in Greater Noida West | Focus Ultrasound"
-        description="Meet our specialist radiologists, Dr. Samar Surya Nirwal and Dr. Rahul Choudhary. Experts in high-risk pregnancy scans and advanced fetal imaging in Nirala Estate."
+        title={t('about.seo.title')}
+        description={t('about.seo.description')}
       />
       <Header />
       <main className="pt-20">
@@ -111,25 +63,19 @@ const AboutContent = () => {
           <BackgroundPattern />
           <div className="relative z-10 container-narrow mx-auto text-center">
             <span className="inline-block px-4 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-body font-medium mb-4 animate-fade-up">
-              About Us
+              {t('about.hero.badge')}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              {language === 'en' ? 'Focus Ultrasound & Fetal Clinic in Greater Noida West' : 'ग्रेटर नोएडा वेस्ट में फोकस अल्ट्रासाउंड एवं फीटल क्लिनिक'}
+              {t('about.hero.title')}
             </h1>
             <p className="text-muted-foreground font-body text-base md:text-lg max-w-3xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              {language === 'en'
-                ? 'Focus Ultrasound and Fetal Clinic is a dedicated diagnostic and fetal imaging centre committed to accuracy, compassion, and patient comfort. We specialize in advanced ultrasound services, including routine pregnancy scans, detailed anomaly scans, growth monitoring, Doppler studies, and gynecological imaging — all performed with precision and care.'
-                : 'फोकस अल्ट्रासाउंड और फीटल क्लिनिक सटीकता, करुणा और मरीज़ के आराम के लिए प्रतिबद्ध एक समर्पित डायग्नोस्टिक और फीटल इमेजिंग केंद्र है।'}
+              {t('about.hero.p1')}
             </p>
             <p className="text-muted-foreground font-body text-sm md:text-base max-w-3xl mx-auto leading-relaxed mt-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-              {language === 'en'
-                ? 'Patients consistently appreciate our clear explanations, calm environment, organized workflow, and respectful approach. We understand that every scan, especially during pregnancy, is an important moment. That\'s why we focus not only on delivering accurate reports, but also on ensuring you feel reassured, informed, and comfortable throughout your visit.'
-                : 'मरीज़ हमारी स्पष्ट व्याख्याओं, शांत वातावरण, संगठित कार्यप्रवाह और सम्मानजनक दृष्टिकोण की सराहना करते हैं।'}
+              {t('about.hero.p2')}
             </p>
             <p className="text-primary/80 font-body text-sm md:text-base max-w-3xl mx-auto leading-relaxed mt-4 font-medium animate-fade-up" style={{ animationDelay: '0.4s' }}>
-              {language === 'en'
-                ? 'At Focus Ultrasound and Fetal Clinic, we combine modern technology with ethical practice and personalized attention — because your health and peace of mind truly matter.'
-                : 'फोकस अल्ट्रासाउंड और फीटल क्लिनिक में, हम आधुनिक तकनीक को नैतिक अभ्यास और व्यक्तिगत ध्यान के साथ जोड़ते हैं — क्योंकि आपका स्वास्थ्य और मन की शांति वास्तव में मायने रखती है।'}
+              {t('about.hero.p3')}
             </p>
           </div>
         </section>
@@ -140,32 +86,32 @@ const AboutContent = () => {
             <div className="text-center mb-12 md:mb-16">
               <span className="inline-block px-4 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-body font-medium mb-4">
                 <Stethoscope className="w-4 h-4 inline mr-1" />
-                {language === 'en' ? 'Expert Team' : 'विशेषज्ञ टीम'}
+                {t('about.team.badge')}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-                {t('doctors.title')}
+                {t('about.team.title')}
               </h2>
               <p className="text-muted-foreground font-body text-base mt-2 max-w-xl mx-auto">
-                {t('doctors.subtitle')}
+                {t('about.team.subtitle')}
               </p>
             </div>
 
             <div className="space-y-10 max-w-5xl mx-auto">
-              {doctorsData.map((doctor, index) => (
+              {doctors.map((doctor, index) => (
                 <div
                   key={doctor.name}
                   className="bg-card rounded-2xl border border-border overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 animate-fade-up"
                   style={{ animationDelay: `${index * 0.15}s` }}
                 >
                   <div className="flex flex-col md:flex-row">
-                    {/* Doctor Photo - premium styling */}
-                    <div className="md:w-64 flex-shrink-0 bg-muted/20 flex items-center justify-center p-6 transition-all duration-500 group-hover:bg-primary/5">
-                      <div className="w-44 h-44 md:w-52 md:h-52 rounded-[2rem] overflow-hidden border border-primary/10 shadow-medium bg-white p-1.5 transition-all duration-500 group-hover:shadow-elevated group-hover:-translate-y-1">
+                    {/* Doctor Photo */}
+                    <div className="md:w-64 flex-shrink-0 bg-muted/20 flex items-center justify-center p-6 transition-all duration-500">
+                      <div className="w-44 h-44 md:w-52 md:h-52 rounded-[2rem] overflow-hidden border border-primary/10 shadow-medium bg-card p-1.5 transition-all duration-500">
                         <div className="w-full h-full rounded-[1.8rem] overflow-hidden bg-muted/10 shadow-inner">
                           <img loading="lazy"
                             src={doctor.image}
-                            alt={language === 'en' ? doctor.name : doctor.nameHi}
-                            className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110"
+                            alt={doctor.name}
+                            className="w-full h-full object-contain transition-transform duration-700 ease-out hover:scale-110"
                           />
                         </div>
                       </div>
@@ -175,16 +121,16 @@ const AboutContent = () => {
                     <div className="flex-1 p-6 md:p-8">
                       <div className="flex flex-wrap items-center gap-3 mb-3">
                         <h3 className="font-display text-xl md:text-2xl font-bold text-foreground">
-                          {language === 'en' ? doctor.name : doctor.nameHi}
+                          {doctor.name}
                         </h3>
                         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body font-medium">
                           <Award className="w-3 h-3" />
-                          Specialist
+                          {t('doctors.specialist')}
                         </span>
                       </div>
 
                       <p className="text-primary font-body font-semibold text-sm mb-1">
-                        {language === 'en' ? doctor.specialization : doctor.specializationHi}
+                        {doctor.role}
                       </p>
                       <p className="text-muted-foreground font-body text-sm mb-4">
                         {doctor.qualifications}
@@ -192,7 +138,7 @@ const AboutContent = () => {
 
                       {/* Bio */}
                       <div className="text-foreground/80 font-body text-sm leading-relaxed mb-5 space-y-2">
-                        {doctor.bio.split('\n\n').map((para, i) => (
+                        {doctor.bio.map((para: string, i: number) => (
                           <p key={i}>{para}</p>
                         ))}
                       </div>
@@ -201,24 +147,16 @@ const AboutContent = () => {
                       <div className="mb-6">
                         <h4 className="font-display text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
                           <GraduationCap className="w-4 h-4 text-primary" />
-                          Areas of Expertise
+                          {t('about.expertiseTitle')}
                         </h4>
                         <div className="flex flex-wrap gap-2">
-                          {doctor.expertise.map((item) => (
+                          {doctor.expertise.map((item: string) => (
                             <span key={item} className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-body">
                               {item}
                             </span>
                           ))}
                         </div>
                       </div>
-
-                      {/* Expertise and Contact Info only */}
-
-                      {doctor.publications && (
-                        <p className="text-muted-foreground font-body text-xs italic mb-4">
-                          {doctor.publications}
-                        </p>
-                      )}
 
                       {/* Email */}
                       <div className="flex flex-wrap items-center gap-3">
@@ -240,16 +178,15 @@ const AboutContent = () => {
 
         {/* Degrees & Certifications */}
         <section className="py-24 px-4 bg-secondary/5 relative overflow-hidden" id="certifications">
-          {/* Subtle background glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-primary/10 blur-[120px] rounded-[100%] pointer-events-none" />
 
           <div className="container mx-auto max-w-[1100px] relative z-10">
             <div className="text-center mb-16">
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-display font-bold uppercase tracking-widest mb-4">
-                {language === 'en' ? 'Credentials' : 'प्रमाणपत्र'}
+                {t('about.credentials.badge')}
               </span>
               <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-6">
-                {language === 'en' ? 'Degrees & Certifications' : 'डिग्री और प्रमाणपत्र'}
+                {t('about.credentials.title')}
               </h2>
               <div className="w-16 h-1 bg-primary/40 mx-auto rounded-full" />
             </div>
@@ -261,7 +198,6 @@ const AboutContent = () => {
                   className="group relative flex flex-col p-8 md:p-10 rounded-[2rem] bg-card backdrop-blur-xl border border-border hover:border-primary/30 hover:bg-card/80 transition-all duration-500 hover:-translate-y-2 hover:shadow-elevated shadow-soft animate-fade-up"
                   style={{ animationDelay: `${index * 0.15}s` }}
                 >
-                  {/* Subtle top inner glow */}
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <div className="flex items-start justify-between mb-8">
@@ -292,10 +228,10 @@ const AboutContent = () => {
                   <div className="space-y-6 flex-1">
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 rounded-[1rem] bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 group-hover:text-primary text-muted-foreground transition-colors duration-300">
-                        <span className="text-sm">📄</span>
+                        <FileText className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="text-foreground/80 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Registration</h4>
+                        <h4 className="text-foreground/80 font-display font-semibold text-sm mb-1 uppercase tracking-wider">{t('about.credentials.registrationLabel')}</h4>
                         {doc.registration.map(reg => (
                           <div key={reg} className="text-muted-foreground text-sm font-body">{reg}</div>
                         ))}
@@ -304,10 +240,10 @@ const AboutContent = () => {
 
                     <div className="flex items-start gap-4">
                       <div className="w-8 h-8 rounded-[1rem] bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 group-hover:text-primary text-muted-foreground transition-colors duration-300">
-                        <span className="text-sm">🏥</span>
+                        <Building2 className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="text-foreground/80 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Formerly At</h4>
+                        <h4 className="text-foreground/80 font-display font-semibold text-sm mb-1 uppercase tracking-wider">{t('about.credentials.formerlyLabel')}</h4>
                         <ul className="space-y-1">
                           {doc.formerly.map(hospital => (
                             <li key={hospital} className="text-muted-foreground text-sm font-body flex items-baseline gap-2">
@@ -332,78 +268,14 @@ const AboutContent = () => {
           </div>
         </section>
 
-
-
-        {/* redesigned Clinic Gallery */}
-        <section className="py-24 px-4 bg-background overflow-hidden" id="clinic-gallery">
-          <div className="container-narrow mx-auto">
-            <div className="text-center mb-16">
-              <span className="inline-block px-4 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-display font-semibold uppercase tracking-widest mb-4">
-                {language === 'en' ? 'The Clinic Experience' : 'क्लिनिक का अनुभव'}
-              </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-                {language === 'en' ? 'Our Gallery' : 'हमारी गैलरी'}
-              </h2>
-              <div className="w-16 h-1 bg-primary/30 mx-auto rounded-full" />
-            </div>
-            
-            <div className="columns-1 md:columns-2 gap-6 md:gap-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
-              {[
-                { 
-                  src: '/images/clinic-exterior-new.webp', 
-                  label: language === 'en' ? 'Modern Exterior' : 'आधुनिक बाहरी हिस्सा',
-                  aspect: 'aspect-[1024/576]'
-                },
-                { 
-                  src: '/images/clinic-waiting-new.webp', 
-                  label: language === 'en' ? 'Comfortable Waiting Lounge' : 'आरामदायक प्रतीक्षा कक्ष',
-                  aspect: 'aspect-[765/1020]'
-                },
-                { 
-                  src: '/images/clinic-entry-new.webp', 
-                  label: language === 'en' ? 'Welcoming Reception' : 'स्वागत क्षेत्र',
-                  aspect: 'aspect-[512/310]'
-                },
-                { 
-                  src: clinicSamsung, 
-                  label: language === 'en' ? 'Diagnostic Suite' : 'डायग्नोस्टिक सूट',
-                  aspect: 'aspect-[816/1020]'
-                }
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className={`group relative overflow-hidden rounded-[2rem] border border-border shadow-soft transition-all duration-700 hover:shadow-elevated hover:-translate-y-2 animate-fade-up break-inside-avoid`}
-                  style={{ animationDelay: `${(index % 2) * 0.15}s` }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                  <div className={`w-full ${item.aspect} relative bg-slate-50/50`}>
-                    <img loading="lazy"
-                      src={item.src}
-                      alt={item.label}
-                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-8 z-20 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                    <p className="font-display text-lg font-bold text-white mb-1">
-                      {item.label}
-                    </p>
-                    <div className="w-8 h-1 bg-primary rounded-full" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Clinic Timings removed - only on Home page */}
+        {/* Gallery Section */}
+        <div id="clinic-gallery">
+          <GalleryPreview showLink={false} />
+        </div>
       </main>
       <Footer />
     </div>
   );
 };
-
-const About = () => (
-  <AboutContent />
-);
 
 export default About;

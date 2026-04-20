@@ -29,13 +29,13 @@ const Hero = () => {
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
-          src="/images/mother_baby_hero.png"
+          src="/images/mother_baby_hero.webp"
           fetchPriority="high"
           alt="Joyful mother lifting her baby in a sunlit room"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-[95%_center] scale-105"
         />
-        {/* Soft Sophisticated Gradient - Reduced Opacity for better image visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-background/20 to-transparent md:from-background/40 md:via-background/10 md:to-transparent" />
+        {/* Soft Sophisticated Gradient - Enhanced for left-side text depth */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/20 to-transparent md:from-background/70 md:via-background/10 md:to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent opacity-30" />
       </motion.div>
 
@@ -46,17 +46,17 @@ const Hero = () => {
       <div className="relative z-10 container-narrow mx-auto px-4 py-20 flex-1 flex flex-col justify-center">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
-          {/* Content Column */}
-          <div className="lg:col-span-10 xl:col-span-9 flex flex-col items-center lg:items-start text-center lg:text-left">
+          {/* Content Column - Aggressively narrowed and left-aligned */}
+          <div className="lg:col-span-7 xl:col-span-6">
             <MotionReveal delay={0.1} duration={0.8}>
               <BrandLogo size="lg" className="mb-6" />
             </MotionReveal>
 
             <MotionReveal delay={0.2} duration={0.8}>
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold leading-[1.1] mb-6 tracking-tight text-slate-950">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 leading-[1.1] mb-8 max-w-[12ch] md:max-w-2xl">
                 {language === 'en' ? (
                   <>
-                    Premier <span className="text-medical-teal">Ultrasound & Fetal Medicine</span>
+                    Ultrasound & <span className="text-medical-teal">Fetal Medicine</span> Clinic <br />
                     <span className="text-2xl md:text-3xl lg:text-4xl block mt-4 font-medium text-slate-700">in Greater Noida West</span>
                   </>
                 ) : (
@@ -69,7 +69,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4} duration={0.8}>
-              <p className="text-slate-700 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-3xl">
+              <p className="text-slate-700 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-2xl">
                 {language === 'en' 
                   ? "Experience the highest standard of fetal ultrasound and medicine in a serene, professional environment dedicated to you and your baby's well-being."
                   : "आपके और आपके बच्चे की भलाई के लिए समर्पित एक शांत, पेशेवर वातावरण में भ्रूण अल्ट्रासाउंड और चिकित्सा के उच्चतम मानक का अनुभव करें।"}
@@ -77,7 +77,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.6} duration={0.8}>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-12">
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <Link
                   to="/contact"
                   className="bg-medical-teal text-white hover:bg-medical-teal/90 px-8 py-4 rounded-2xl font-semibold shadow-glow flex items-center gap-2 transform transition-transform hover:-translate-y-1"
@@ -104,7 +104,7 @@ const Hero = () => {
               <div className="flex flex-wrap items-center gap-8 border-t border-slate-100 pt-10">
                 {[
                   { value: '5000+', label: language === 'en' ? 'Happy Families' : 'खुश परिवार', icon: Heart },
-                  { value: '10+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
+                  { value: '5+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
                   { value: '4.9★', label: language === 'en' ? 'Expert Rating' : 'विशेषज्ञ रेटिंग', icon: Star },
                 ].map((m) => (
                   <div key={m.label} className="flex items-center gap-3">

@@ -28,7 +28,7 @@ export class EventGateway {
         await prisma.kernelEvent.create({
           data: {
             eventType: payload.type || 'kernel.unknown',
-            payload: payload.data || {},
+            payload: payload.data ? JSON.stringify(payload.data) : '{}',
             region: this.region
           }
         });
