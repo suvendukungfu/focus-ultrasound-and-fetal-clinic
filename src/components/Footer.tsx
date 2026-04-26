@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
 import { Link } from 'react-router-dom';
-const clinicLogo = '/images/clinic-logo-new.png';
+const clinicLogo = '/images/clinic-logo-new.webp';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -32,7 +32,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full overflow-hidden border border-primary/20">
-                <img src={clinicLogo} alt="Focus Ultrasound" className="w-full h-full object-cover" />
+                <img loading="lazy" src={clinicLogo} alt="Focus Ultrasound" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h3 className="font-display font-semibold text-lg">Focus Ultrasound</h3>
@@ -98,8 +98,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary" />
-                <a href="tel:+919870475400" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm">
-                  +91 98704 75400
+                <a href="tel:+918287655133" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm">
+                  +91 82876 55133
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -110,9 +110,10 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Clock className="w-5 h-5 text-primary" />
-                <span className="text-muted-foreground font-body text-sm">
-                  Mon - Sat: 9:00 AM - 8:00 PM
-                </span>
+                <div className="text-muted-foreground font-body text-sm">
+                  <p>Mon - Sat: 9:00 AM - 8:00 PM</p>
+                  <p>Sunday: 9:00 AM - 2:00 PM</p>
+                </div>
               </li>
             </ul>
           </div>
