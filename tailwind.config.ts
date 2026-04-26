@@ -114,6 +114,10 @@ export default {
           "0%": { opacity: "0", transform: "translateX(20px)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
+        "pulse-scale": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -123,6 +127,7 @@ export default {
         "scale-in": "scale-in 0.5s ease-out forwards",
         "slide-up": "slide-up 0.5s ease-out forwards",
         "slide-in-right": "slide-in-right 0.5s ease-out forwards",
+        "pulse-scale": "pulse-scale 3s ease-in-out infinite",
       },
       boxShadow: {
         soft: "var(--shadow-soft)",
