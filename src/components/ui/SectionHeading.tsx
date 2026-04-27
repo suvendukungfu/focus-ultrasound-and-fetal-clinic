@@ -7,11 +7,14 @@ interface SectionHeadingProps {
   subtitle?: string;
   centered?: boolean;
   light?: boolean;
+  level?: 'h1' | 'h2' | 'h3';
 }
 
 const SectionHeading: React.FC<SectionHeadingProps> = ({ 
-  badge, title, subtitle, centered = true, light = false 
+  badge, title, subtitle, centered = true, light = false, level = 'h2' 
 }) => {
+  const TitleTag = level;
+
   return (
     <div className={`mb-16 md:mb-24 ${centered ? 'text-center' : 'text-left'}`}>
       <motion.span
@@ -27,17 +30,20 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         {badge}
       </motion.span>
       
-      <motion.h2
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-[1.1] ${
-          light ? 'text-foreground' : 'text-foreground'
-        }`}
       >
-        {title}
-      </motion.h2>
+        <TitleTag
+          className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-[1.1] ${
+            light ? 'text-foreground' : 'text-foreground'
+          }`}
+        >
+          {title}
+        </TitleTag>
+      </motion.div>
       
       {subtitle && (
         <motion.p

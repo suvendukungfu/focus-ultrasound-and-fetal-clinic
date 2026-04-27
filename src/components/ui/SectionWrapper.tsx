@@ -20,9 +20,9 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
   const { theme } = useTheme();
 
   const variantStyles = {
-    primary: theme === 'dark' ? 'bg-[#0b1222]' : 'bg-slate-50',
-    secondary: theme === 'dark' ? 'bg-[#0f172a]' : 'bg-white',
-    accent: theme === 'dark' ? 'bg-[#0b1222]/50' : 'bg-primary/5',
+    primary: 'bg-background',
+    secondary: 'bg-card',
+    accent: 'bg-primary/5',
   };
 
   return (
@@ -40,7 +40,7 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
           <div className="absolute inset-0 bg-noise-pattern opacity-[0.02] mix-blend-overlay" />
           
           {/* Radial Highlight */}
-          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full blur-[150px] opacity-20 transition-all duration-1000 ${theme === 'dark' ? 'bg-primary/5' : 'bg-primary/10'}`} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full blur-[150px] opacity-20 transition-all duration-1000 bg-primary/10" />
         </div>
       )}
       

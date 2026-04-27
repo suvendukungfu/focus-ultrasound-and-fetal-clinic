@@ -31,10 +31,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-      className={`
-        relative rounded-[3.5rem] p-8 md:p-24 border overflow-hidden group shadow-elevated transition-all duration-700
-        ${theme === 'dark' ? 'bg-card/30 border-white/10 backdrop-blur-3xl' : 'bg-white/80 border-slate-200 backdrop-blur-xl'}
-      `}
+      className="relative rounded-[2rem] p-8 md:p-24 border overflow-hidden group shadow-elevated transition-all duration-700 bg-card/80 border-border backdrop-blur-xl"
     >
       {/* Decorative Layering */}
       <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-20 transition-opacity duration-1000 group-hover:scale-110 pointer-events-none">
@@ -47,7 +44,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 shadow-soft transition-transform duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground"
+            className="w-16 h-16 rounded-[1rem] bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 shadow-soft transition-transform duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground"
           >
             <Sparkles className="w-8 h-8" strokeWidth={1.5} />
           </motion.div>
@@ -65,10 +62,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
             </span>
           </h3>
           
-          <p className={`
-            font-body text-2xl leading-relaxed mb-14 transition-colors duration-500
-            ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}
-          `}>
+          <p className="font-body text-2xl leading-relaxed mb-14 transition-colors duration-500 text-muted-foreground">
             {desc}
           </p>
           
@@ -77,10 +71,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
               <motion.div 
                 key={feat.l} 
                 whileHover={{ scale: 1.05, y: -2 }}
-                className={`
-                  flex items-center gap-3 px-6 py-4 rounded-2xl border transition-all duration-300 shadow-soft font-bold text-sm tracking-wide
-                  ${theme === 'dark' ? 'bg-background/40 border-white/5 hover:border-primary/40' : 'bg-white/50 border-slate-200 hover:border-primary/30'}
-                `}
+                className="flex items-center gap-3 px-6 py-4 rounded-[1rem] border transition-all duration-300 shadow-soft font-bold text-sm tracking-wide bg-card/50 border-border hover:border-primary/30"
               >
                 <feat.i className="w-5 h-5 text-primary" strokeWidth={2} />
                 {feat.l}
@@ -94,7 +85,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-4 bg-primary text-primary-foreground px-14 py-6 rounded-[2.5rem] font-black text-lg transition-all shadow-glow hover:shadow-primary/40 group relative overflow-hidden"
+            className="inline-flex items-center gap-4 bg-primary text-primary-foreground px-14 py-6 rounded-[2rem] font-black text-lg transition-all shadow-glow hover:shadow-primary/40 group relative overflow-hidden"
           >
             <span className="relative z-10">{language === 'en' ? 'Explore MedGenome' : 'मेडजिनोम एक्सप्लोर करें'}</span>
             <ArrowRight className="w-7 h-7 relative z-10 transition-transform duration-300 group-hover:translate-x-2" />
@@ -106,12 +97,9 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
           <motion.div 
             whileHover={{ y: -12, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className={`
-              rounded-[4rem] overflow-hidden border shadow-elevated aspect-[4/5] relative transition-colors duration-700
-              ${theme === 'dark' ? 'border-border' : 'border-slate-200'}
-            `}
+            className="rounded-[2rem] overflow-hidden border border-border shadow-elevated aspect-[4/5] relative transition-colors duration-700"
           >
-            <img 
+            <img loading="lazy" 
               src={image} 
               alt={title}
               className="w-full h-full object-cover grayscale-[0.2] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
@@ -123,7 +111,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
               initial={{ x: 30, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               whileHover={{ scale: 1.1 }}
-              className="absolute bottom-8 right-8 md:-bottom-10 md:-right-10 bg-card/90 backdrop-blur-2xl border border-primary/30 p-10 rounded-[2.5rem] shadow-glow animate-float-slow hidden md:block"
+              className="absolute bottom-8 right-8 md:-bottom-10 md:-right-10 bg-card/90 backdrop-blur-2xl border border-primary/30 p-10 rounded-[2rem] shadow-glow animate-float-slow hidden md:block"
             >
               <p className="text-primary text-5xl font-black mb-2 tracking-tighter">{accuracy}</p>
               <p className="text-muted-foreground text-xs font-bold uppercase tracking-[0.3em] pl-1">
