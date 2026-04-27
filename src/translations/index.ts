@@ -33,6 +33,10 @@ export const translations: Translations = {
   'stats.accuracy': { en: 'Accuracy', hi: 'सटीकता' },
   'stats.hygiene': { en: 'Hygiene', hi: 'स्वच्छता' },
 
+  // Equipment
+  'equipment.badge': { en: 'World-Class Equipment', hi: 'विश्व-स्तरीय उपकरण' },
+  'equipment.title': { en: 'Advanced Diagnostic Technology', hi: 'उन्नत डायग्नोस्टिक तकनीक' },
+
   // Doctors
   'doctors.title': { en: 'Meet Our Experts', hi: 'हमारे विशेषज्ञों से मिलें' },
   'doctors.subtitle': { en: 'Experienced professionals dedicated to your care', hi: 'आपकी देखभाल के लिए समर्पित अनुभवी पेशेवर' },
@@ -51,15 +55,27 @@ export const translations: Translations = {
   'reviews.leave': { en: 'Share Your Experience', hi: 'अपना अनुभव साझा करें' },
   'reviews.google': { en: 'Review us on Google', hi: 'गूगल पर समीक्षा करें' },
 
+  // Clinic Timings
+  'timings.badge': { en: 'Clinic Hours', hi: 'क्लिनिक समय' },
+  'timings.title': { en: 'Clinic Timings', hi: 'क्लिनिक का समय' },
+  'timings.openWelcome': { en: 'We are open — Welcome!', hi: 'हम खुले हैं — स्वागत है!' },
+  'timings.closedNotice': { en: 'Currently closed. See timings below.', hi: 'वर्तमान में बंद है। नीचे समय देखें।' },
+  'timings.call': { en: 'Call: +91-98704-75400', hi: 'कॉल करें: +91-98704-75400' },
+
   // Culture
   'culture.title': { en: 'Our Work Culture', hi: 'हमारी कार्य संस्कृति' },
   'culture.subtitle': { en: 'What makes us different', hi: 'हमें अलग क्या बनाता है' },
+
+  // Gallery
+  'gallery.badge': { en: 'The Clinic Experience', hi: 'क्लिनिक का अनुभव' },
+  'gallery.title': { en: 'A Sanctuary for Motherhood', hi: 'मातृत्व के लिए एक अभयारण्य' },
+  'gallery.viewAll': { en: 'View Full Gallery', hi: 'पूरी गैलरी देखें' },
 
   // Contact
   'contact.title': { en: 'Book Your Appointment', hi: 'अपॉइंटमेंट बुक करें' },
   'contact.subtitle': { en: 'Advanced fetal imaging with expert care', hi: 'विशेषज्ञों द्वारा उन्नत भ्रूण इमेजिंग' },
   'contact.hero.badge': { en: 'Trusted Fetal Care', hi: 'विश्वसनीय भ्रूण देखभाल' },
-  'contact.hero.title': { en: 'Book Your Ultrasound Appointment with Confidence', hi: 'आत्मविश्वास के साथ अपना अल्ट्रासाउंड अपॉइंटमेंट बुक करें' },
+  'contact.hero.title': { en: 'Book Ultrasound & Fetal Scan in Greater Noida West', hi: 'ग्रेटर नोएडा वेस्ट में अल्ट्रासाउंड और फीटल स्कैन बुक करें' },
   'contact.hero.subtitle': { en: 'Advanced fetal imaging with expert radiologists. Safe, accurate, and compassionate care for you and your baby.', hi: 'विशेषज्ञ रेडियोलॉजिस्ट के साथ उन्नत भ्रूण इमेजिंग। आपके और आपके बच्चे के लिए सुरक्षित, सटीक और दयालु देखभाल।' },
   'contact.hero.callNow': { en: 'Call Now', hi: 'अभी कॉल करें' },
   'contact.hero.trust1': { en: 'Certified Radiologists', hi: 'प्रमाणित रेडियोलॉजिस्ट' },
@@ -90,4 +106,8 @@ export const translations: Translations = {
   'common.language': { en: 'हिंदी', hi: 'English' },
   'common.loading': { en: 'Please wait...', hi: 'कृपया प्रतीक्षा करें...' },
   'common.success': { en: 'Submitted Successfully', hi: 'सफलतापूर्वक जमा किया गया' },
+  'common.clinicStatus': { en: 'Clinic Status', hi: 'क्लिनिक की स्थिति' },
+  'common.open': { en: 'Open Now', hi: 'अभी खुला है' },
+  'common.closed': { en: 'Closed', hi: 'बंद है' },
+  'common.busy': { en: 'Busy', hi: 'व्यस्त' },
 };
