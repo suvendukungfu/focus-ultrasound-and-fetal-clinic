@@ -4,6 +4,7 @@ import { Calendar, Phone, ArrowRight, Award, ShieldCheck, Star, Heart, Activity 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Stats from './Stats';
 import { MotionReveal } from './MotionReveal';
+import BrandLogo from './BrandLogo';
 import { useRef } from 'react';
 
 const Hero = () => {
@@ -24,38 +25,44 @@ const Hero = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20 bg-medical-soft/30">
+    <section ref={containerRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20 bg-background/30">
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
-          src="/images/mother_baby_hero.png"
+          src="/images/mother_baby_hero.webp"
+          fetchPriority="high"
           alt="Joyful mother lifting her baby in a sunlit room"
           className="w-full h-full object-cover object-center"
         />
         {/* Soft Sophisticated Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/40 md:from-white md:via-white/90 md:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/40 md:from-background md:via-background/90 md:to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
       </motion.div>
 
       {/* Modern Glass Background Elements */}
-      <div className="absolute top-40 right-20 w-96 h-96 bg-medical-teal/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-40 left-20 w-80 h-80 bg-medical-blue/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-40 right-20 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-40 left-20 w-80 h-80 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 container-narrow mx-auto px-4 py-20 flex-1 flex flex-col justify-center">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
           {/* Content Column */}
           <div className="lg:col-span-7">
+            <MotionReveal delay={0.1} duration={0.8}>
+              <BrandLogo size="lg" className="mb-6" />
+            </MotionReveal>
+
             <MotionReveal delay={0.2} duration={0.8}>
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-slate-900 leading-[1.05] mb-8">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 leading-[1.1] mb-8">
                 {language === 'en' ? (
                   <>
-                    Cherish Your <br />
-                    <span className="text-medical-teal">Fetal Journey</span>
+                    Ultrasound & <span className="text-medical-teal">Fetal Medicine</span> Clinic <br />
+                    <span className="text-2xl md:text-3xl lg:text-4xl block mt-4 font-medium text-slate-600">in Greater Noida West</span>
                   </>
                 ) : (
                   <>
-                    अपनी <span className="text-medical-teal">भ्रूण यात्रा</span> <br /> को संजोएं
+                    ग्रेटर नोएडा वेस्ट में <br />
+                    <span className="text-medical-teal">अल्ट्रासाउंड और फीटल मेडिसिन</span> क्लीनिक
                   </>
                 )}
               </h1>
@@ -80,11 +87,15 @@ const Hero = () => {
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <a
-                  href="tel:+919870475400"
-                  className="bg-white text-slate-900 hover:bg-slate-50 border border-slate-200 px-8 py-4 rounded-2xl font-semibold flex items-center gap-2 shadow-soft transform transition-transform hover:-translate-y-1"
+                  href="https://wa.me/918287655133?text=Hello%2C%20I%20would%20like%20to%20book%20an%20ultrasound%20appointment."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-green-500 text-white hover:bg-green-600 px-8 py-4 rounded-2xl font-semibold shadow-glow flex items-center gap-2 transform transition-transform hover:-translate-y-1"
                 >
-                  <Phone className="w-5 h-5 text-medical-blue" />
-                  {t('hero.call')}
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .015 5.398.01 12.038c0 2.123.554 4.197 1.608 6.06L0 24l6.096-1.599a11.822 11.822 0 005.949 1.599h.005c6.636 0 12.036-5.399 12.041-12.04a11.782 11.782 0 00-3.48-8.514z"/>
+                  </svg>
+                  {language === 'en' ? 'Book via WhatsApp' : 'व्हाट्सएप से बुक करें'}
                 </a>
               </div>
             </MotionReveal>
@@ -116,7 +127,7 @@ const Hero = () => {
                <motion.div 
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-20 right-0 max-w-[280px] bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-elevated border border-white/50"
+                className="absolute top-20 right-0 max-w-[280px] bg-white/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-elevated border border-white/50"
                >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-full bg-medical-teal/10 flex items-center justify-center">
@@ -127,7 +138,7 @@ const Hero = () => {
                       <p className="text-xs text-slate-500">Elite Diagnostic Care</p>
                     </div>
                   </div>
-                  <img src="/images/ultrasound-machine.jpg" alt="Advanced Ultrasound System" className="rounded-2xl mb-4 w-full aspect-video object-cover" />
+                  <img loading="lazy" src="/images/ultrasound-machine.webp" alt="Advanced Ultrasound System" className="rounded-2xl mb-4 w-full aspect-video object-cover" />
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-medical-blue bg-medical-blue/10 px-3 py-1 rounded-full uppercase tracking-wider">Premium Tech</span>
                     <span className="text-xs font-semibold text-slate-400 italic">GE Voluson E10</span>
