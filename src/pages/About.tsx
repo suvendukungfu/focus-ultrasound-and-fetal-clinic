@@ -2,16 +2,17 @@ import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackgroundPattern from '@/components/BackgroundPattern';
+import SEO from '@/components/SEO';
 
 import { Award, Mail, GraduationCap, Stethoscope } from 'lucide-react';
-const drSamar = '/images/dr-samar-photo.png';
-const drRahul = '/images/dr-rahul-photo.png';
-const drSamarDegree = '/images/dr-samar-cert.png';
-const drRahulDegree = '/images/dr-rahul-cert.png';
-const clinicExterior = '/images/clinic-exterior.jpg';
-const clinicEntry = '/images/facilities-1.jpg';
-const clinicWaiting = '/images/clinic-waiting.jpg';
-const clinicSamsung = '/images/clinic-samsung-v7.jpg';
+const drSamar = '/images/dr-samar-photo.webp';
+const drRahul = '/images/dr-rahul-photo.webp';
+const drSamarDegree = '/images/dr-samar-cert.webp';
+const drRahulDegree = '/images/dr-rahul-cert.webp';
+const clinicExterior = '/images/clinic-exterior.webp';
+const clinicEntry = '/images/facilities-1.webp';
+const clinicWaiting = '/images/clinic-waiting.webp';
+const clinicSamsung = '/images/clinic-samsung-v7.webp';
 
 const doctorsData = [
   {
@@ -22,7 +23,7 @@ const doctorsData = [
     qualifications: 'MBBS, MD, DNB (Radiodiagnosis)',
     email: 'samarsurya777@gmail.com',
     image: drSamar,
-    degreeImage: '/images/dr-samar-degree-final.png',
+    degreeImage: '/images/dr-samar-degree-final.webp',
     bio: `Dr. Samar Surya Nirwal is a highly accomplished Radiologist and Fetal Medicine Specialist dedicated to delivering precise, ethical, and compassionate diagnostic care. With strong academic credentials and advanced subspecialty training, he brings a blend of clinical expertise and evidence-based practice to every patient he serves.
 
 He completed his MBBS from King George's Medical University (KGMU), Lucknow, followed by MD Radiology from VMMC & Safdarjung Hospital, New Delhi, and later earned his DNB Radiology qualification.
@@ -47,7 +48,7 @@ To further advance his expertise in maternal–fetal imaging, he completed a Fel
     qualifications: 'MBBS, MD (Radio Diagnosis)',
     email: 'rahul2choudhary.48@gmail.com',
     image: drRahul,
-    degreeImage: '/images/dr-rahul-degree-final.png',
+    degreeImage: '/images/dr-rahul-degree-final.webp',
     bio: `Dr. Rahul Choudhary is a highly experienced radiologist with a special interest in fetal medicine, obstetric ultrasound, and advanced diagnostic imaging. He is committed to delivering accurate, ethical, and patient-centered imaging services with a strong focus on quality and clinical excellence.
 
 He completed his postgraduate training in Radiodiagnosis from Safdarjung Hospital, followed by Senior Residency at VMMC & Safdarjung Hospital and AIIMS Patna.
@@ -99,6 +100,10 @@ const AboutContent = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Expert Fetal Medicine Specialists in Greater Noida West | Focus Ultrasound"
+        description="Meet our specialist radiologists, Dr. Samar Surya Nirwal and Dr. Rahul Choudhary. Experts in high-risk pregnancy scans and advanced fetal imaging in Nirala Estate."
+      />
       <Header />
       <main className="pt-20">
         {/* Hero Section */}
@@ -109,7 +114,7 @@ const AboutContent = () => {
               About Us
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              {language === 'en' ? 'Focus Ultrasound & Fetal Clinic' : 'फोकस अल्ट्रासाउंड एवं फीटल क्लिनिक'}
+              {language === 'en' ? 'Focus Ultrasound & Fetal Clinic in Greater Noida West' : 'ग्रेटर नोएडा वेस्ट में फोकस अल्ट्रासाउंड एवं फीटल क्लिनिक'}
             </h1>
             <p className="text-muted-foreground font-body text-base md:text-lg max-w-3xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '0.2s' }}>
               {language === 'en'
@@ -155,9 +160,9 @@ const AboutContent = () => {
                   <div className="flex flex-col md:flex-row">
                     {/* Doctor Photo - premium styling */}
                     <div className="md:w-64 flex-shrink-0 bg-muted/20 flex items-center justify-center p-6 transition-all duration-500 group-hover:bg-primary/5">
-                      <div className="w-44 h-44 md:w-52 md:h-52 rounded-[2.5rem] overflow-hidden border border-primary/10 shadow-medium bg-white p-1.5 transition-all duration-500 group-hover:shadow-elevated group-hover:-translate-y-1">
-                        <div className="w-full h-full rounded-[2.2rem] overflow-hidden bg-muted/10 shadow-inner">
-                          <img
+                      <div className="w-44 h-44 md:w-52 md:h-52 rounded-[2rem] overflow-hidden border border-primary/10 shadow-medium bg-white p-1.5 transition-all duration-500 group-hover:shadow-elevated group-hover:-translate-y-1">
+                        <div className="w-full h-full rounded-[1.8rem] overflow-hidden bg-muted/10 shadow-inner">
+                          <img loading="lazy"
                             src={doctor.image}
                             alt={language === 'en' ? doctor.name : doctor.nameHi}
                             className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110"
@@ -234,39 +239,39 @@ const AboutContent = () => {
         </section>
 
         {/* Degrees & Certifications */}
-        <section className="py-24 px-4 bg-[#0b1220] relative overflow-hidden" id="certifications">
+        <section className="py-24 px-4 bg-secondary/5 relative overflow-hidden" id="certifications">
           {/* Subtle background glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-[#00c8ff]/10 blur-[120px] rounded-[100%] pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-primary/10 blur-[120px] rounded-[100%] pointer-events-none" />
 
           <div className="container mx-auto max-w-[1100px] relative z-10">
             <div className="text-center mb-16">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-[#00c8ff]/10 border border-[#00c8ff]/20 text-[#00c8ff] text-xs font-display font-bold uppercase tracking-widest mb-4">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-display font-bold uppercase tracking-widest mb-4">
                 {language === 'en' ? 'Credentials' : 'प्रमाणपत्र'}
               </span>
-              <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-6">
                 {language === 'en' ? 'Degrees & Certifications' : 'डिग्री और प्रमाणपत्र'}
               </h2>
-              <div className="w-16 h-1 bg-[#00c8ff]/40 mx-auto rounded-full" />
+              <div className="w-16 h-1 bg-primary/40 mx-auto rounded-full" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
               {certificationsData.map((doc, index) => (
                 <div 
                   key={index}
-                  className="group relative flex flex-col p-8 md:p-10 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-[#00c8ff]/30 hover:bg-white/[0.05] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,200,255,0.15)] animate-fade-up"
+                  className="group relative flex flex-col p-8 md:p-10 rounded-[2rem] bg-card backdrop-blur-xl border border-border hover:border-primary/30 hover:bg-card/80 transition-all duration-500 hover:-translate-y-2 hover:shadow-elevated shadow-soft animate-fade-up"
                   style={{ animationDelay: `${index * 0.15}s` }}
                 >
                   {/* Subtle top inner glow */}
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <div className="flex items-start justify-between mb-8">
                     <div className="flex items-center gap-5">
-                      <div className="w-20 h-20 rounded-full bg-slate-800 border-2 border-white/10 p-1 flex-shrink-0 relative overflow-hidden group-hover:border-[#00c8ff]/50 transition-colors duration-500">
-                        <img src={doc.avatar} alt={doc.name} className="w-full h-full object-cover rounded-full" />
+                      <div className="w-20 h-20 rounded-full bg-muted border-2 border-border p-1 flex-shrink-0 relative overflow-hidden group-hover:border-primary/50 transition-colors duration-500">
+                        <img loading="lazy" src={doc.avatar} alt={doc.name} className="w-full h-full object-cover rounded-full" />
                       </div>
                       <div>
-                        <h3 className="font-display text-2xl font-bold text-white mb-1.5">{doc.name}</h3>
-                        <p className="text-[#00c8ff] font-display font-semibold text-sm tracking-wide">
+                        <h3 className="font-display text-2xl font-bold text-foreground mb-1.5">{doc.name}</h3>
+                        <p className="text-primary font-display font-semibold text-sm tracking-wide">
                           {doc.degree}
                         </p>
                       </div>
@@ -274,39 +279,39 @@ const AboutContent = () => {
                   </div>
 
                   <div className="mb-8">
-                    <p className="text-slate-200 font-medium text-lg leading-snug mb-1">
+                    <p className="text-foreground/90 font-medium text-lg leading-snug mb-1">
                       {doc.role}
                     </p>
-                    <p className="text-slate-400 font-body text-sm italic">
+                    <p className="text-muted-foreground font-body text-sm italic">
                       {doc.university}
                     </p>
                   </div>
 
-                  <div className="w-full h-px bg-white/10 mb-8" />
+                  <div className="w-full h-px bg-border mb-8" />
 
                   <div className="space-y-6 flex-1">
                     <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00c8ff]/10 group-hover:text-[#00c8ff] text-slate-400 transition-colors duration-300">
+                      <div className="w-8 h-8 rounded-[1rem] bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 group-hover:text-primary text-muted-foreground transition-colors duration-300">
                         <span className="text-sm">📄</span>
                       </div>
                       <div>
-                        <h4 className="text-slate-300 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Registration</h4>
+                        <h4 className="text-foreground/80 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Registration</h4>
                         {doc.registration.map(reg => (
-                          <div key={reg} className="text-slate-400 text-sm font-body">{reg}</div>
+                          <div key={reg} className="text-muted-foreground text-sm font-body">{reg}</div>
                         ))}
                       </div>
                     </div>
 
                     <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00c8ff]/10 group-hover:text-[#00c8ff] text-slate-400 transition-colors duration-300">
+                      <div className="w-8 h-8 rounded-[1rem] bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 group-hover:text-primary text-muted-foreground transition-colors duration-300">
                         <span className="text-sm">🏥</span>
                       </div>
                       <div>
-                        <h4 className="text-slate-300 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Formerly At</h4>
+                        <h4 className="text-foreground/80 font-display font-semibold text-sm mb-1 uppercase tracking-wider">Formerly At</h4>
                         <ul className="space-y-1">
                           {doc.formerly.map(hospital => (
-                            <li key={hospital} className="text-slate-400 text-sm font-body flex items-baseline gap-2">
-                              <span className="w-1.5 h-1.5 bg-[#00c8ff]/50 rounded-full flex-shrink-0"></span>
+                            <li key={hospital} className="text-muted-foreground text-sm font-body flex items-baseline gap-2">
+                              <span className="w-1.5 h-1.5 bg-primary/50 rounded-full flex-shrink-0"></span>
                               {hospital}
                             </li>
                           ))}
@@ -315,9 +320,9 @@ const AboutContent = () => {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-white/10">
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 text-xs font-semibold uppercase tracking-wider">
-                      <Award className="w-4 h-4 text-[#00c8ff]" />
+                  <div className="mt-8 pt-6 border-t border-border">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[1rem] bg-secondary/10 text-foreground/80 text-xs font-semibold uppercase tracking-wider">
+                      <Award className="w-4 h-4 text-primary" />
                       {doc.experience}
                     </span>
                   </div>
@@ -345,17 +350,17 @@ const AboutContent = () => {
             <div className="columns-1 md:columns-2 gap-6 md:gap-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
               {[
                 { 
-                  src: '/images/clinic-exterior-new.jpg', 
+                  src: '/images/clinic-exterior-new.webp', 
                   label: language === 'en' ? 'Modern Exterior' : 'आधुनिक बाहरी हिस्सा',
                   aspect: 'aspect-[1024/576]'
                 },
                 { 
-                  src: '/images/clinic-waiting-new.jpg', 
+                  src: '/images/clinic-waiting-new.webp', 
                   label: language === 'en' ? 'Comfortable Waiting Lounge' : 'आरामदायक प्रतीक्षा कक्ष',
                   aspect: 'aspect-[765/1020]'
                 },
                 { 
-                  src: '/images/clinic-entry-new.png', 
+                  src: '/images/clinic-entry-new.webp', 
                   label: language === 'en' ? 'Welcoming Reception' : 'स्वागत क्षेत्र',
                   aspect: 'aspect-[512/310]'
                 },
@@ -367,12 +372,12 @@ const AboutContent = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className={`group relative overflow-hidden rounded-[2.5rem] border border-border shadow-soft transition-all duration-700 hover:shadow-elevated hover:-translate-y-2 animate-fade-up break-inside-avoid`}
+                  className={`group relative overflow-hidden rounded-[2rem] border border-border shadow-soft transition-all duration-700 hover:shadow-elevated hover:-translate-y-2 animate-fade-up break-inside-avoid`}
                   style={{ animationDelay: `${(index % 2) * 0.15}s` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                   <div className={`w-full ${item.aspect} relative bg-slate-50/50`}>
-                    <img
+                    <img loading="lazy"
                       src={item.src}
                       alt={item.label}
                       className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
@@ -398,9 +403,7 @@ const AboutContent = () => {
 };
 
 const About = () => (
-  <LanguageProvider>
-    <AboutContent />
-  </LanguageProvider>
+  <AboutContent />
 );
 
 export default About;

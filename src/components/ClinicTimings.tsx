@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Clock, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useClinicStatus } from '@/hooks/useClinicStatus';
 
 const timings = [
   { dayEn: 'Mon – Sat', dayHi: 'सोम – शनि', time: '9:00 AM – 3:00 PM & 5:00 PM – 8:00 PM' },
@@ -8,7 +9,8 @@ const timings = [
 ];
 
 const ClinicTimings = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
+  const { data: status } = useClinicStatus();
 
   return (
     <section className="py-16 md:py-24 px-4 bg-gradient-to-r from-primary/5 to-accent/5">
@@ -22,10 +24,10 @@ const ClinicTimings = () => {
         >
           <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-body font-medium mb-4">
             <Clock className="w-3.5 h-3.5" />
-            {language === 'en' ? 'Clinic Hours' : 'क्लिनिक समय'}
+            {t('timings.badge')}
           </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-            {language === 'en' ? 'Clinic Timings' : 'क्लिनिक का समय'}
+            {t('timings.title')}
           </h2>
         </motion.div>
 
@@ -34,13 +36,13 @@ const ClinicTimings = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-card rounded-2xl border border-border shadow-elevated overflow-hidden"
+          className="glass-effect rounded-[2rem] border border-white/60 shadow-xl overflow-hidden bg-white/50 backdrop-blur-xl"
         >
-          {/* Open indicator strip */}
-          <div className="bg-primary/5 border-b border-border px-6 py-3 flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+          {/* Dynamic Open indicator strip */}
+          <div className={`${status === 'open' ? 'bg-primary/5' : 'bg-rose-500/5'} border-b border-border px-6 py-3 flex items-center gap-2`}>
+            <span className={`w-2.5 h-2.5 rounded-full ${status === 'open' ? 'bg-green-500 animate-pulse' : 'bg-rose-500'}`} />
             <span className="text-sm font-body font-medium text-foreground">
-              {language === 'en' ? 'We are open — Welcome!' : 'हम खुले हैं — स्वागत है!'}
+              {status === 'open' ? t('timings.openWelcome') : t('timings.closedNotice')}
             </span>
           </div>
 
@@ -67,11 +69,11 @@ const ClinicTimings = () => {
 
             <div className="mt-6 pt-5 border-t border-border flex flex-col sm:flex-row gap-3 items-center justify-center">
               <a
-                href="tel:+919870475400"
+                href="tel:+918287655133"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-body font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm"
               >
                 <Phone className="w-4 h-4" />
-                {language === 'en' ? 'Call: +91-98704-75400' : 'कॉल करें: +91-98704-75400'}
+                {t('timings.call')}
               </a>
             </div>
           </div>
