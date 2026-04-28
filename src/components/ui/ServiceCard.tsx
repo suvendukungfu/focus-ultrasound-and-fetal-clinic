@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { LucideIcon, ArrowRight } from 'lucide-react';
+import { LucideIcon, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/hooks/use-theme';
+import { useWhatsApp } from '@/contexts/WhatsAppContext';
 
 interface ServiceCardProps {
   icon: LucideIcon;
@@ -20,6 +20,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 }) => {
   const { language } = useLanguage();
   const { theme } = useTheme();
+  const { setService, buildUrl } = useWhatsApp();
+
+  const handleBookClick = (e: React.MouseEvent) => {
+    // Set the service in context first so buildUrl picks it up
+    setService(name);
+  };
+
+  // Build a one-off URL for this specific service regardless of global state
+  const directUrl = `https://wa.me/918287655133?text=${encodeURIComponent(
+    `Hello, I want to book ${/^[aeiou]/i.test(name) ? 'an' : 'a'} ${name} appointment.`
+  )}`;
 
   return (
     <motion.div
@@ -28,33 +39,20 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -10 }}
-      className={`
-        group relative flex flex-col h-full rounded-[2.5rem] border overflow-hidden transition-all duration-700
-        ${theme === 'dark' 
-          ? 'bg-[#0f172a]/40 border-white/5 shadow-elevated hover:border-primary/40 hover:shadow-glow' 
-          : 'bg-white border-slate-200 shadow-soft hover:border-primary/30 hover:shadow-xl'}
-      `}
+      className="group relative flex flex-col h-full rounded-[2rem] border overflow-hidden transition-all duration-700 bg-card border-border shadow-soft hover:border-primary/30 hover:shadow-elevated"
     >
       {/* Image Section with Consistency and Zoom */}
       <div className="relative aspect-[4/3] overflow-hidden">
-        <img
+        <img loading="lazy"
           src={image}
           alt={name}
-          className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[1300ms] ease-out"
+          className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all [transition-duration:1300ms] ease-out"
         />
         {/* Modern Layered Gradient Overlay */}
-        <div className={`
-          absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-75
-          ${theme === 'dark' ? 'from-[#0f172a]/60' : 'from-slate-50/40'}
-        `} />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-75" />
         
-        {/* Floating Icon Container - Senior Style */}
-        <div className={`
-          absolute top-8 left-8 w-14 h-14 rounded-2xl flex items-center justify-center border transition-all duration-700 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground
-          ${theme === 'dark' 
-            ? 'bg-background/40 backdrop-blur-2xl border-white/10 text-primary hover:border-primary' 
-            : 'bg-white/80 backdrop-blur-xl border-slate-200 text-primary shadow-medium hover:border-primary'}
-        `}>
+        {/* Floating Icon Container */}
+        <div className="absolute top-8 left-8 w-14 h-14 rounded-[1rem] flex items-center justify-center border transition-all duration-700 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground bg-background/80 backdrop-blur-xl border-border text-primary shadow-soft hover:border-primary">
           <Icon className="w-7 h-7 transition-transform group-hover:rotate-12" strokeWidth={1.5} />
         </div>
       </div>
@@ -64,16 +62,30 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         {/* Section Glow behind content */}
         <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-[60px] pointer-events-none group-hover:bg-primary/10 transition-colors" />
 
-        <h3 className="font-display text-2xl md:text-3xl font-bold mb-5 tracking-tight group-hover:text-primary transition-colors leading-tight">
+        <h2 className="font-display text-2xl md:text-3xl font-bold mb-5 tracking-tight group-hover:text-primary transition-colors leading-tight">
           {language === 'en' ? name : nameHi}
-        </h3>
+        </h2>
         
-        <p className={`
-          font-body text-base leading-relaxed transition-colors duration-500
-          ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}
-        `}>
+        <p className="font-body text-base leading-relaxed transition-colors duration-500 text-muted-foreground mb-6">
           {language === 'en' ? desc : descHi}
         </p>
+
+        {/* Book via WhatsApp CTA */}
+        <div className="mt-auto">
+          <a
+            href={directUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleBookClick}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold
+                       bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/20
+                       hover:bg-[#25D366] hover:text-white hover:border-[#25D366]
+                       transition-all duration-300 group/btn"
+          >
+            <MessageCircle className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+            {language === 'en' ? 'Book via WhatsApp' : 'WhatsApp पर बुक करें'}
+          </a>
+        </div>
       </div>
 
       {/* Subtle Visual Anchor Line */}
