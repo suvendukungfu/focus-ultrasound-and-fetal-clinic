@@ -20,16 +20,16 @@ const CultureSection = () => {
     <section className="relative min-h-[85vh] flex items-center py-20 px-6 overflow-hidden transition-all duration-500">
       {/* Background with Layered Gradient Overlay */}
       <div className="absolute inset-0 z-0 select-none">
-        <img
-          src="/images/culture-premium-bg.png"
+        <img loading="lazy"
+          src="/images/culture-premium-bg.webp"
           alt=""
           className={`w-full h-full object-cover transition-all duration-1000 ${theme === 'dark' ? 'opacity-30 brightness-50 contrast-125' : 'opacity-50 brightness-110'}`}
           aria-hidden="true"
         />
         {/* Left Dark to Right Soft Fade Gradient Overlay */}
-        <div className={`absolute inset-0 bg-gradient-to-r ${theme === 'dark' ? 'from-[#0b1220] via-[#0b1220]/80' : 'from-background via-background/60'} to-transparent z-10`} />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
         {/* Vertical Depth Gradient */}
-        <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'dark' ? 'from-[#0b1220] via-transparent' : 'from-background via-transparent'} to-transparent opacity-90 z-10`} />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90 z-10" />
         
         {/* Atmospheric Radial Light for Depth */}
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] mix-blend-screen opacity-50 animate-pulse" />
@@ -46,12 +46,7 @@ const CultureSection = () => {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative"
           >
-            <div className={`
-              relative p-10 md:p-16 rounded-[3rem] border backdrop-blur-xl shadow-elevated transition-all duration-700
-              ${theme === 'dark' 
-                ? 'bg-[#0f172a]/40 border-white/10 text-white' 
-                : 'bg-white/70 border-black/[0.05] text-foreground'}
-            `}>
+            <div className="relative p-10 md:p-16 rounded-[2rem] border backdrop-blur-xl shadow-elevated transition-all duration-700 bg-card/70 border-border text-foreground">
               {/* Badge Overlay */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -80,7 +75,7 @@ const CultureSection = () => {
               
               <p className={`
                 font-body text-xl leading-relaxed mb-12 max-w-xl transition-colors duration-500
-                ${theme === 'dark' ? 'text-white/70' : 'text-foreground/80'}
+                text-muted-foreground
               `}>
                 At <span className="text-primary font-bold">Focus Ultrasound</span>, our culture is defined by empathy and excellence. We merge 
                 compassionate care with world-class technology to create a safe, supportive environment for every journey.

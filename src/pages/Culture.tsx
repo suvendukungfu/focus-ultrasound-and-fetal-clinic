@@ -2,6 +2,7 @@ import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CultureSection from '@/components/CultureSection';
+import SEO from '@/components/SEO';
 import { motion, Variants } from 'framer-motion';
 import { useTheme } from '@/hooks/use-theme';
 import { Heart, Users, Sparkles, Shield, Coffee, Award, CheckCircle2, Star, TrendingUp, Calendar, Zap, MessageSquare } from 'lucide-react';
@@ -77,13 +78,17 @@ const CultureContent = () => {
   ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-700 ${theme === 'dark' ? 'bg-[#0b1220] text-white' : 'bg-background text-foreground'} selection:bg-primary/20`}>
+    <div className={`min-h-screen transition-colors duration-700 bg-background text-foreground selection:bg-primary/20`}>
+      <SEO 
+        title="Our Culture & Clinical Excellence | Focus Ultrasound and Fetal Clinic"
+        description="Learn about our patient-first approach and clinical values. Our specialists bring elite medical expertise to a caring environment in Greater Noida West."
+      />
       <Header />
       <main className="relative overflow-hidden">
         {/* Layered Background Gradients for Depth */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className={`absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px] opacity-40 transition-opacity duration-1000 ${theme === 'dark' ? 'mix-blend-screen' : 'mix-blend-multiply'}`} />
-          <div className={`absolute bottom-0 left-[-10%] w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] opacity-20 transition-opacity duration-1000 ${theme === 'dark' ? 'mix-blend-screen' : 'mix-blend-multiply'}`} />
+          <div className={`absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px] opacity-40 transition-opacity duration-1000 mix-blend-multiply dark:mix-blend-screen`} />
+          <div className={`absolute bottom-0 left-[-10%] w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] opacity-20 transition-opacity duration-1000 mix-blend-multiply dark:mix-blend-screen`} />
           <div className="absolute inset-0 bg-noise-pattern opacity-[0.03] mix-blend-overlay" />
         </div>
 
@@ -113,12 +118,9 @@ const CultureContent = () => {
                   key={value.title}
                   variants={itemVariants}
                   whileHover={{ y: -6, scale: 1.02 }}
-                  className={`
-                    relative bg-card/40 backdrop-blur-2xl rounded-[2.5rem] p-10 border transition-all duration-500 flex flex-col group
-                    ${theme === 'dark' ? 'hover:bg-card/60 hover:shadow-glow border-white/10 hover:border-primary/40' : 'hover:bg-white shadow-soft border-black/[0.05] hover:border-primary/30'}
-                  `}
+                  className="relative bg-card/40 backdrop-blur-2xl rounded-[2rem] p-10 border transition-all duration-500 flex flex-col group hover:bg-card/60 shadow-soft border-border hover:border-primary/30"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 border border-primary/20 shadow-soft group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                  <div className="w-16 h-16 rounded-[1rem] bg-primary/10 flex items-center justify-center mb-8 border border-primary/20 shadow-soft group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                     <value.icon className="w-8 h-8 transition-transform" strokeWidth={1.5} />
                   </div>
                   <h3 className="font-display text-2xl font-bold mb-4 tracking-tight group-hover:text-primary transition-colors">
@@ -152,7 +154,7 @@ const CultureContent = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 shadow-soft"
+                  className="w-14 h-14 rounded-[1rem] bg-primary/10 flex items-center justify-center mb-10 border border-primary/20 shadow-soft"
                 >
                   <MessageSquare className="w-7 h-7 text-primary" strokeWidth={1.5} />
                 </motion.div>
@@ -190,7 +192,7 @@ const CultureContent = () => {
               {/* Right Column: Heroic Stats Cards Grid */}
               <div className="relative">
                 {/* Decorative elevated panel for grouping */}
-                <div className={`absolute -inset-8 backdrop-blur-3xl rounded-[3rem] border shadow-2xl transition-all duration-700 ${theme === 'dark' ? 'bg-[#0f172a]/20 border-white/5' : 'bg-white/40 border-black/[0.03]'}`} />
+                <div className="absolute -inset-8 backdrop-blur-3xl rounded-[2rem] border shadow-2xl transition-all duration-700 bg-card/40 border-border" />
                 
                 <div className="relative grid grid-cols-2 gap-6 md:gap-8">
                   {statCards.map((stat, index) => (
@@ -200,12 +202,9 @@ const CultureContent = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.1 * index, duration: 0.6 }}
                       whileHover={{ y: -8, scale: 1.04 }}
-                      className={`
-                        p-10 rounded-[2.5rem] text-center border transition-all duration-500 group shadow-soft
-                        ${theme === 'dark' ? 'bg-[#1e293b]/40 border-white/10 hover:shadow-glow' : 'bg-white border-black/[0.05] hover:shadow-xl'}
-                      `}
+                      className="p-10 rounded-[2rem] text-center border transition-all duration-500 group shadow-soft bg-card border-border hover:shadow-xl hover:border-primary/30"
                     >
-                      <div className={`inline-flex items-center justify-center p-3 rounded-2xl bg-primary/5 mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300`}>
+                      <div className={`inline-flex items-center justify-center p-3 rounded-[1rem] bg-primary/5 mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300`}>
                         <stat.icon className="w-6 h-6 transition-transform group-hover:scale-110" />
                       </div>
                       <div className={`font-display font-black text-4xl md:text-5xl mb-2 tracking-tight ${stat.color} group-hover:scale-110 transition-transform`}>
