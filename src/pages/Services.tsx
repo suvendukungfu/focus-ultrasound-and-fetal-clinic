@@ -1,6 +1,8 @@
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
+import FAQSection from '@/components/FAQSection';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/hooks/use-theme';
 import {
@@ -20,7 +22,7 @@ const equipment = [
   { 
     icon: Monitor, 
     name: 'Samsung V7', 
-    image: '/images/clinic-samsung-v7.jpg',
+    image: '/images/clinic-samsung-v7.webp',
     desc: 'Advanced 3D/4D imaging with precision diagnostics for fetal and gynecological ultrasound.', 
     descHi: 'फीटल और गायनेकोलॉजिकल अल्ट्रासाउंड के लिए उन्नत 3D/4D इमेजिंग।',
     url: 'https://www.samsunghealthcare.com/en/products/UltrasoundSystem/V7/Radiology/v1/main'
@@ -28,7 +30,7 @@ const equipment = [
   { 
     icon: Monitor, 
     name: 'GE Voluson E8 Expert', 
-    image: '/images/ge-voluson-e8-real.png',
+    image: '/images/ge-voluson-e8-real.webp',
     desc: 'The global gold standard in fetal medicine. Offers extraordinary image quality for the highest diagnostic confidence.', 
     descHi: 'भ्रूण चिकित्सा में वैश्विक स्वर्ण मानक। उच्चतम नैदानिक विश्वास के लिए असाधारण इमेज क्वालिटी।',
     url: 'https://www.gehealthcare.com/products/ultrasound/voluson/voluson-e8'
@@ -36,35 +38,68 @@ const equipment = [
 ];
 
 const services = [
-  { icon: Baby, name: 'NT Scan', nameHi: 'एनटी स्कैन', desc: 'Early screening for chromosomal abnormalities like Down syndrome.', descHi: 'डाउन सिंड्रोम जैसी गुणसूत्र असामान्यता के लिए प्रारंभिक स्क्रीनिंग।', image: '/images/nt-scan.jpg' },
-  { icon: Scan, name: 'Anomaly Scan (TIFFA)', nameHi: 'असामान्यता स्कैन (TIFFA)', desc: 'Detailed mid-pregnancy scan to check baby\'s physical development.', descHi: 'बच्चे के शारीरिक विकास की जांच के लिए विस्तृत मध्य-गर्भावस्था स्कैन।', image: '/images/anomaly-scan.jpg' },
-  { icon: Activity, name: 'Growth Scan', nameHi: 'ग्रोथ स्कैन', desc: 'Monitor baby\'s growth and amniotic fluid in the third trimester.', descHi: 'तीसरी तिमाही में बच्चे के विकास और एमनियोटिक द्रव की निगरानी।', image: '/images/growth-scan.jpg' },
-  { icon: Stethoscope, name: 'Early Pregnancy Scan', nameHi: 'प्रारंभिक गर्भावस्था स्कैन', desc: 'Confirm viability, detect multiples, and accurately date the pregnancy.', descHi: 'गर्भावस्था की व्यवहार्यता की पुष्टि करें और सही तारीख तय करें।', image: '/images/early-pregnancy.jpg' },
-  { icon: Activity, name: 'Doppler Study', nameHi: 'डॉप्लर अध्ययन', desc: 'Evaluate blood flow in umbilical cord and baby\'s vessels.', descHi: 'गर्भनाल और बच्चे की रक्त वाहिकाओं में रक्त प्रवाह का मूल्यांकन।', image: '/images/doppler-study.jpg' },
-  { icon: Heart, name: 'Fetal Echocardiography', nameHi: 'फीटल इकोकार्डियोग्राफी', desc: 'Specialized ultrasound to examine the baby\'s heart structure and function.', descHi: 'बच्चे के हृदय की संरचना और कार्यप्रणाली की जांच।', image: '/images/fetal-echo.jpg' },
-  { icon: Dna, name: 'NIPT Screening', nameHi: 'एनआईपीटी स्क्रीनिंग', desc: 'Non-invasive prenatal testing to screen for common chromosomal conditions.', descHi: 'सामान्य गुणसूत्र स्थितियों की जांच के लिए गैर-आक्रामक प्रसवपूर्व परीक्षण।', image: '/images/nipt-screening.png' },
-  { icon: Scan, name: 'Liver Fibroscan', nameHi: 'लिवर फाइब्रोस्कैन', desc: 'Non-invasive test to assess liver stiffness and fatty changes.', descHi: 'लिवर की कठोरता और फैटी परिवर्तनों का आकलन करने के लिए गैर-आक्रामक परीक्षण।', image: '/images/liver-fibroscan.png' },
-  { icon: Eye, name: 'Small Parts Ultrasound', nameHi: 'स्मॉल पार्ट्स अल्ट्रासाउंड', desc: 'Detailed imaging of superficial organs like the thyroid and breast.', descHi: 'थायराइड और स्तन जैसे सतही अंगों की विस्तृत इमेजिंग।', image: '/images/small-parts-ultrasound.png' },
-  { icon: Camera, name: 'Digital X-Ray', nameHi: 'डिजिटल एक्स-रे', desc: 'High-precision digital radiography for accurate skeletal and chest diagnostics.', descHi: 'सटीक कंकाल और छाती के निदान के लिए उच्च-सटीक डिजिटल रेडियोग्राफी।', image: '/images/digital-x-ray.png' },
-  { icon: Activity, name: 'ECG', nameHi: 'ईसीजी', desc: 'Comprehensive heart rhythm monitoring to assess cardiac health and patterns.', descHi: 'हृदय स्वास्थ्य और पैटर्न का आकलन करने के लिए व्यापक हृदय गति की निगरानी।', image: '/images/ecg.png' },
-  { icon: FlaskConical, name: 'Lab Tests', nameHi: 'लैब टेस्ट', desc: 'Wide range of clinical diagnostic tests for thorough health evaluation.', descHi: 'संपूर्ण स्वास्थ्य मूल्यांकन के लिए नैदानिक ​​परीक्षणों की विस्तृत श्रृंखला।', image: '/images/lab-tests.png' }
+  { icon: Baby, name: 'NT Scan', nameHi: 'एनटी स्कैन', desc: 'Early screening for chromosomal abnormalities like Down syndrome.', descHi: 'डाउन सिंड्रोम जैसी गुणसूत्र असामान्यता के लिए प्रारंभिक स्क्रीनिंग।', image: '/images/nt-scan.webp' },
+  { icon: Scan, name: 'Anomaly Scan (TIFFA)', nameHi: 'असामान्यता स्कैन (TIFFA)', desc: 'Detailed mid-pregnancy scan to check baby\'s physical development.', descHi: 'बच्चे के शारीरिक विकास की जांच के लिए विस्तृत मध्य-गर्भावस्था स्कैन।', image: '/images/anomaly-scan.webp' },
+  { icon: Activity, name: 'Growth Scan', nameHi: 'ग्रोथ स्कैन', desc: 'Monitor baby\'s growth and amniotic fluid in the third trimester.', descHi: 'तीसरी तिमाही में बच्चे के विकास और एमनियोटिक द्रव की निगरानी।', image: '/images/growth-scan.webp' },
+  { icon: Stethoscope, name: 'Early Pregnancy Scan', nameHi: 'प्रारंभिक गर्भावस्था स्कैन', desc: 'Confirm viability, detect multiples, and accurately date the pregnancy.', descHi: 'गर्भावस्था की व्यवहार्यता की पुष्टि करें और सही तारीख तय करें।', image: '/images/early-pregnancy.webp' },
+  { icon: Activity, name: 'Doppler Study', nameHi: 'डॉप्लर अध्ययन', desc: 'Evaluate blood flow in umbilical cord and baby\'s vessels.', descHi: 'गर्भनाल और बच्चे की रक्त वाहिकाओं में रक्त प्रवाह का मूल्यांकन।', image: '/images/doppler-study.webp' },
+  { icon: Heart, name: 'Fetal Echocardiography', nameHi: 'फीटल इकोकार्डियोग्राफी', desc: 'Specialized ultrasound to examine the baby\'s heart structure and function.', descHi: 'बच्चे के हृदय की संरचना और कार्यप्रणाली की जांच।', image: '/images/fetal-echo.webp' },
+  { icon: Dna, name: 'NIPT Screening', nameHi: 'एनआईपीटी स्क्रीनिंग', desc: 'Non-invasive prenatal testing to screen for common chromosomal conditions.', descHi: 'सामान्य गुणसूत्र स्थितियों की जांच के लिए गैर-आक्रामक प्रसवपूर्व परीक्षण।', image: '/images/nipt-screening.webp' },
+  { icon: Scan, name: 'Liver Fibroscan', nameHi: 'लिवर फाइब्रोस्कैन', desc: 'Non-invasive test to assess liver stiffness and fatty changes.', descHi: 'लिवर की कठोरता और फैटी परिवर्तनों का आकलन करने के लिए गैर-आक्रामक परीक्षण।', image: '/images/liver-fibroscan.webp' },
+  { icon: Eye, name: 'Small Parts Ultrasound', nameHi: 'स्मॉल पार्ट्स अल्ट्रासाउंड', desc: 'Detailed imaging of superficial organs like the thyroid and breast.', descHi: 'थायराइड और स्तन जैसे सतही अंगों की विस्तृत इमेजिंग।', image: '/images/small-parts-ultrasound.webp' },
+  { icon: Camera, name: 'Digital X-Ray', nameHi: 'डिजिटल एक्स-रे', desc: 'High-precision digital radiography for accurate skeletal and chest diagnostics.', descHi: 'सटीक कंकाल और छाती के निदान के लिए उच्च-सटीक डिजिटल रेडियोग्राफी।', image: '/images/digital-x-ray.webp' },
+  { icon: Activity, name: 'ECG', nameHi: 'ईसीजी', desc: 'Comprehensive heart rhythm monitoring to assess cardiac health and patterns.', descHi: 'हृदय स्वास्थ्य और पैटर्न का आकलन करने के लिए व्यापक हृदय गति की निगरानी।', image: '/images/ecg.webp' },
+  { icon: FlaskConical, name: 'Lab Tests', nameHi: 'लैब टेस्ट', desc: 'Wide range of clinical diagnostic tests for thorough health evaluation.', descHi: 'संपूर्ण स्वास्थ्य मूल्यांकन के लिए नैदानिक ​​परीक्षणों की विस्तृत श्रृंखला।', image: '/images/lab-tests.webp' }
 ];
 
 const ServicesContent = () => {
   const { language } = useLanguage();
-  const { theme } = useTheme();
+  
+  const faqData = language === 'en' ? [
+    {
+      question: "What is a fetal ultrasound?",
+      answer: "A fetal ultrasound is a safe, non-invasive imaging technique using high-frequency sound waves to create live images of your baby. It allows our specialists to monitor fetal development, check the baby's position, and confirm essential growth milestones accurately."
+    },
+    {
+      question: "When should I get a pregnancy scan?",
+      answer: "You should get your first pregnancy scan between 6 and 10 weeks to confirm viability. Essential milestones follow, including the NT scan at 11–13 weeks for early health screening and the Level II Anomaly Scan at 18–20 weeks."
+    },
+    {
+      question: "Is ultrasound safe during pregnancy?",
+      answer: "Yes, ultrasound is completely safe for both you and your baby during pregnancy. Unlike X-rays, ultrasound technology uses harmless sound waves rather than ionizing radiation to visualize the womb. It is a standard and secure diagnostic tool."
+    }
+  ] : [
+    {
+      question: "भ्रूण अल्ट्रासाउंड क्या है?",
+      answer: "भ्रूण अल्ट्रासाउंड एक सुरक्षित तकनीक है जो आपके बच्चे की लाइव छवियां बनाने के लिए उच्च-आवृत्ति ध्वनि तरंगों का उपयोग करती है। यह हमारे विशेषज्ञों को भ्रूण के विकास की निगरानी करने और विकास के महत्वपूर्ण मील के पत्थर की पुष्टि करने की अनुमति देता है।"
+    },
+    {
+      question: "मुझे गर्भावस्था का स्कैन कब करवाना चाहिए?",
+      answer: "व्यवहार्यता की पुष्टि के लिए आपको 6 से 10 सप्ताह के बीच अपना पहला स्कैन करवाना चाहिए। इसके बाद महत्वपूर्ण पड़ाव आते हैं, जिसमें 11-13 सप्ताह में एनटी स्कैन और 18-20 सप्ताह में लेवल II विसंगति स्कैन शामिल है।"
+    },
+    {
+      question: "क्या गर्भावस्था के दौरान अल्ट्रासाउंड सुरक्षित है?",
+      answer: "हाँ, गर्भावस्था के दौरान अल्ट्रासाउंड आपके और आपके बच्चे दोनों के लिए पूरी तरह से सुरक्षित है। एक्स-रे के विपरीत, अल्ट्रासाउंड तकनीक विकिरण के बजाय हानिरहित ध्वनि तरंगों का उपयोग करती है। यह एक मानक और सुरक्षित उपकरण है।"
+    }
+  ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-700 ${theme === 'dark' ? 'bg-[#0b1222] text-white' : 'bg-slate-50 text-slate-900'} selection:bg-primary/20`}>
+    <div className="min-h-screen transition-colors duration-700 bg-background text-foreground selection:bg-primary/20">
+      <SEO 
+        title="3D/4D Ultrasound Scans & Diagnostic Services in Greater Noida West"
+        description="Comprehensive diagnostic ultrasound services including NT Scan, Level 2 TIFFA, Doppler, and Growth scans. Expert prenatal care in Nirala Estate."
+        faqData={faqData}
+      />
       <Header />
       
       <main className="pt-20">
         {/* Main Services Grid Section */}
         <SectionWrapper variant="primary" id="services-grid">
           <SectionHeading 
+            level="h1"
             badge={language === 'en' ? "Diagnostic Suite" : "डायग्नोस्टिक सूट"}
-            title={language === 'en' ? "Comprehensive Global Services" : "व्यापक वैश्विक सेवाएं"}
-            subtitle={language === 'en' ? "Precision-driven diagnostics merging advanced expertise with state-of-the-art fetal medicine." : "उन्नत विशेषज्ञता को अत्याधुनिक भ्रूण चिकित्सा के साथ मिलाते हुए सटीक-संचालित डायग्नोस्टिक्स।"}
+            title={language === 'en' ? "Advanced Diagnostic & Fetal Services" : "उन्नत डायग्नोस्टिक और फीटल सेवाएं"}
+            subtitle={language === 'en' ? "Precision-driven diagnostics merging advanced expertise with state-of-the-art GE Voluson technology." : "उन्नत विशेषज्ञता को अत्याधुनिक GE Voluson तकनीक के साथ मिलाते हुए सटीक-संचालित डायग्नोस्टिक्स।"}
           />
 
           <motion.div 
@@ -124,11 +159,13 @@ const ServicesContent = () => {
               { l: language === 'en' ? 'Screening Panels' : 'स्क्रीनिंग पैनल', i: ShieldCheck },
               { l: language === 'en' ? 'Early Detection' : 'प्रारंभिक पहचान', i: Zap }
             ]}
-            image="/images/medgenome-lab-real.png"
+            image="/images/medgenome-lab-real.webp"
             accuracy="99.9%"
             url="https://diagnostics.medgenome.com/"
           />
         </SectionWrapper>
+
+        <FAQSection />
       </main>
 
       <Footer />
@@ -138,9 +175,7 @@ const ServicesContent = () => {
 
 const Services = () => {
   return (
-    <LanguageProvider>
-      <ServicesContent />
-    </LanguageProvider>
+    <ServicesContent />
   );
 };
 
