@@ -26,6 +26,8 @@ const AdminAppointments = lazy(() => import("./pages/admin/Appointments"));
 const AdminReviews = lazy(() => import("./pages/admin/Reviews"));
 const AdminUsers = lazy(() => import("./pages/admin/Users"));
 const AdminLeads = lazy(() => import("./pages/admin/Leads"));
+const AdminAuditLog = lazy(() => import("./pages/admin/AuditLog"));
+const AdminProfile = lazy(() => import("./pages/admin/Profile"));
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -57,6 +59,8 @@ const App = () => (
                     <Route path="/admin/reviews" element={<AdminLayout><AdminReviews /></AdminLayout>} />
                     <Route path="/admin/users" element={<AdminLayout><AdminUsers /></AdminLayout>} />
                     <Route path="/admin/leads" element={<AdminLayout><AdminLeads /></AdminLayout>} />
+                    <Route path="/admin/audit" element={<AdminLayout><AdminAuditLog /></AdminLayout>} />
+                    <Route path="/admin/profile" element={<AdminLayout><AdminProfile /></AdminLayout>} />
 
                     <Route path="*" element={<NotFound />} />
                   </Routes>
