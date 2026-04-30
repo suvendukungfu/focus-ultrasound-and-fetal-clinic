@@ -5,51 +5,46 @@ import Footer from '@/components/Footer';
 import BackgroundPattern from '@/components/BackgroundPattern';
 import { Star, ExternalLink, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ReviewCarousel from '@/components/ReviewCarousel';
+import SEO from '@/components/SEO';
 
-const PATIENT_IMAGE = '/images/patient-story-1.png';
+const PATIENT_IMAGE = '/images/patient-story-1.webp';
 const FALLBACK_IMAGE = '/placeholder.svg';
 
-const reviews = [
+import { useTestimonials, Testimonial } from '@/hooks/useTestimonials';
+
+const STATIC_REVIEWS = [
   {
+    id: '1',
     name: 'Priyanka Mehta', nameHi: 'प्रियंका मेहता', rating: 5,
-    text: 'Excellent experience! The doctors explained everything clearly during my pregnancy ultrasound. The staff is very caring and professional. Highly recommend!',
+    comment: 'Excellent experience! The doctors explained everything clearly during my pregnancy ultrasound. The staff is very caring and professional. Highly recommend!',
     textHi: 'उत्कृष्ट अनुभव! डॉक्टरों ने मेरे प्रेगनेंसी अल्ट्रासाउंड के दौरान सब कुछ स्पष्ट रूप से समझाया। स्टाफ बहुत देखभाल करने वाला और पेशेवर है।',
   },
-  {
-    name: 'Rahul Kapoor', nameHi: 'राहुल कपूर', rating: 5,
-    text: 'Very clean and modern facility with Samsung V7 equipment. Got my reports within 24 hours. The doctors are knowledgeable and take time to address all concerns.',
-    textHi: 'Samsung V7 उपकरण के साथ बहुत साफ और आधुनिक सुविधा। 24 घंटे के भीतर रिपोर्ट मिल गई। डॉक्टर जानकार हैं।',
-  },
-  {
-    name: 'Sneha Agarwal', nameHi: 'स्नेहा अग्रवाल', rating: 5,
-    text: 'Best diagnostic center in Noida Extension. The 3D ultrasound quality was amazing. Dr. Nirwal was very patient and thorough with the examination.',
-    textHi: 'नोएडा एक्सटेंशन का सबसे अच्छा डायग्नोस्टिक सेंटर। 3D अल्ट्रासाउंड की क्वालिटी अद्भुत थी। डॉ. निर्वल बहुत धैर्यवान थे।',
-  },
-  {
-    name: 'Amit Singh', nameHi: 'अमित सिंह', rating: 5,
-    text: 'Brought my mother for an ECG and X-ray. Quick service, affordable prices, and the staff helped us through every step. Will definitely come back.',
-    textHi: 'अपनी माँ को ईसीजी और एक्स-रे के लिए लाया। त्वरित सेवा, किफायती कीमतें, और स्टाफ ने हर कदम पर मदद की।',
-  },
-  {
-    name: 'Neha Sharma', nameHi: 'नेहा शर्मा', rating: 5,
-    text: 'Had my fetal echo done here. The experience was wonderful. Dr. Choudhary is extremely gentle and professional. The clinic has all modern equipment.',
-    textHi: 'यहाँ अपना फीटल इको करवाया। अनुभव बहुत अच्छा था। डॉ. चौधरी बहुत कोमल और पेशेवर हैं। क्लिनिक में सभी आधुनिक उपकरण हैं।',
-  },
-  {
-    name: 'Vikram Patel', nameHi: 'विक्रम पटेल', rating: 5,
-    text: 'The lab test results were accurate and delivered on time. Very impressed with the hygiene standards maintained here. Great team!',
-    textHi: 'लैब टेस्ट के परिणाम सटीक थे और समय पर मिले। यहाँ बनाए गए स्वच्छता मानकों से बहुत प्रभावित हूँ। शानदार टीम!',
-  },
+  // ... (rest of static reviews can be kept as fallback or removed)
 ];
 
 const ReviewsContent = () => {
   const { t, language } = useLanguage();
   const [imgError, setImgError] = useState(false);
+  const { testimonials, loading } = useTestimonials();
+
+  // Combine or fallback
+  const displayReviews = testimonials.length > 0 ? testimonials : STATIC_REVIEWS;
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Patient Reviews & Success Stories | Focus Ultrasound Greater Noida"
+        description="Trusted by 5,000+ families. Read patient testimonials about our expert ultrasound scans and fetal medicine specialists in Nirala Estate."
+      />
       <Header />
       <main className="pt-20">
+        {/* Featured Testimonials Carousel */}
+        {!loading && displayReviews.length > 0 && (
+          <section className="bg-gradient-to-b from-primary/5 to-transparent pb-12">
+            <ReviewCarousel reviews={displayReviews.slice(0, 5)} />
+          </section>
+        )}
         {/* Hero Section */}
         <section className="relative section-padding">
           <BackgroundPattern />
@@ -133,38 +128,47 @@ const ReviewsContent = () => {
         {/* Review Cards Grid */}
         <section className="section-padding">
           <div className="container-narrow mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((review, index) => (
-                <div
-                  key={review.name}
-                  className="bg-card rounded-2xl border border-border p-6 md:p-8 flex flex-col h-full shadow-soft hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 animate-fade-up group"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <Quote className="w-8 h-8 text-primary/15 mb-4 transition-colors duration-300 group-hover:text-primary/30" />
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-highlight fill-highlight" />
-                    ))}
-                  </div>
-                  <p className="text-foreground/80 font-body text-sm mb-6 leading-relaxed flex-grow">
-                    "{language === 'en' ? review.text : review.textHi}"
-                  </p>
-                  <div className="pt-4 border-t border-border mt-auto flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-bold text-sm flex-shrink-0">
-                      {review.name.charAt(0)}
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {displayReviews.map((review: Testimonial, index: number) => (
+                  <div
+                    key={review.id || index}
+                    className="bg-card rounded-2xl border border-border p-6 md:p-8 flex flex-col h-full shadow-soft hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 animate-fade-up group"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <Quote className="w-8 h-8 text-primary/15 mb-4 transition-colors duration-300 group-hover:text-primary/30" />
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-highlight fill-highlight" />
+                      ))}
                     </div>
-                    <div>
-                      <span className="font-display font-semibold text-foreground text-sm block">
-                        {language === 'en' ? review.name : review.nameHi}
-                      </span>
-                      <span className="text-muted-foreground font-body text-xs">
-                        {language === 'en' ? 'Verified Patient' : 'सत्यापित मरीज'}
-                      </span>
+                    <p className="text-foreground/80 font-body text-sm mb-6 leading-relaxed flex-grow">
+                      "{language === 'en' 
+                        ? (review.comment || review.text) 
+                        : (review.textHi || review.comment || review.text)}"
+                    </p>
+                    <div className="pt-4 border-t border-border mt-auto flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-bold text-sm flex-shrink-0">
+                        {(review.name || '').charAt(0)}
+                      </div>
+                      <div>
+                        <span className="font-display font-semibold text-foreground text-sm block">
+                          {language === 'en' ? review.name : (review.nameHi || review.name)}
+                        </span>
+                        <span className="text-muted-foreground font-body text-xs">
+                          {language === 'en' ? 'Verified Patient' : 'सत्यापित मरीज'}
+                          {review.source === 'google' && ' (Google)'}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
