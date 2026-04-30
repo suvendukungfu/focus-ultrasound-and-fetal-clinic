@@ -125,9 +125,9 @@ model Appointment {
   status AppointmentStatus @default(PENDING)
   notes  String?
 
-  patientName  String
-  patientPhone String
-  patientEmail String?
+  name   String
+  phone  String
+  email  String?
 
   doctorId String?
   doctor   Doctor? @relation(fields: [doctorId], references: [id])
@@ -167,10 +167,12 @@ model BlogPost {
 
 model Review {
   id         String  @id @default(uuid())
-  author     String
+  name       String
   rating     Int
-  content    String?
+  comment    String? @db.Text
   isApproved Boolean @default(false)
+  source     String  @default("manual") // "manual" | "google"
+  externalId String? @unique // Google Places review ID for deduplication
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

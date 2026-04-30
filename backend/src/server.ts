@@ -14,16 +14,24 @@ async function bootstrap() {
   try {
     await prisma.$connect();
     Logger.info(`✅ Database connected (Worker ${process.pid})`);
+  } catch (error) {
+    Logger.error(`❌ Failed to connect to database (Worker ${process.pid})`);
+    if (error instanceof Error) {
+      Logger.error(error.message);
+    }
+    // In development, we might want to start anyway to debug API routes
+    if (process.env.NODE_ENV !== 'development') {
+      await prisma.$disconnect();
+      process.exit(1);
+    }
+  }
 
+  try {
     app.listen(PORT, () => {
       Logger.info(`🚀 Server worker ${process.pid} running on port ${PORT}`);
     });
   } catch (error) {
-    Logger.error(`❌ Failed to start worker ${process.pid}`);
-    if (error instanceof Error) {
-      Logger.error(error.message);
-    }
-    await prisma.$disconnect();
+    Logger.error(`❌ Failed to start server worker ${process.pid}`);
     process.exit(1);
   }
 }
@@ -41,7 +49,7 @@ if (cluster.isPrimary) {
       init: async () => {},
       start: async () => { selfHealingService.startAllMonitors(); },
       stop: async () => {},
-      health: async () => ({ status: 'ONLINE' })
+      health: async () => ({ status: 'ONLINE' as const })
     });
 
     // Register Distributed AI Orchestrator
@@ -68,14 +76,24 @@ if (cluster.isPrimary) {
               import('./modules/ai/services/LeadReplyService').then(({ leadReplyService }) => {
                 Kernel.registry.register(leadReplyService);
 
-                Kernel.boot().then(() => {
-                  Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
-                  for (let i = 0; i < numCPUs; i++) {
-                    cluster.fork();
-                  }
-                }).catch(err => {
-                  Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
-                  process.exit(1);
+                // Register Reviews Cron Service (BullMQ scheduler + worker)
+                import('./modules/reviews/services/ReviewsCronService').then(({ reviewsCronService }) => {
+                  Kernel.registry.register(reviewsCronService);
+
+                  // Register Appointment Automation Service (Confirmations + Reminders)
+                  import('./modules/appointments/services/AppointmentAutomationService').then(({ appointmentAutomationService }) => {
+                    Kernel.registry.register(appointmentAutomationService);
+
+                    Kernel.boot().then(() => {
+                      Logger.info(`[Cluster] Kernel Online. Forking Express Node Workers...`);
+                      for (let i = 0; i < numCPUs; i++) {
+                        cluster.fork();
+                      }
+                    }).catch(err => {
+                      Logger.error(`[Cluster] Critical Kernel failure natively caught: ${err}`);
+                      process.exit(1);
+                    });
+                  });
                 });
               });
             });
