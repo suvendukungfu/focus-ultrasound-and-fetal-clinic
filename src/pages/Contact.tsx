@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
+import { useAppointments } from '@/hooks/useAppointments';
+import { useWhatsApp } from '@/contexts/WhatsAppContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackgroundPattern from '@/components/BackgroundPattern';
+import SEO from '@/components/SEO';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Send, MapPin, Phone, Mail, Clock, 
   Baby, Calendar as CalendarIcon, User, 
-  Stethoscope, FileText, Info
+  Stethoscope, FileText, Info, ShieldCheck, Star
 } from 'lucide-react';
 import ContactHeroBanner from '@/components/ContactHeroBanner';
 import {
@@ -19,11 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ToastAction } from "@/components/ui/toast";
 import { motion } from 'framer-motion';
 
 const ContactContent = () => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
+  const { createAppointment, loading: isSubmitting } = useAppointments();
   
   const [formData, setFormData] = useState({
     name: '', 
@@ -40,7 +45,17 @@ const ContactContent = () => {
     message: '',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Sync Contact form selections to the global WhatsApp context
+  const { setService, setDate, setTime, setName, setPhone, setWeeks, buildUrl } = useWhatsApp();
+
+  useEffect(() => {
+    setService(formData.scanType);
+    setDate(formData.preferredDate);
+    setTime(formData.preferredTime);
+    setName(formData.name);
+    setPhone(formData.phone);
+    setWeeks(formData.weeksOfPregnancy);
+  }, [formData.scanType, formData.preferredDate, formData.preferredTime, formData.name, formData.phone, formData.weeksOfPregnancy, setService, setDate, setTime, setName, setPhone, setWeeks]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,21 +67,56 @@ const ContactContent = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    toast({
-      title: language === 'en' ? "Appointment Request Submitted!" : "अपॉइंटमेंट अनुरोध भेजा गया!",
-      description: language === 'en' ? "We'll contact you within 24 hours to confirm." : "हम पुष्टि के लिए 24 घंटे के भीतर आपसे संपर्क करेंगे।",
-    });
-    setFormData({ 
-      name: '', phone: '', email: '', age: '', 
-      weight: '', medicalConditions: '',
-      weeksOfPregnancy: '', scanType: '', 
-      preferredDate: '', preferredTime: '',
-      doctorPreference: '', message: '' 
-    });
-    setIsSubmitting(false);
+    
+    try {
+      // Combine date and time
+      const appointmentDate = new Date(formData.preferredDate);
+      if (formData.preferredTime) {
+        const [hours, minutes] = formData.preferredTime.split(':');
+        appointmentDate.setHours(parseInt(hours), parseInt(minutes));
+      }
+
+      await createAppointment({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        serviceId: formData.scanType,
+        doctorId: formData.doctorPreference,
+        date: appointmentDate.toISOString(),
+        notes: `
+          Age: ${formData.age}
+          Weight: ${formData.weight}
+          Medical Conditions: ${formData.medicalConditions}
+          Weeks of Pregnancy: ${formData.weeksOfPregnancy}
+          Doctor Preference: ${formData.doctorPreference}
+          Message: ${formData.message}
+        `.trim(),
+      });
+
+      toast({
+        title: language === 'en' ? "Appointment Request Submitted!" : "अपॉइंटमेंट अनुरोध भेजा गया!",
+        description: language === 'en' ? "We'll contact you within 24 hours to confirm." : "हम पुष्टि के लिए 24 घंटे के भीतर आपसे संपर्क करेंगे।",
+        action: (
+          <ToastAction altText="Open WhatsApp" onClick={() => window.open(buildUrl(), '_blank')}>
+            {language === 'en' ? 'Confirm on WhatsApp' : 'WhatsApp पर पुष्टि करें'}
+          </ToastAction>
+        ),
+      });
+
+      setFormData({ 
+        name: '', phone: '', email: '', age: '', 
+        weight: '', medicalConditions: '',
+        weeksOfPregnancy: '', scanType: '', 
+        preferredDate: '', preferredTime: '',
+        doctorPreference: '', message: '' 
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: language === 'en' ? "Submission Failed" : "सबमिशन विफल रहा",
+        description: error instanceof Error ? error.message : "An unknown error occurred",
+      });
+    }
   };
 
   const scanTypes = [
@@ -83,6 +133,24 @@ const ContactContent = () => {
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-500">
+      <SEO 
+        title="Book Appointment | Best Ultrasound Clinic in Greater Noida West"
+        description="Schedule your pregnancy scan or diagnostic ultrasound at Focus Clinic Nirala Estate. Online appointment booking for expert fetal medicine and diagnostics."
+        faqData={[
+          {
+            question: "How can I book an appointment at Focus Ultrasound?",
+            answer: "You can book an appointment by calling us at +91 8130881986 or by filling out the online appointment request form on our contact page."
+          },
+          {
+            question: "What should I bring for my ultrasound appointment?",
+            answer: "Please bring your doctor's prescription, any previous scan reports, and a valid ID proof. For certain scans, you may need to come with a full bladder; our staff will advise you during booking."
+          },
+          {
+            question: "Is parking available at the clinic?",
+            answer: "Yes, free parking is available within the Nirala Estate Commercial Complex for all our patients."
+          }
+        ]}
+      />
       <Header />
       <main className="pt-20">
         <ContactHeroBanner />
@@ -98,7 +166,7 @@ const ContactContent = () => {
                    initial={{ opacity: 0, y: 20 }}
                    whileInView={{ opacity: 1, y: 0 }}
                    viewport={{ once: true }}
-                   className="bg-card rounded-[2rem] md:rounded-[3rem] border border-border shadow-xl p-6 md:p-12 transition-all duration-500"
+                   className="bg-card rounded-[2rem] border border-border shadow-xl p-6 md:p-12 transition-all duration-500"
                 >
                   <form onSubmit={handleSubmit} className="space-y-10">
                     {/* Patient Information */}
@@ -254,18 +322,69 @@ const ContactContent = () => {
                       )}
                       <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     </Button>
+
+                    <div className="relative my-8">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-border"></span>
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-card px-2 text-muted-foreground font-semibold tracking-widest">{language === 'en' ? 'OR' : 'या'}</span>
+                      </div>
+                    </div>
+
+                    <Button 
+                      type="button"
+                      onClick={() => window.open(buildUrl(), '_blank')}
+                      className="w-full h-16 rounded-2xl text-lg font-bold transition-all bg-[#25D366] hover:bg-[#128C7E] text-white flex items-center justify-center gap-3 shadow-lg"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                      </svg>
+                      {language === 'en' ? 'Book via WhatsApp' : 'WhatsApp पर बुक करें'}
+                    </Button>
                   </form>
                 </motion.div>
               </div>
 
               {/* Info Sidebar */}
               <div className="lg:col-span-4 space-y-8 h-full">
+                {/* Verified Trust Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="bg-card rounded-[2rem] border border-border p-6 shadow-lg flex flex-col items-center text-center group"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform duration-500">
+                    <ShieldCheck className="w-10 h-10" />
+                  </div>
+                  <div className="flex justify-center gap-1 mb-2">
+                    {[1,2,3,4,5].map(i => (
+                      <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
+                    ))}
+                  </div>
+                  <h4 className="font-display font-bold text-xl text-foreground">
+                    {language === 'en' ? 'Verified Patients' : 'सत्यापित मरीज'}
+                  </h4>
+                  <p className="text-muted-foreground text-sm mt-2 font-body leading-relaxed">
+                    {language === 'en' 
+                      ? 'Join 5,000+ happy families who trusted our expert ultrasound services.' 
+                      : 'उन 5,000+ खुशहाल परिवारों में शामिल हों जिन्होंने हमारी विशेषज्ञ अल्ट्रासाउंड सेवाओं पर भरोसा किया।'}
+                  </p>
+                </motion.div>
+
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="bg-card rounded-[2.5rem] border border-border p-8 md:p-10 shadow-xl border-l-4 border-l-primary transition-all duration-500"
+                  className="bg-card rounded-[2rem] border border-border p-8 md:p-10 shadow-xl border-l-4 border-l-primary transition-all duration-500"
                 >
                   <h3 className="font-display text-2xl font-bold text-foreground mb-8 flex items-center gap-2">
                     <Info className="w-6 h-6 text-primary" />
@@ -289,7 +408,7 @@ const ContactContent = () => {
                       </div>
                       <div>
                         <p className="text-foreground font-semibold text-sm mb-1 uppercase tracking-wider">{language === 'en' ? 'Quick Contact' : 'त्वरित संपर्क'}</p>
-                        <a href="tel:+919870475400" className="text-foreground font-bold text-base hover:text-primary transition-colors block">
+                        <a href="tel:+918287655133" className="text-foreground font-bold text-base hover:text-primary transition-colors block">
                           +91 98704 75400
                         </a>
                         <a href="mailto:info.fufc@gmail.com" className="text-muted-foreground font-body text-sm hover:text-primary transition-colors">
@@ -327,7 +446,7 @@ const ContactContent = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
-                  className="bg-primary/5 rounded-[2.5rem] p-8 border border-primary/20 relative overflow-hidden group shadow-lg"
+                  className="bg-primary/5 rounded-[2rem] p-8 border border-primary/20 relative overflow-hidden group shadow-lg"
                 >
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
                     < Baby className="w-24 h-24" />
@@ -347,14 +466,12 @@ const ContactContent = () => {
                 </motion.div>
                 
                 {/* Visual Trust Indicator */}
-                <div className="rounded-[2.5rem] bg-gradient-to-br from-primary/10 to-transparent p-1">
+                <div className="rounded-[2rem] bg-gradient-to-br from-primary/10 to-transparent p-1">
                   <div className="bg-card rounded-[2.4rem] p-8 text-center border border-border/50">
                     <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Patient Trust</p>
                     <div className="flex justify-center gap-1 mb-3">
                       {[1,2,3,4,5].map(i => (
-                        <svg key={i} className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+                        <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                       ))}
                     </div>
                     <p className="text-foreground font-display font-bold text-2xl">4.9/5</p>
@@ -373,9 +490,7 @@ const ContactContent = () => {
 
 const Contact = () => {
   return (
-    <LanguageProvider>
-      <ContactContent />
-    </LanguageProvider>
+    <ContactContent />
   );
 };
 

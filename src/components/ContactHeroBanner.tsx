@@ -46,7 +46,8 @@ const ContactHeroBanner = () => {
         className="absolute inset-0 z-0"
       >
         <img
-          src="/images/contact-hero-bg.png"
+          src="/images/contact-hero-bg.webp"
+          fetchPriority="high"
           alt="Book Ultrasound Appointment"
           className="w-full h-full object-cover"
         />
@@ -65,7 +66,7 @@ const ContactHeroBanner = () => {
           className="max-w-3xl text-center md:text-left"
         >
           {/* Enhanced Glassmorphism Wrapper */}
-          <div className="bg-card/40 dark:bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 border border-border/50 dark:border-white/10 shadow-xl dark:shadow-[0_0_50px_rgba(0,200,255,0.1)] inline-block w-full transition-all duration-500">
+          <div className="bg-card/40 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 border border-border/50 dark:border-white/10 shadow-xl dark:shadow-[0_0_50px_rgba(0,200,255,0.1)] inline-block w-full transition-all duration-500">
             {/* Small Badge */}
             <motion.span 
               variants={itemVariants}
@@ -106,7 +107,7 @@ const ContactHeroBanner = () => {
               </motion.button>
               
               <motion.a
-                href="tel:+919870475400"
+                href="tel:+918287655133"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="border border-border bg-background/50 text-foreground font-bold rounded-2xl px-8 py-4 backdrop-blur-sm hover:bg-foreground hover:text-background transition-all flex items-center justify-center gap-2"
