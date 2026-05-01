@@ -86,8 +86,8 @@ const Header = () => {
       <div className="max-w-[1300px] mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo Section - Aligned Far Left */}
-          <div className="flex-1 flex justify-start">
-            <Link to="/" className="flex items-center gap-4 group" aria-label="Focus Ultrasound & Fetal Clinic - Home">
+          <div className="flex-shrink-0 flex justify-start items-center">
+            <Link to="/" className="flex items-center gap-2 md:gap-4 group" aria-label="Focus Ultrasound & Fetal Clinic - Home">
               <div className="relative">
                 <BrandLogo size="sm" />
                 <motion.div 
@@ -97,23 +97,23 @@ const Header = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-display font-black tracking-tighter leading-none text-slate-900 dark:text-white transition-colors duration-300">
-                  FOCUS ULTRASOUND
+                <span className="text-sm md:text-xl font-display font-black tracking-tighter leading-none text-slate-900 dark:text-white transition-colors duration-300">
+                  {language === 'en' ? 'FOCUS ULTRASOUND' : 'फोकस अल्ट्रासाउंड'}
                 </span>
-                <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-60 text-primary">
-                  & Fetal Clinic
+                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-0.5 md:mt-1 opacity-90">
+                  {language === 'en' ? '& Fetal Clinic' : '& फीटल क्लिनिक'}
                 </span>
               </div>
             </Link>
           </div>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden lg:flex items-center gap-2" role="navigation" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2" role="navigation" aria-label="Main navigation">
             {navItems.map((item) => (
               <Link
                 key={item.key}
                 to={item.href}
-                className={`relative px-5 py-2 text-[11px] font-black uppercase tracking-widest transition-all duration-300 ${
+                className={`relative px-3 xl:px-5 py-2 text-[10px] xl:text-[11px] font-black uppercase tracking-widest transition-all duration-300 ${
                   isActive(item.href) ? 'text-primary' : 'text-slate-700 dark:text-slate-300 hover:text-primary'
                 }`}
               >
@@ -130,7 +130,7 @@ const Header = () => {
           </nav>
 
           {/* Right Side Actions - Right Aligned */}
-          <div className="flex-1 flex items-center justify-end gap-3">
+          <div className="flex items-center justify-end gap-1.5 md:gap-3">
             <div className="hidden xl:block">
               <ClinicStatus />
             </div>
@@ -142,10 +142,10 @@ const Header = () => {
             <button
               onClick={toggleLanguage}
               aria-label={`Switch language to ${language === 'en' ? 'Hindi' : 'English'}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/5 border border-black/5 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+              className="flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/5 border border-black/5 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
             >
-              <Globe className="w-4 h-4 text-primary" />
-              <span className="text-[10px] font-black text-slate-900 dark:text-white">
+              <Globe className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
+              <span className="text-[9px] md:text-[10px] font-black text-slate-900 dark:text-white">
                 {language.toUpperCase()}
               </span>
             </button>
@@ -153,11 +153,12 @@ const Header = () => {
             {/* CTA Button */}
             <Link
               to="/contact"
-              className="hidden md:flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm hover:scale-105 hover:shadow-md transition-all duration-300"
+              className="hidden sm:flex items-center gap-2 bg-primary text-white px-4 md:px-8 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest shadow-sm hover:scale-105 hover:shadow-md transition-all duration-300"
               aria-label="Book appointment"
             >
-              <Calendar className="w-4 h-4" />
-              {t('nav.contact')}
+              <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
+              <span className="hidden md:inline">{t('nav.contact')}</span>
+              <span className="md:hidden">Book</span>
             </Link>
 
             {/* Mobile Toggle */}
@@ -165,9 +166,9 @@ const Header = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
-              className={`lg:hidden p-2 rounded-full transition-colors ${isScrolled ? 'bg-black/5 dark:bg-white/10' : 'bg-black/5 dark:bg-white/10 text-slate-900 dark:text-white'}`}
+              className={`lg:hidden p-2.5 rounded-xl transition-all active:scale-90 ${isScrolled ? 'bg-black/5 dark:bg-white/10' : 'bg-black/10 dark:bg-white/20 text-slate-900 dark:text-white'}`}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -176,52 +177,60 @@ const Header = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.nav
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="lg:hidden mt-4 p-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-[2.5rem] border border-black/5 dark:border-white/10 shadow-2xl"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden mt-4 overflow-hidden"
               role="navigation"
               aria-label="Mobile navigation"
             >
-              <div className="flex flex-col gap-4">
-                {navItems.map((item) => (
-                  <Link
+              <div className="p-6 md:p-8 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-[2rem] md:rounded-[2.5rem] border border-black/5 dark:border-white/10 shadow-2xl flex flex-col gap-1 md:gap-2">
+                {navItems.map((item, idx) => (
+                  <motion.div
                     key={item.key}
-                    to={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`text-xl font-black uppercase tracking-[0.2em] py-5 border-b border-black/5 dark:border-white/5 flex items-center justify-between group transition-all duration-300 ${
-                      isActive(item.href) ? 'text-primary' : 'text-slate-900 dark:text-white'
-                    }`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
                   >
-                    <span>{t(item.key)}</span>
-                    <motion.div
-                      animate={isActive(item.href) ? { x: 0, opacity: 1 } : { x: -10, opacity: 0 }}
+                    <Link
+                      to={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`text-xl md:text-2xl font-black uppercase tracking-[0.2em] py-4 md:py-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between group transition-all duration-300 ${
+                        isActive(item.href) ? 'text-primary' : 'text-slate-900 dark:text-white'
+                      }`}
                     >
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </motion.div>
-                  </Link>
+                      <span>{t(item.key)}</span>
+                      <motion.div
+                        animate={isActive(item.href) ? { x: 0, opacity: 1 } : { x: -10, opacity: 0 }}
+                      >
+                        <ArrowRight className="w-6 h-6 text-primary" />
+                      </motion.div>
+                    </Link>
+                  </motion.div>
                 ))}
                 
                 {/* Mobile: Theme + Language row */}
-                <div className="flex items-center gap-4 py-6 border-b border-black/5 dark:border-white/5">
-                  <div className="flex-1 flex items-center gap-3">
-                    <ThemeToggle theme={theme} toggle={toggleTheme} />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Theme</span>
+                <div className="flex items-center gap-4 py-8">
+                  <div className="flex-1 flex items-center gap-4">
+                    <div className="p-1 rounded-full bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10">
+                      <ThemeToggle theme={theme} toggle={toggleTheme} />
+                    </div>
+                    <span className="text-[11px] font-black uppercase tracking-widest text-slate-500">Theme</span>
                   </div>
                   <button
                     onClick={toggleLanguage}
                     aria-label={`Switch to ${language === 'en' ? 'Hindi' : 'English'}`}
-                    className="flex items-center gap-3 px-6 py-3 rounded-full bg-slate-900/5 dark:bg-white/5 border border-black/5 dark:border-white/10"
+                    className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-slate-900/5 dark:bg-white/5 border border-black/5 dark:border-white/10 active:scale-95 transition-transform"
                   >
-                    <Globe className="w-4 h-4 text-primary" />
-                    <span className="text-[10px] font-black text-slate-900 dark:text-white tracking-widest">{language.toUpperCase()}</span>
+                    <Globe className="w-5 h-5 text-primary" />
+                    <span className="text-[11px] font-black text-slate-900 dark:text-white tracking-widest">{language.toUpperCase()}</span>
                   </button>
                 </div>
 
                 <Link
                   to="/contact"
                   onClick={() => setIsMenuOpen(false)}
-                  className="mt-8 flex items-center justify-center gap-4 bg-primary text-white py-6 rounded-3xl font-black text-[11px] uppercase tracking-[0.3em] shadow-lg active:scale-95 transition-transform"
+                  className="mt-4 flex items-center justify-center gap-4 bg-primary text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.3em] shadow-glow active:scale-95 transition-transform"
                 >
                   <Calendar className="w-5 h-5" />
                   {t('nav.contact')}

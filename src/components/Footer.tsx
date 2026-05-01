@@ -19,8 +19,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-card border-t border-border">
-      <div className="max-w-7xl mx-auto py-12 px-6 md:px-10 pb-28 md:pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
+      <div className="max-w-7xl mx-auto py-12 md:py-16 px-6 md:px-10 pb-24 md:pb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 mb-12 text-center md:text-left">
           
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start">
@@ -42,14 +42,14 @@ const Footer = () => {
             <p className="text-muted-foreground font-body text-sm leading-relaxed mb-6 max-w-sm">
               {t('footer.tagline')}
             </p>
-            <div className="flex items-center justify-center md:justify-start gap-3">
-              <a href="#" className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+            <div className="flex items-center justify-center sm:justify-start gap-4">
+              <a href="#" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-sm border border-border/50">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+              <a href="#" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-sm border border-border/50">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+              <a href="#" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all duration-300 shadow-sm border border-border/50">
                 <Twitter className="w-4 h-4" />
               </a>
             </div>
@@ -74,7 +74,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6 text-gray-900 dark:text-white">{t('footer.servicesTitle')}</h4>
+            <h4 className="font-display font-semibold text-lg mb-6 text-foreground">{t('footer.servicesTitle')}</h4>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service}>
@@ -86,7 +86,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6 text-gray-900 dark:text-white">{t('nav.contact')}</h4>
+            <h4 className="font-display font-semibold text-lg mb-6 text-foreground">{t('nav.contact')}</h4>
             <ul className="space-y-4 inline-block text-left">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -102,7 +102,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="mailto:info.fufc@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-body text-sm">
+                <a href="mailto:info.fufc@gmail.com" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm">
                   info.fufc@gmail.com
                 </a>
               </li>
