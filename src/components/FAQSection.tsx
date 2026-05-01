@@ -38,27 +38,27 @@ const FAQSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="card-clean p-8 md:p-12 bg-card border border-border/40"
+          className="card-clean p-4 md:p-12 bg-card border border-border/40"
         >
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-3">
             {Array.isArray(faqs) && faqs.map((faq, index) => (
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}
-                className="border border-border/40 rounded-xl px-6 data-[state=open]:bg-secondary/20 transition-colors"
+                className="border border-border/40 rounded-xl px-4 md:px-6 data-[state=open]:bg-secondary/20 transition-colors"
               >
-                <AccordionTrigger className="text-left py-6 hover:no-underline group">
-                  <div className="flex gap-4 items-center pr-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-colors">
-                      <HelpCircle className="w-5 h-5" />
+                <AccordionTrigger className="text-left py-5 md:py-6 hover:no-underline group">
+                  <div className="flex gap-3 md:gap-4 items-center pr-2 md:pr-4">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-colors">
+                      <HelpCircle className="w-4 h-4 md:w-5 md:h-5" />
                     </div>
-                    <span className="font-display text-lg md:text-xl font-bold text-foreground">
+                    <span className="font-display text-base md:text-xl font-bold text-foreground leading-tight">
                       {faq.question}
                     </span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pb-6 pt-0">
-                  <p className="font-body text-muted-foreground text-base md:text-lg leading-relaxed whitespace-pre-line">
+                <AccordionContent className="pb-5 md:pb-6 pt-0">
+                  <p className="font-body text-muted-foreground text-sm md:text-lg leading-relaxed whitespace-pre-line pl-11 md:pl-14">
                     {faq.answer}
                   </p>
                 </AccordionContent>
