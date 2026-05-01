@@ -39,7 +39,7 @@ const CultureCircle = () => {
         </p>
       </div>
 
-      <div className="relative w-full max-w-[800px] h-auto md:h-[700px] flex items-center justify-center">
+      <div className="relative w-full max-w-[800px] h-auto md:h-[700px] flex flex-col md:flex-row items-center justify-center">
         {/* SVG Connection Lines */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block z-0">
           <defs>
@@ -80,7 +80,7 @@ const CultureCircle = () => {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, type: "spring" }}
           viewport={{ once: true }}
-          className="absolute z-20 w-48 h-48 md:w-56 md:h-56 rounded-full bg-card shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_-10px_rgba(0,0,0,0.4)] border border-border flex flex-col items-center justify-center p-6 text-center group"
+          className="relative md:absolute z-20 w-48 h-48 md:w-56 md:h-56 rounded-full bg-card shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_-10px_rgba(0,0,0,0.4)] border border-border flex flex-col items-center justify-center p-6 text-center group mt-8 md:mt-0"
         >
           {/* Pulsing rings */}
           <div className="absolute inset-0 rounded-full border border-primary/20 animate-ping opacity-20 [animation-duration:3s]" />
@@ -140,7 +140,7 @@ const CultureCircle = () => {
         })}
 
         {/* Mobile View (Grid instead of circle for smaller screens) */}
-        <div className="md:hidden flex flex-col gap-4 w-full px-4 pt-48 pb-12 z-30">
+        <div className="md:hidden flex flex-col gap-4 w-full px-4 pt-20 pb-12 z-30">
           {values.map((value, index) => (
             <motion.div
               key={value.title}
