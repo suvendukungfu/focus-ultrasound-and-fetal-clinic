@@ -13,7 +13,7 @@ interface UserContext {
 export interface AdminEvent {
   id: string;
   type: string;
-  payload: any;
+  payload: unknown;
   timestamp: string;
 }
 
