@@ -2,5 +2,10 @@ export interface ICreateBlogPostDTO {
   title: string;
   slug?: string;
   content: string;
-  [key: string]: any;
+  excerpt?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  authorId?: string;
+  isPublished?: boolean;
 }

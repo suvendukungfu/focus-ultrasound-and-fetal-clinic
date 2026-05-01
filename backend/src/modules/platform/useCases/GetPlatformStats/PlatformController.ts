@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { cpus } from 'os';
 import { prisma } from '../../../../shared/infra/database/prismaClient';
 import { Kernel } from '../../../../kernel/Kernel';
 
@@ -25,7 +26,7 @@ export class PlatformController {
       return res.status(200).json({
         platformState: 'DISTRIBUTED_ACTIVE',
         region: Kernel.region,
-        workerCount: require('os').cpus().length,
+        workerCount: cpus().length,
         activeServices,
         serviceHealth,
         regionMetrics,
