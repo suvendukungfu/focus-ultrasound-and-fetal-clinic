@@ -38,18 +38,23 @@ const ClinicTimings = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="card-clean overflow-hidden bg-card/50 backdrop-blur-xl"
+          className="card-clean overflow-hidden bg-card/50 backdrop-blur-xl border border-border/40"
         >
           {/* Dynamic Open indicator strip */}
-          <div className={`${status === 'open' ? 'bg-primary/5' : 'bg-rose-500/5'} border-b border-border px-6 py-3 flex items-center gap-2`}>
-            <span className={`w-2.5 h-2.5 rounded-full ${status === 'open' ? 'bg-green-500 animate-pulse' : 'bg-rose-500'}`} />
-            <span className="text-sm font-body font-medium text-foreground">
+          <div className={`${status === 'open' ? 'bg-primary/10' : 'bg-rose-500/10'} border-b border-border/40 px-5 py-3.5 flex items-center justify-center sm:justify-start gap-3`}>
+            <div className="relative">
+              <span className={`flex w-3 h-3 rounded-full ${status === 'open' ? 'bg-green-500' : 'bg-rose-500'}`} />
+              {status === 'open' && (
+                <span className="absolute inset-0 w-full h-full rounded-full bg-green-500 animate-ping opacity-75" />
+              )}
+            </div>
+            <span className="text-sm font-display font-bold text-foreground tracking-tight">
               {status === 'open' ? t('timings.openWelcome') : t('timings.closedNotice')}
             </span>
           </div>
 
-          <div className="p-6 md:p-8">
-            <div className="space-y-4">
+          <div className="p-5 md:p-8">
+            <div className="space-y-3 md:space-y-4">
               {timings.map((row, i) => (
                 <motion.div
                   key={row.dayKey}
@@ -57,25 +62,25 @@ const ClinicTimings = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.1 + 0.2 }}
-                  className={`flex items-center justify-between py-3 px-4 rounded-xl ${i % 2 === 0 ? 'bg-secondary/30' : 'bg-secondary/10'}`}
+                  className={`flex items-center justify-between py-4 px-5 rounded-[1.25rem] ${i % 2 === 0 ? 'bg-primary/5' : 'bg-secondary/10'} border border-border/20`}
                 >
-                  <span className="font-display text-base font-semibold text-foreground">
+                  <span className="font-display text-sm md:text-base font-bold text-foreground">
                     {t(row.dayKey)}
                   </span>
-                  <span className="font-body text-sm text-muted-foreground">
+                  <span className="font-body text-xs md:text-sm font-semibold text-muted-foreground text-right">
                     {row.time}
                   </span>
                 </motion.div>
               ))}
             </div>
 
-            <div className="mt-6 pt-5 border-t border-border flex flex-col sm:flex-row gap-3 items-center justify-center">
+            <div className="mt-8 pt-6 border-t border-border/40 flex flex-col sm:flex-row gap-4 items-center justify-center">
               <a
                 href="tel:+918287655133"
-                className="btn-primary inline-flex items-center gap-2"
+                className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4"
               >
-                <Phone className="w-4 h-4" />
-                {t('timings.call')}
+                <Phone className="w-4.5 h-4.5" />
+                <span className="font-bold">{t('timings.call')}</span>
               </a>
             </div>
           </div>

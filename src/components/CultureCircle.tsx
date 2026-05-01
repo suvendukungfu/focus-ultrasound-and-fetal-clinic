@@ -39,7 +39,7 @@ const CultureCircle = () => {
         </p>
       </div>
 
-      <div className="relative w-full max-w-[800px] h-[600px] md:h-[700px] flex items-center justify-center">
+      <div className="relative w-full max-w-[800px] h-auto md:h-[700px] flex items-center justify-center">
         {/* SVG Connection Lines */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block z-0">
           <defs>
@@ -140,7 +140,7 @@ const CultureCircle = () => {
         })}
 
         {/* Mobile View (Grid instead of circle for smaller screens) */}
-        <div className="absolute inset-0 md:hidden flex flex-col items-center justify-center px-6 overflow-y-auto pt-48 pb-12 gap-6 z-30">
+        <div className="md:hidden flex flex-col gap-4 w-full px-4 pt-48 pb-12 z-30">
           {values.map((value, index) => (
             <motion.div
               key={value.title}
@@ -148,15 +148,15 @@ const CultureCircle = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="w-full bg-card/80 backdrop-blur-md p-6 rounded-3xl border border-border shadow-lg flex items-start gap-4"
+              className="w-full bg-card/80 backdrop-blur-xl p-6 rounded-[2rem] border border-primary/10 shadow-lg flex flex-col gap-3"
             >
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
-                <value.icon className="w-6 h-6" />
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-sm">
+                  <value.icon className="w-6 h-6" />
+                </div>
+                <h4 className="text-lg font-bold text-foreground leading-tight">{value.title}</h4>
               </div>
-              <div>
-                <h4 className="text-lg font-bold text-foreground mb-1">{value.title}</h4>
-                <p className="text-sm text-muted-foreground">{value.desc}</p>
-              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed font-medium">{value.desc}</p>
             </motion.div>
           ))}
         </div>
