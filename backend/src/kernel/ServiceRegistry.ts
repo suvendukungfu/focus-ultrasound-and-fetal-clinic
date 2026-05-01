@@ -5,7 +5,7 @@ export interface IKernelService {
   init(): Promise<void>;
   start(): Promise<void>;
   stop(): Promise<void>;
-  health(): Promise<{ status: 'ONLINE' | 'DEGRADED' | 'OFFLINE', metrics?: any }>;
+  health(): Promise<{ status: 'ONLINE' | 'DEGRADED' | 'OFFLINE', metrics?: Record<string, unknown> }>;
 }
 
 export class ServiceRegistry {

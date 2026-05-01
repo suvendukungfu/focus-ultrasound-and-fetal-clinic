@@ -1,6 +1,12 @@
 import { Logger } from '../core/Logger';
 import { prisma } from '../shared/infra/database/prismaClient';
 import { EventBus } from '../events/EventBus';
+import { Prisma } from '@prisma/client';
+
+type KernelEventPayload = {
+  type?: string;
+  data?: Prisma.InputJsonValue;
+};
 
 export class EventGateway {
   private region: string;
@@ -15,7 +21,7 @@ export class EventGateway {
     Logger.info(`[EventGateway-${this.region}] Initializing Real-Time Streaming Gateway...`);
     
     // Subscribe to all kernel level events to broadcast them cross-region
-    EventBus.on('kernel.*', async (payload: any) => {
+    EventBus.on('kernel.*', async (payload: KernelEventPayload) => {
       if (!this.isRunning) return;
       
       try {
