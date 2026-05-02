@@ -34,9 +34,9 @@ const Hero = () => {
           alt="Joyful mother lifting her baby in a sunlit room"
           className="w-full h-full object-cover object-center"
         />
-        {/* Soft Sophisticated Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/40 md:from-background md:via-background/90 md:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+        {/* Soft Sophisticated Gradient - Reduced Opacity for better image visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-background/20 to-transparent md:from-background/40 md:via-background/10 md:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent opacity-30" />
       </motion.div>
 
       {/* Modern Glass Background Elements */}
@@ -47,17 +47,17 @@ const Hero = () => {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
           {/* Content Column */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-10 xl:col-span-8">
             <MotionReveal delay={0.1} duration={0.8}>
               <BrandLogo size="lg" className="mb-6" />
             </MotionReveal>
 
             <MotionReveal delay={0.2} duration={0.8}>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 leading-[1.1] mb-8">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 leading-[1.1] mb-8">
                 {language === 'en' ? (
                   <>
                     Ultrasound & <span className="text-medical-teal">Fetal Medicine</span> Clinic <br />
-                    <span className="text-2xl md:text-3xl lg:text-4xl block mt-4 font-medium text-slate-600">in Greater Noida West</span>
+                    <span className="text-2xl md:text-3xl lg:text-4xl block mt-4 font-medium text-slate-700">in Greater Noida West</span>
                   </>
                 ) : (
                   <>
@@ -69,7 +69,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4} duration={0.8}>
-              <p className="text-slate-600 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-xl">
+              <p className="text-slate-700 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-2xl">
                 {language === 'en' 
                   ? "Experience the highest standard of fetal ultrasound and medicine in a serene, professional environment dedicated to you and your baby's well-being."
                   : "आपके और आपके बच्चे की भलाई के लिए समर्पित एक शांत, पेशेवर वातावरण में भ्रूण अल्ट्रासाउंड और चिकित्सा के उच्चतम मानक का अनुभव करें।"}
@@ -112,38 +112,12 @@ const Hero = () => {
                       <m.icon className="w-5 h-5 text-medical-teal" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-display text-xl font-bold text-slate-900">{m.value}</span>
-                      <span className="text-slate-500 text-sm font-medium">{m.label}</span>
+                      <span className="font-display text-xl font-bold text-slate-950">{m.value}</span>
+                      <span className="text-slate-600 text-sm font-medium">{m.label}</span>
                     </div>
                   </div>
                 ))}
               </div>
-            </MotionReveal>
-          </div>
-
-          {/* Visual Column */}
-          <div className="lg:col-span-5 relative hidden lg:block h-full min-h-[500px]">
-            <MotionReveal direction="left" delay={0.4} className="absolute inset-0">
-               <motion.div 
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-20 right-0 max-w-[280px] bg-white/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-elevated border border-white/50"
-               >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-medical-teal/10 flex items-center justify-center">
-                      <Activity className="w-6 h-6 text-medical-teal" />
-                    </div>
-                    <div>
-                      <h4 className="font-display font-bold text-slate-900 leading-tight">Advanced Scanning</h4>
-                      <p className="text-xs text-slate-500">Elite Diagnostic Care</p>
-                    </div>
-                  </div>
-                  <img loading="lazy" src="/images/ultrasound-machine.webp" alt="Advanced Ultrasound System" className="rounded-2xl mb-4 w-full aspect-video object-cover" />
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-medical-blue bg-medical-blue/10 px-3 py-1 rounded-full uppercase tracking-wider">Premium Tech</span>
-                    <span className="text-xs font-semibold text-slate-400 italic">GE Voluson E10</span>
-                  </div>
-               </motion.div>
             </MotionReveal>
           </div>
         </div>
