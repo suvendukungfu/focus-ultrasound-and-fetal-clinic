@@ -28,12 +28,19 @@ const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ reviews }) => {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto px-4 py-12 overflow-hidden">
-      {/* Trust Badge */}
-      <div className="flex justify-center mb-8">
+      {/* Trust Badge & Average Rating */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/20 rounded-full shadow-sm animate-fade-in">
           <ShieldCheck className="w-5 h-5 text-primary" />
           <span className="text-sm font-display font-semibold text-primary uppercase tracking-wider">
             {language === 'en' ? 'Verified Patients' : 'सत्यापित मरीज'}
+          </span>
+        </div>
+        
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-highlight/10 border border-highlight/20 rounded-full shadow-sm animate-fade-in">
+          <Star className="w-5 h-5 text-highlight fill-highlight" />
+          <span className="text-sm font-display font-semibold text-foreground">
+            4.8 <span className="text-muted-foreground ml-1">({language === 'en' ? '1000+ Happy Families' : '1000+ खुश परिवार'})</span>
           </span>
         </div>
       </div>

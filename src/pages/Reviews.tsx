@@ -11,25 +11,15 @@ import SEO from '@/components/SEO';
 const PATIENT_IMAGE = '/images/patient-story-1.webp';
 const FALLBACK_IMAGE = '/placeholder.svg';
 
-import { useTestimonials, Testimonial } from '@/hooks/useTestimonials';
-
-const STATIC_REVIEWS = [
-  {
-    id: '1',
-    name: 'Priyanka Mehta', nameHi: 'प्रियंका मेहता', rating: 5,
-    comment: 'Excellent experience! The doctors explained everything clearly during my pregnancy ultrasound. The staff is very caring and professional. Highly recommend!',
-    textHi: 'उत्कृष्ट अनुभव! डॉक्टरों ने मेरे प्रेगनेंसी अल्ट्रासाउंड के दौरान सब कुछ स्पष्ट रूप से समझाया। स्टाफ बहुत देखभाल करने वाला और पेशेवर है।',
-  },
-  // ... (rest of static reviews can be kept as fallback or removed)
-];
+import { useTestimonials, Testimonial, STATIC_REVIEWS } from '@/hooks/useTestimonials';
 
 const ReviewsContent = () => {
   const { t, language } = useLanguage();
   const [imgError, setImgError] = useState(false);
-  const { testimonials, loading } = useTestimonials();
+  const { testimonials, loading, error } = useTestimonials();
 
   // Combine or fallback
-  const displayReviews = testimonials.length > 0 ? testimonials : STATIC_REVIEWS;
+  const displayReviews = error ? STATIC_REVIEWS : testimonials;
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,7 +49,7 @@ const ReviewsContent = () => {
               {t('reviews.subtitle')}
             </p>
             <a
-              href="https://g.page/r/review"
+              href={import.meta.env.VITE_GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 btn-primary animate-fade-up"
@@ -134,39 +124,58 @@ const ReviewsContent = () => {
               </div>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {displayReviews.map((review: Testimonial, index: number) => (
-                  <div
-                    key={review.id || index}
-                    className="bg-card rounded-2xl border border-border p-6 md:p-8 flex flex-col h-full shadow-soft hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 animate-fade-up group"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <Quote className="w-8 h-8 text-primary/15 mb-4 transition-colors duration-300 group-hover:text-primary/30" />
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 text-highlight fill-highlight" />
-                      ))}
+                {displayReviews.length > 0 ? (
+                  displayReviews.map((review: Testimonial, index: number) => (
+                    <div
+                      key={review.id || index}
+                      className="bg-card rounded-2xl border border-border p-6 md:p-8 flex flex-col h-full shadow-soft hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 animate-fade-up group"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <Quote className="w-8 h-8 text-primary/15 mb-4 transition-colors duration-300 group-hover:text-primary/30" />
+                      <div className="flex gap-1 mb-4">
+                        {[...Array(review.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 text-highlight fill-highlight" />
+                        ))}
+                      </div>
+                      <p className="text-foreground/80 font-body text-sm mb-6 leading-relaxed flex-grow">
+                        "{language === 'en' 
+                          ? (review.comment || review.text) 
+                          : (review.textHi || review.comment || review.text)}"
+                      </p>
+                      <div className="pt-4 border-t border-border mt-auto flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-bold text-sm flex-shrink-0">
+                          {(review.name || '').charAt(0)}
+                        </div>
+                        <div>
+                          <span className="font-display font-semibold text-foreground text-sm block">
+                            {language === 'en' ? review.name : (review.nameHi || review.name)}
+                          </span>
+                          <span className="text-muted-foreground font-body text-xs">
+                            {language === 'en' ? 'Verified Patient' : 'सत्यापित मरीज'}
+                            {review.source === 'google' && ' (Google)'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-foreground/80 font-body text-sm mb-6 leading-relaxed flex-grow">
-                      "{language === 'en' 
-                        ? (review.comment || review.text) 
-                        : (review.textHi || review.comment || review.text)}"
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-16 bg-card rounded-2xl border border-border shadow-soft">
+                    <Star className="w-12 h-12 text-muted mx-auto mb-4" />
+                    <h3 className="font-display font-semibold text-xl text-foreground mb-2">No reviews yet</h3>
+                    <p className="text-muted-foreground font-body mb-6">
+                      {language === 'en' ? 'Be the first to review us on Google' : 'Google पर हमारी समीक्षा करने वाले पहले व्यक्ति बनें'}
                     </p>
-                    <div className="pt-4 border-t border-border mt-auto flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-bold text-sm flex-shrink-0">
-                        {(review.name || '').charAt(0)}
-                      </div>
-                      <div>
-                        <span className="font-display font-semibold text-foreground text-sm block">
-                          {language === 'en' ? review.name : (review.nameHi || review.name)}
-                        </span>
-                        <span className="text-muted-foreground font-body text-xs">
-                          {language === 'en' ? 'Verified Patient' : 'सत्यापित मरीज'}
-                          {review.source === 'google' && ' (Google)'}
-                        </span>
-                      </div>
-                    </div>
+                    <a 
+                      href={import.meta.env.VITE_GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-flex items-center justify-center gap-2 btn-primary"
+                    >
+                      <Star className="w-4 h-4" />
+                      {t('reviews.google')}
+                    </a>
                   </div>
-                ))}
+                )}
               </div>
             )}
           </div>
@@ -184,7 +193,12 @@ const ReviewsContent = () => {
                 : 'आपकी प्रतिक्रिया हमें सुधारने में मदद करती है और दूसरों को गुणवत्तापूर्ण देखभाल खोजने में मदद करती है।'}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="https://g.page/r/review" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 btn-primary">
+              <a 
+                href={import.meta.env.VITE_GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center justify-center gap-2 btn-primary"
+              >
                 <Star className="w-5 h-5" />
                 {t('reviews.google')}
                 <ExternalLink className="w-4 h-4" />

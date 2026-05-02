@@ -29,7 +29,7 @@ const Hero = () => {
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
-          src="/images/mother_baby_hero.webp"
+          src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=2500&auto=format&fit=crop"
           fetchPriority="high"
           alt="Joyful mother lifting her baby in a sunlit room"
           className="w-full h-full object-cover object-center"
@@ -47,16 +47,16 @@ const Hero = () => {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
           {/* Content Column */}
-          <div className="lg:col-span-10 xl:col-span-8">
+          <div className="lg:col-span-10 xl:col-span-9 flex flex-col items-center lg:items-start text-center lg:text-left">
             <MotionReveal delay={0.1} duration={0.8}>
               <BrandLogo size="lg" className="mb-6" />
             </MotionReveal>
 
             <MotionReveal delay={0.2} duration={0.8}>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 leading-[1.1] mb-8">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold leading-[1.1] mb-6 tracking-tight text-slate-950">
                 {language === 'en' ? (
                   <>
-                    Ultrasound & <span className="text-medical-teal">Fetal Medicine</span> Clinic <br />
+                    Premier <span className="text-medical-teal">Ultrasound & Fetal Medicine</span>
                     <span className="text-2xl md:text-3xl lg:text-4xl block mt-4 font-medium text-slate-700">in Greater Noida West</span>
                   </>
                 ) : (
@@ -69,7 +69,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4} duration={0.8}>
-              <p className="text-slate-700 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-2xl">
+              <p className="text-slate-700 text-lg md:text-xl font-body leading-relaxed mb-10 max-w-3xl">
                 {language === 'en' 
                   ? "Experience the highest standard of fetal ultrasound and medicine in a serene, professional environment dedicated to you and your baby's well-being."
                   : "आपके और आपके बच्चे की भलाई के लिए समर्पित एक शांत, पेशेवर वातावरण में भ्रूण अल्ट्रासाउंड और चिकित्सा के उच्चतम मानक का अनुभव करें।"}
@@ -77,7 +77,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.6} duration={0.8}>
-              <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-12">
                 <Link
                   to="/contact"
                   className="bg-medical-teal text-white hover:bg-medical-teal/90 px-8 py-4 rounded-2xl font-semibold shadow-glow flex items-center gap-2 transform transition-transform hover:-translate-y-1"
