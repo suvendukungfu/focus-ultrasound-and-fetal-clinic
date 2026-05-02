@@ -101,6 +101,11 @@ interface SEOProps {
         "latitude": 28.6015,
         "longitude": 77.4475
       },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "100"
+      },
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -167,7 +172,7 @@ interface SEOProps {
     return () => {
       // Clean up script on unmount if needed, though usually fine to keep for SEO
     };
-  }, [title, description, keywords, ogImage, ogUrl, ogType, canonicalUrl, faqData]);
+  }, [title, description, keywords, ogImage, ogUrl, ogType, canonicalUrl, faqData, noindex]);
 
   return null;
 };
