@@ -29,7 +29,7 @@ const Hero = () => {
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=2500&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1544126592-807daa2156d4?q=80&w=2500&auto=format&fit=crop"
           fetchPriority="high"
           alt="Joyful mother lifting her baby in a sunlit room"
           className="w-full h-full object-cover object-center"
