@@ -24,11 +24,9 @@ export function activityLogger(req: Request, res: Response, next: NextFunction) 
     return next();
   }
 
-  // Capture the original response end to log after response is sent
-  const originalEnd = res.end;
   const startTime = Date.now();
 
-  res.end = function (this: Response, ...args: any[]) {
+  res.on('finish', () => {
     // Fire-and-forget: never block the response
     setImmediate(async () => {
       try {
@@ -52,9 +50,7 @@ export function activityLogger(req: Request, res: Response, next: NextFunction) 
         Logger.error(`[ActivityLogger] Failed to record activity: ${err}`);
       }
     });
-
-    return originalEnd.apply(this, args as any);
-  } as any;
+  });
 
   next();
 }
@@ -79,7 +75,7 @@ function deriveAction(method: string, path: string): string {
 /**
  * Extract entity type and ID from the URL path.
  */
-function deriveEntity(path: string, body: any): { entityType: string | null; entityId: string | null } {
+function deriveEntity(path: string, body: unknown): { entityType: string | null; entityId: string | null } {
   const segments = path.split('/').filter(Boolean);
   
   // Pattern: /api/v1/leads/:id → entityType=Lead, entityId=:id
@@ -97,7 +93,7 @@ function deriveEntity(path: string, body: any): { entityType: string | null; ent
   }
 
   // If no UUID in path, try the body
-  if (!entityId && body?.id) {
+  if (!entityId && isRecord(body) && typeof body.id === 'string') {
     entityId = body.id;
   }
 
@@ -112,6 +108,10 @@ function deriveEntity(path: string, body: any): { entityType: string | null; ent
 
 function capitalise(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1).replace(/s$/, ''); // "leads" → "Lead"
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 
 /**

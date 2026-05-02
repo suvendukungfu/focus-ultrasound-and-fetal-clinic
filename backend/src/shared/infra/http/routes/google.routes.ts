@@ -27,9 +27,9 @@ googleRoutes.get('/reviews', async (req: Request, res: Response) => {
         data: {
           reviews: cachedReviews.map(r => ({
             id: r.id,
-            author: r.author,
+            author: r.name,
             rating: r.rating,
-            text: r.content,
+            text: r.comment,
             time: r.createdAt,
           })),
           averageRating: cachedReviews.length > 0
@@ -60,14 +60,14 @@ googleRoutes.get('/reviews', async (req: Request, res: Response) => {
         where: { id: reviewId },
         create: {
           id: reviewId,
-          author: review.author_name,
+          name: review.author_name,
           rating: review.rating,
-          content: review.text || '',
+          comment: review.text || '',
           isApproved: true,
         },
         update: {
           rating: review.rating,
-          content: review.text || '',
+          comment: review.text || '',
         },
       });
     }

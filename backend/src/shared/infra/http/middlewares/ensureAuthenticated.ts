@@ -2,15 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { verify, JwtPayload } from 'jsonwebtoken';
 import { Logger } from '../../../../core/Logger';
 
-// Extend Express Request
-declare global {
-  namespace Express {
-    interface Request {
-      user: {
-        id: string;
-        role: string;
-      };
-    }
+declare module 'express-serve-static-core' {
+  interface Request {
+    user: {
+      id: string;
+      role: string;
+    };
   }
 }
 

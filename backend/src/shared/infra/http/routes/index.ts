@@ -5,6 +5,7 @@ import { servicesRoutes } from '../../../../modules/services/infra/http/routes/s
 import { reviewsRoutes } from '../../../../modules/reviews/infra/http/routes/reviews.routes';
 import { blogRoutes } from '../../../../modules/content/infra/http/routes/blog.routes';
 import { analyticsRoutes } from '../../../../modules/analytics/infra/http/routes/analytics.routes';
+import { appointmentsRouter } from '../../../../modules/appointments/infra/http/routes/appointments.routes';
 
 const routes = Router();
 
@@ -14,5 +15,6 @@ routes.use('/services', servicesRoutes);
 routes.use('/reviews', reviewsRoutes);
 routes.use('/blog', blogRoutes);
 routes.use('/analytics', analyticsRoutes);
+routes.use('/appointments', appointmentsRouter);
 
 export { routes };

@@ -7,12 +7,13 @@ const createReviewUseCase = new CreateReviewUseCase(prismaReviewsRepository);
 
 export class CreateReviewController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { author, rating, content } = request.body;
+    // Accept both old field names (author/content) and new (name/comment) for compatibility
+    const { name, author, rating, comment, content } = request.body;
 
     const review = await createReviewUseCase.execute({
-      author,
+      name: name ?? author,
       rating,
-      content,
+      comment: comment ?? content,
     });
 
     return response.status(201).json(review);

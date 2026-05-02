@@ -5,42 +5,75 @@ import { prisma } from '../../../../shared/infra/database/prismaClient';
 
 export class PrismaReviewsRepository implements IReviewsRepository {
   async create(data: ICreateReviewDTO): Promise<Review> {
-    const review = await prisma.review.create({
+    return prisma.review.create({
       data: {
-        author: data.author,
+        name: data.name,
         rating: data.rating,
-        content: data.content,
-        isApproved: false, // Default to pending approval
+        comment: data.comment,
+        source: data.source ?? 'manual',
+        externalId: data.externalId,
+        isApproved: false,
       },
     });
-    return review;
   }
 
   async listAll(): Promise<Review[]> {
-    const reviews = await prisma.review.findMany({
+    return prisma.review.findMany({
+      where: { deletedAt: null },
       orderBy: { createdAt: 'desc' },
     });
-    return reviews;
+  }
+
+  async listApproved(): Promise<Review[]> {
+    return prisma.review.findMany({
+      where: { isApproved: true, deletedAt: null },
+      orderBy: [{ rating: 'desc' }, { createdAt: 'desc' }],
+    });
   }
 
   async findById(id: string): Promise<Review | null> {
-    const review = await prisma.review.findUnique({
-      where: { id },
+    return prisma.review.findUnique({ where: { id } });
+  }
+
+  async findByExternalId(externalId: string): Promise<Review | null> {
+    return prisma.review.findFirst({
+      where: { externalId },
     });
-    return review;
   }
 
   async approve(id: string): Promise<Review> {
-    const review = await prisma.review.update({
+    return prisma.review.update({
       where: { id },
       data: { isApproved: true },
     });
-    return review;
   }
 
   async delete(id: string): Promise<void> {
-    await prisma.review.delete({
+    await prisma.review.update({
       where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  /**
+   * Idempotent upsert from Google Places.
+   * Skips silently if the externalId already exists.
+   */
+  async upsertFromGoogle(
+    data: ICreateReviewDTO & { externalId: string }
+  ): Promise<Review> {
+    const existing = await this.findByExternalId(data.externalId);
+    if (existing) return existing;
+
+    return prisma.review.create({
+      data: {
+        name: data.name,
+        rating: data.rating,
+        comment: data.comment,
+        source: 'google',
+        externalId: data.externalId,
+        isApproved: true, // Google reviews are auto-approved
+      },
     });
   }
 }

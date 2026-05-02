@@ -1,5 +1,9 @@
 export interface ICreateReviewDTO {
-  author: string;
+  name: string;
   rating: number;
-  [key: string]: any;
+  comment?: string;
+  /** Source identifier — 'manual' | 'google' */
+  source?: string;
+  /** External Google review ID for deduplication */
+  externalId?: string;
 }

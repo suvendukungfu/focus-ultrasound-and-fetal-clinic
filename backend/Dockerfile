@@ -3,15 +3,23 @@
 # Multi-stage build for minimal image size
 # ══════════════════════════════════════════════════════
 
+# ─── Base: Runtime libraries required by Prisma ──────
+FROM node:22-slim AS base
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openssl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
 # ─── Stage 1: Install dependencies ───────────────────
-FROM node:22-slim AS deps
+FROM base AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+COPY prisma ./prisma/
 RUN npm ci --omit=dev
+RUN npx prisma generate
 
 # ─── Stage 2: Build TypeScript ───────────────────────
-FROM node:22-slim AS builder
+FROM base AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -28,7 +36,7 @@ RUN npx prisma generate
 RUN npx tsc --outDir dist
 
 # ─── Stage 3: Production image ──────────────────────
-FROM node:22-slim AS runner
+FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -36,14 +44,17 @@ ENV PORT=4000
 
 # Security: run as non-root user
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 focusapp
-USER focusapp
+    adduser --system --uid 1001 focusapp && \
+    mkdir -p /app/logs && \
+    chown -R focusapp:nodejs /app/logs
 
 # Copy production dependencies
 COPY --from=deps --chown=focusapp:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=focusapp:nodejs /app/dist ./dist
 COPY --from=builder --chown=focusapp:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=focusapp:nodejs /app/package.json ./
+
+USER focusapp
 
 EXPOSE 4000
 
