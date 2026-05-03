@@ -16,7 +16,7 @@ const Hero = () => {
   });
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const trustBadges = [
     { icon: Award, label: language === 'en' ? 'FMF UK Certified' : 'FMF UK प्रमाणित', color: 'bg-medical-teal/10 text-medical-teal border-medical-teal/20' },
@@ -25,18 +25,18 @@ const Hero = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20 bg-background/30">
+    <section ref={containerRef} className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-20 bg-background/30">
       {/* Background & Parallax Image */}
       <motion.div style={{ y: y1, opacity }} className="absolute inset-0 z-0">
         <img
           src="/images/mother_baby_hero.webp"
           fetchPriority="high"
           alt="Joyful mother lifting her baby in a sunlit room"
-          className="w-full h-full object-cover object-right md:object-[95%_center] scale-105"
+          className="w-full h-full object-cover object-center md:object-[95%_center] scale-105"
         />
-        {/* Soft Sophisticated Gradient - Enhanced for mobile contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent md:from-background/70 md:via-background/10 md:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80 md:opacity-30" />
+        {/* Soft Sophisticated Gradient - Enhanced for mobile visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/10 to-transparent md:from-background/70 md:via-background/10 md:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40 md:opacity-30" />
       </motion.div>
 
       {/* Modern Glass Background Elements */}
@@ -53,7 +53,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2} duration={0.8}>
-              <h1 className="font-display text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 leading-[1.1] mb-6 md:mb-8 max-w-[15ch] md:max-w-2xl">
+              <h1 className="font-display text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 leading-[1.1] mb-6 md:mb-8 max-w-[15ch] md:max-w-2xl drop-shadow-sm">
                 {language === 'en' ? (
                   <>
                     Ultrasound & <span className="text-medical-teal">Fetal Medicine</span> Clinic <br />
@@ -69,7 +69,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4} duration={0.8}>
-              <p className="text-slate-700 text-base md:text-xl font-body leading-relaxed mb-8 md:mb-10 max-w-2xl">
+              <p className="text-slate-800 text-base md:text-xl font-body leading-relaxed mb-8 md:mb-10 max-w-2xl drop-shadow-sm">
                 {language === 'en' 
                   ? "Experience the highest standard of fetal ultrasound and medicine in a serene, professional environment dedicated to you and your baby's well-being."
                   : "आपके और आपके बच्चे की भलाई के लिए समर्पित एक शांत, पेशेवर वातावरण में भ्रूण अल्ट्रासाउंड और चिकित्सा के उच्चतम मानक का अनुभव करें।"}
@@ -104,7 +104,7 @@ const Hero = () => {
               <div className="flex flex-wrap items-center gap-x-8 gap-y-6 border-t border-slate-100 pt-8 md:pt-10">
                 {[
                   { value: '5000+', label: language === 'en' ? 'Happy Families' : 'खुश परिवार', icon: Heart },
-                  { value: '10+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
+                  { value: '5+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
                   { value: '4.9★', label: language === 'en' ? 'Expert Rating' : 'विशेषज्ञ रेटिंग', icon: Star },
                 ].map((m) => (
                   <div key={m.label} className="flex items-center gap-3">
