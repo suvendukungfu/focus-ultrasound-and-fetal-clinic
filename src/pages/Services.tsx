@@ -30,41 +30,12 @@ interface FAQ {
 const Services = () => {
   const { t } = useLanguage();
   
-  // Icon and Image Mappings
-  const serviceIcons = [
-    Scan, Scan, Scan, Scan, Scan, Stethoscope, Activity, 
-    Activity, Baby, Baby, Activity, Baby, Heart, Activity
-  ];
-  const serviceImages = [
-    'https://upload.wikimedia.org/wikipedia/commons/b/b4/2_Boyutlu_Orijinal_Ultrasound_G%C3%B6r%C3%BCnt%C3%BCs%C3%BC.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/9/9e/Amniotic_sheet.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/2/2d/Bicornuate_uterus_with_pregnancy.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/b/be/Cervical_pregnancy_-_with_descriptions.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/2/2a/CN_T21.JPG',
-    'https://upload.wikimedia.org/wikipedia/commons/4/4e/Complete_miscarriage.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/e/ee/Diane_Rodriguez_y_fernando_Machado_donde_el_hombre_esta_embarazado_de_ella.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/4/48/Early_ultrasound.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/a/aa/Feindiagnostik_%28Ultraschall%29.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/f/f4/Fetal_Anomaly_Ultrasound_Scan_in_Navi_Mumbai.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/f/f9/Gastrochisis_0001.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/c/c3/Incomplete_miscarriage.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/d/d3/LIFE_2013-06-19_10-24.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/b/b8/Molar_pregnancy_0001.jpg'
-  ];
-
   const equipmentIcons = [Monitor, Monitor];
   const equipmentImages = ['/images/clinic-samsung-v7.webp', '/images/ge-voluson-e8-real.webp'];
   const equipmentUrls = [
     'https://www.samsunghealthcare.com/en/products/UltrasoundSystem/V7/Radiology/v1/main',
     'https://www.gehealthcare.com/products/ultrasound/voluson/voluson-e8'
   ];
-
-  const servicesItemsData = t<TranslatedItem[]>('services.items');
-  const servicesData = (Array.isArray(servicesItemsData) ? servicesItemsData : []).map((item, i) => ({
-    ...item,
-    icon: serviceIcons[i] || Scan,
-    image: serviceImages[i] || '/placeholder.svg'
-  }));
 
   const equipmentListData = t<TranslatedItem[]>('services.equipment');
   const equipmentData = (Array.isArray(equipmentListData) ? equipmentListData : []).map((item, i) => ({

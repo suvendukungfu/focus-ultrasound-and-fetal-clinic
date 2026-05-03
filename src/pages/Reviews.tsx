@@ -86,7 +86,7 @@ const Reviews = () => {
                   <Star className="w-4 h-4 fill-primary" />
                   {t('reviews.badge')}
                 </div>
-                <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-8 tracking-tight leading-[1.1]">
+                <h1 className="text-4xl md:text-7xl font-bold text-foreground mb-8 tracking-tight leading-[1.1]">
                   {language === 'en' ? (
                     <>Stories That <span className="text-primary italic">Inspire</span> Confidence</>
                   ) : (
@@ -162,7 +162,7 @@ const Reviews = () => {
                     <Heart className="w-3.5 h-3.5 fill-white" />
                     {t<string>('reviews.featured.badge')}
                   </div>
-                  <h2 className="text-4xl md:text-7xl font-display font-black text-white mb-10 leading-[1.05] tracking-tighter">
+                  <h2 className="text-3xl md:text-7xl font-display font-black text-white mb-10 leading-[1.05] tracking-tighter">
                     {t<string>('reviews.featured.quote')}
                   </h2>
                   <p className="text-white/80 text-xl md:text-2xl leading-relaxed font-body italic mb-12 text-pretty">
@@ -212,7 +212,7 @@ const Reviews = () => {
                   <div className="w-1.5 h-8 bg-primary rounded-full" />
                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">{t('reviews.realPatients')}</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-display font-black text-foreground tracking-tighter leading-none">
+                <h2 className="text-3xl md:text-6xl font-display font-black text-foreground tracking-tighter leading-none">
                   {t<string>('reviews.allStories')}
                 </h2>
               </div>
@@ -326,7 +326,7 @@ const Reviews = () => {
               className="bg-primary rounded-[3rem] p-12 md:p-24 text-center text-white relative overflow-hidden shadow-glow-primary"
             >
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-              <h2 className="text-4xl md:text-6xl font-display font-black mb-6 tracking-tighter leading-tight">
+              <h2 className="text-3xl md:text-6xl font-display font-black mb-6 tracking-tighter leading-tight">
                 {t('reviews.cta.title')}
               </h2>
               <p className="text-white/80 text-xl mb-12 max-w-2xl mx-auto">
@@ -364,7 +364,7 @@ const Reviews = () => {
                 exit={{ opacity: 0, scale: 0.9, y: 40 }}
                 className="bg-card w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden relative"
               >
-                <div className="p-10 md:p-16">
+                <div className="p-8 md:p-16">
                   <button 
                     onClick={() => setShowReviewForm(false)}
                     className="absolute top-8 right-8 p-3 rounded-2xl bg-secondary/10 text-foreground hover:bg-primary hover:text-white transition-all duration-500 group"
