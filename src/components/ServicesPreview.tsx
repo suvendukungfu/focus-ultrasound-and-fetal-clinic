@@ -121,17 +121,31 @@ const ServicesPreview = () => {
                     className="group relative flex flex-col rounded-[2.5rem] md:rounded-[3.5rem] bg-card border border-border shadow-elevated hover:shadow-2xl transition-all duration-700 hover:-translate-y-2 md:hover:-translate-y-3 overflow-hidden"
                   >
                     {/* Immersive Image Section */}
-                    <div className="relative h-60 sm:h-72 overflow-hidden bg-secondary/10 flex items-center justify-center">
+                    <div className="relative h-60 sm:h-72 overflow-hidden bg-black flex items-center justify-center">
                       <img loading="lazy"
                         src={service.image}
                         alt={t(service.nameKey)}
-                        className="w-full h-full object-cover transition-transform [transition-duration:2000ms] ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform [transition-duration:2000ms] ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent opacity-90 group-hover:opacity-75 transition-opacity duration-700" />
                       
+                      {/* Diagnostic UI Overlays */}
+                      <div className="diagnostic-overlay" />
+                      <div className="scanline" />
+                      
+                      {/* Subtler Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60 transition-opacity duration-700" />
+                      
+                      {/* Status Badge */}
+                      <div className="absolute bottom-4 right-4 z-30 pointer-events-none transition-all duration-700 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+                        <span className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[8px] font-bold uppercase tracking-widest">
+                          <span className="w-1 h-1 rounded-full bg-primary animate-pulse" />
+                          Diagnostic Capture
+                        </span>
+                      </div>
+
                       {/* Tech Badge */}
                       <div className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center gap-4 z-20">
-                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-white shadow-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-white/20 shadow-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
                           <service.icon className="w-6 h-6 md:w-7 md:h-7 text-primary" strokeWidth={1.5} />
                         </div>
                       </div>
