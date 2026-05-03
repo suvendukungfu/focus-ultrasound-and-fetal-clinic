@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Mail, Loader2, Wifi, WifiOff } from 'lucide-react';
+import { Lock, Mail, Loader2, Shield, ArrowRight } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Hardcoded local admin credentials for offline/development use
 const LOCAL_ADMIN = {
@@ -52,7 +52,9 @@ const AdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // --- Try backend first ---
+    // Simulation delay for premium feel
+    await new Promise(r => setTimeout(r, 1000));
+
     if (backendStatus === 'online') {
       try {
         const response = await fetch(`${API_URL}/auth/login`, {
@@ -70,31 +72,24 @@ const AdminLogin = () => {
             role: data.user?.role || 'ADMIN'
           };
           login(data.token, userObj);
-          toast({ title: "Login Successful", description: "Welcome to the Admin Dashboard." });
+          toast({ title: "Verification Successful", description: "Identity confirmed. Accessing Secure Console." });
           setIsLoading(false);
           return;
         }
-      } catch {
-        // Network error - fall through to local auth
-      }
+      } catch { /* Fall through */ }
     }
 
-    // --- Local / offline authentication ---
     if (email.trim().toLowerCase() === LOCAL_ADMIN.email.toLowerCase() && password === LOCAL_ADMIN.password) {
       login(LOCAL_ADMIN.token, LOCAL_ADMIN.user);
       toast({
-        title: "Login Successful",
-        description: backendStatus === 'offline'
-          ? "Running in offline mode with demo data."
-          : "Welcome to the Admin Dashboard.",
+        title: "Access Granted",
+        description: "Welcome to the Clinic Management Console.",
       });
     } else {
       toast({
         variant: "destructive",
-        title: "Login Failed",
-        description: backendStatus === 'offline'
-          ? "Use admin@focusultrasound.in / Focus@Admin2026 for offline access."
-          : "Invalid email or password. Please try again.",
+        title: "Authentication Failed",
+        description: "Invalid credentials. Please verify your identity and try again.",
       });
     }
 
@@ -102,44 +97,69 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-950">
       <SEO noindex title="Admin Login | Focus Ultrasound" />
       
+      {/* Premium Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,180,216,0.1),transparent_50%)]" />
+      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-medical-teal/20 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-md relative z-10"
       >
-        <Card className="glass-card overflow-hidden">
-          <CardHeader className="space-y-4 text-center pt-12 pb-8 bg-gradient-to-br from-primary/10 to-transparent">
-            <div className="w-20 h-20 bg-primary/20 rounded-3xl flex items-center justify-center mx-auto text-primary shadow-xl shadow-primary/20 transform hover:rotate-3 transition-transform duration-500">
-              <Lock className="w-10 h-10" />
-            </div>
-            <div>
-              <CardTitle className="text-4xl font-display font-black tracking-tighter text-foreground mb-1">ADMIN PORTAL</CardTitle>
-              <CardDescription className="text-primary font-bold uppercase tracking-[0.2em] text-xs">Secure Management Access</CardDescription>
+        <Card className="glass-card overflow-hidden border-white/10 shadow-2xl rounded-[2.5rem]">
+          <CardHeader className="space-y-6 text-center pt-16 pb-10 bg-gradient-to-b from-primary/10 to-transparent">
+            <motion.div 
+              initial={{ rotate: -10, scale: 0.8 }}
+              animate={{ rotate: 0, scale: 1 }}
+              transition={{ delay: 0.3, type: 'spring' }}
+              className="w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-[2rem] flex items-center justify-center mx-auto text-white shadow-glow-primary transform hover:scale-105 transition-transform duration-500"
+            >
+              <Shield className="w-12 h-12 fill-white/20" />
+            </motion.div>
+            
+            <div className="space-y-2">
+              <CardTitle className="text-4xl font-display font-black tracking-tighter text-white">CLINIC PORTAL</CardTitle>
+              <CardDescription className="text-primary font-bold uppercase tracking-[0.3em] text-[10px]">Secure Management Access</CardDescription>
             </div>
             
             <div className="flex justify-center">
-              {backendStatus === 'online' ? (
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 text-[10px] font-black uppercase tracking-widest">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  Systems Operational
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-black uppercase tracking-widest">
-                  <Loader2 className="w-3 h-3 animate-spin" />
-                  Synchronizing...
-                </div>
-              )}
+              <AnimatePresence mode="wait">
+                {backendStatus === 'online' ? (
+                  <motion.div 
+                    key="online"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-black uppercase tracking-widest"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Cloud Systems Operational
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="sync"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black uppercase tracking-widest"
+                  >
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                    Offline Sync Mode
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </CardHeader>
 
-          <CardContent className="p-10">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Email Identity</label>
+          <CardContent className="p-12 pt-4">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Email Identity</label>
                 <div className="relative group">
                   <Input
                     type="email"
@@ -147,14 +167,14 @@ const AdminLogin = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder="admin@focusultrasound.in"
-                    className="h-14 pl-12 rounded-2xl bg-background/50 border-border/50 focus:border-primary focus:ring-primary/20 transition-all font-bold"
+                    className="h-16 pl-14 rounded-2xl bg-white/5 border-white/10 focus:border-primary focus:ring-primary/20 transition-all font-bold text-white placeholder:text-slate-600"
                   />
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                  <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-primary transition-colors" />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Secure Key</label>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Secure Key</label>
                 <div className="relative group">
                   <Input
                     type="password"
@@ -162,29 +182,36 @@ const AdminLogin = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     placeholder="••••••••"
-                    className="h-14 pl-12 rounded-2xl bg-background/50 border-border/50 focus:border-primary focus:ring-primary/20 transition-all font-bold"
+                    className="h-16 pl-14 rounded-2xl bg-white/5 border-white/10 focus:border-primary focus:ring-primary/20 transition-all font-bold text-white placeholder:text-slate-600"
                   />
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                  <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-primary transition-colors" />
                 </div>
               </div>
 
               <Button
                 type="submit"
-                className="w-full h-16 rounded-2xl text-lg font-bold shadow-glow btn-premium group"
+                className="w-full h-18 rounded-[1.5rem] text-sm font-black uppercase tracking-[0.3em] shadow-glow btn-premium group"
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-                    VERIFYING...
-                  </>
+                  <div className="flex items-center gap-3">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span>Verifying Identity...</span>
+                  </div>
                 ) : (
-                  <span className="flex items-center gap-2">
-                    SIGN IN TO CONSOLE
+                  <span className="flex items-center gap-3">
+                    Access Console <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                 )}
               </Button>
             </form>
+            
+            <div className="mt-12 text-center">
+               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-loose">
+                 Authorized Personnel Only.<br />
+                 Unauthorized access attempts are monitored and recorded.
+               </p>
+            </div>
           </CardContent>
         </Card>
       </motion.div>
