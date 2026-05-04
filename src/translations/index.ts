@@ -78,7 +78,8 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
         badge: "Credentials",
         title: "Degrees & Certifications",
         registration: "Registration",
-        formerly: "Formerly At"
+        formerly: "Formerly At",
+        activeStatus: "Active Practitioner"
       },
       gallery: {
         badge: "The Clinic Experience",
@@ -187,7 +188,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'services.wholeAbdomen.name': 'USG Whole Abdomen + Obstetrics',
     'services.wholeAbdomen.desc': 'Comprehensive abdominal evaluation with pregnancy monitoring.',
     'services.kub.name': 'KUB / Pelvis / Lower Abdomen',
-    'services.kub.desc': 'Specialized scan for Kidney, Ureter, Bladder and pelvic region.',
+    'services.kub.desc': 'Specialized scan for Kidney, Ureter, Bladder and pelvic region',
     'services.tvs.name': 'TVS (Transvaginal Sonography)',
     'services.tvs.desc': 'High-resolution internal imaging for detailed gynecological assessment.',
     'services.smallParts.name': 'Small Parts (Neck/Thyroid/Soft Tissue)',
@@ -384,7 +385,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
       { name: 'USG Abdomen', desc: 'Detailed ultrasound of the abdominal organs including liver, gallbladder, and spleen.' },
       { name: 'Upper Abdomen Ultrasound', desc: 'Focused imaging of the upper abdominal cavity and related organs.' },
       { name: 'USG Whole Abdomen + Obstetrics', desc: 'Comprehensive abdominal evaluation combined with pregnancy monitoring.' },
-      { name: 'KUB / Pelvis / Lower Abdomen', desc: 'Specialized scan for Kidney, Ureter, Bladder and pelvic region.' },
+      { name: 'KUB / Pelvis / Lower Abdomen', desc: 'Specialized scan for Kidney, Ureter, Bladder and pelvic region' },
       { name: 'TVS (Transvaginal Sonography)', desc: 'High-resolution internal imaging for detailed gynecological assessment.' },
       { name: 'Small Parts (Neck / Thyroid / Soft Tissue)', desc: 'High-frequency imaging of superficial structures and soft tissues.' },
       { name: 'USG Bilateral Breast', desc: 'Advanced breast tissue screening for early detection and monitoring.' },
@@ -618,7 +619,8 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
         badge: "प्रमाणपत्र",
         title: "डिग्री और प्रमाणपत्र",
         registration: "पंजीकरण",
-        formerly: "पूर्व में"
+        formerly: "पूर्व में",
+        activeStatus: "सक्रिय चिकित्सक"
       },
       gallery: {
         badge: "क्लिनिक का अनुभव",
