@@ -205,3 +205,26 @@
 ::selection {
   @apply bg-primary/20 text-primary;
 }
+/* Medical Scan Effects */
+@keyframes scan-line {
+  0% { transform: translateY(-100%); opacity: 0; }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.scanline {
+  @apply absolute left-0 w-full h-[2px] bg-primary/40 shadow-[0_0_15px_hsl(var(--primary))] z-30 pointer-events-none opacity-0;
+}
+
+.group:hover .scanline {
+  animation: scan-line 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.diagnostic-overlay {
+  @apply absolute inset-0 border-[1px] border-primary/20 pointer-events-none z-20 transition-opacity duration-700 opacity-0 group-hover:opacity-100;
+  background-image: 
+    linear-gradient(to right, hsl(var(--primary)/0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--primary)/0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
