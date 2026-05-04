@@ -23,45 +23,26 @@ export const categoryMeta: Record<ServiceCategory, { label: string; color: strin
   advanced:   { label: 'Advanced Scans',             color: '#F59E0B', order: 4 },
 };
 
-// Image pool — all verified non-zero local .webp files
+// Image pool — premium ultrasound scan assets generated from the reference guide
 const img = {
-  abdomen:      '/images/growth-scan.webp',        // General abdominal scan feel
-  upperAbdomen: '/images/liver-fibroscan.webp',    // Upper abdomen / liver context
-  wholeAbdomen: '/images/anomaly-scan.webp',       // Comprehensive scan feel
-  kub:          '/images/doppler-study.webp',      // KUB / pelvic region study
-  tvs:          '/images/early-pregnancy.webp',    // Internal gynae scan
-  smallParts:   '/images/small-parts-ultrasound.webp', // Thyroid / neck — exact match
-  breast:       '/images/prenatal-care.webp',      // Breast / soft tissue
-  scrotum:      '/images/ultrasound-machine.webp', // Soft tissue general machine shot
-  routineObs:   '/images/pregnancy-hero.webp',     // Standard pregnancy scan
-  level1:       '/images/nt-scan.webp',            // NT/NB first-trimester — exact match
-  level2:       '/images/anomaly-scan.webp',       // TIFFA Level 2 — exact match
-  fetalEcho:    '/images/fetal-echo.webp',         // Fetal echo — exact match
-  obsDoppler:   '/images/doppler-study.webp',      // Obstetric Doppler — exact match
-  fibroscan:    '/images/liver-fibroscan.webp',    // Fibroscan — exact match
-  cervical:     '/images/growth-scan.webp',        // Cervical / uterine doppler
+  wholeAbdomen: '/images/scans/whole-abdomen.webp',
+  kubMale:      '/images/scans/kub-male-pelvis.webp',
+  femalePelvis: '/images/scans/female-pelvis.webp',
+  tvs:          '/images/scans/tvs.webp',
+  thyroid:      '/images/scans/thyroid.webp',
+  breast:       '/images/scans/bilateral-breast.webp',
+  scrotum:      '/images/scans/scrotum-soft-tissues.webp',
+  routineObs:   '/images/scans/routine-obs.webp',
+  level1:       '/images/scans/level-1-nt-nb.webp',
+  level2:       '/images/scans/level-2-anomaly.webp',
+  fetalEcho:    '/images/scans/fetal-echo.webp',
+  obsDoppler:   '/images/scans/obs-doppler-growth-bpp.webp',
+  fibroscan:    '/images/scans/fibroscan-elastography.webp',
+  cervical:     '/images/scans/cervical-uterine-doppler.webp',
 };
 
 export const services: ServiceItem[] = [
   // ─── 1. Abdominal & Pelvic Scans ─────────────────────────────────────────
-  {
-    icon: Scan,
-    nameKey: 'services.usgAbdomen.name',
-    descKey: 'services.usgAbdomen.desc',
-    image: img.abdomen,
-    machine: 'Samsung V7',
-    machineType: 'SECONDARY',
-    category: 'abdominal',
-  },
-  {
-    icon: Scan,
-    nameKey: 'services.upperAbdomen.name',
-    descKey: 'services.upperAbdomen.desc',
-    image: img.upperAbdomen,
-    machine: 'Samsung V7',
-    machineType: 'SECONDARY',
-    category: 'abdominal',
-  },
   {
     icon: Scan,
     nameKey: 'services.wholeAbdomen.name',
@@ -75,7 +56,16 @@ export const services: ServiceItem[] = [
     icon: Scan,
     nameKey: 'services.kub.name',
     descKey: 'services.kub.desc',
-    image: img.kub,
+    image: img.kubMale,
+    machine: 'Samsung V7',
+    machineType: 'SECONDARY',
+    category: 'abdominal',
+  },
+  {
+    icon: Scan,
+    nameKey: 'services.femalePelvis.name',
+    descKey: 'services.femalePelvis.desc',
+    image: img.femalePelvis,
     machine: 'Samsung V7',
     machineType: 'SECONDARY',
     category: 'abdominal',
@@ -95,7 +85,7 @@ export const services: ServiceItem[] = [
     icon: Stethoscope,
     nameKey: 'services.smallParts.name',
     descKey: 'services.smallParts.desc',
-    image: img.smallParts,
+    image: img.thyroid,
     machine: 'Samsung V7',
     machineType: 'SECONDARY',
     category: 'smallParts',
