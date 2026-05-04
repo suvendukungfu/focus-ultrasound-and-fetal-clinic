@@ -54,7 +54,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   ];
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC] dark:bg-slate-950 overflow-hidden font-sans">
+    <div className="flex h-[100dvh] bg-[#F8FAFC] dark:bg-slate-950 overflow-hidden font-sans">
       <CommandPalette />
       <PulseFeed />
       
@@ -179,28 +179,28 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </Button>
 
         {/* Mobile Top Bar */}
-        <header className="lg:hidden h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between px-8 shrink-0 relative z-30">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800" onClick={() => setIsSidebarOpen(true)}>
-              <Menu className="w-6 h-6" />
+        <header className="lg:hidden h-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between px-6 shrink-0 relative z-30">
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800" onClick={() => setIsSidebarOpen(true)}>
+              <Menu className="w-5 h-5" />
             </Button>
             <div className="flex flex-col">
-              <span className="font-display font-black text-lg tracking-tighter leading-none">FOCUS</span>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">ADMIN</span>
+              <span className="font-display font-black text-base tracking-tighter leading-none">FOCUS</span>
+              <span className="text-[8px] font-black uppercase tracking-[0.2em] text-primary">ADMIN</span>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800">
-               <Bell className="w-5 h-5" />
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800">
+               <Bell className="w-4 h-4" />
             </Button>
-            <div className="w-10 h-10 rounded-2xl bg-primary text-white flex items-center justify-center font-black shadow-glow-primary">
+            <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center text-sm font-black shadow-glow-primary">
               {user?.name?.charAt(0)}
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-12 relative bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent">
-          <div className="max-w-[1600px] mx-auto pb-20">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 relative bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent">
+          <div className="max-w-[1600px] mx-auto pb-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={location.pathname}
