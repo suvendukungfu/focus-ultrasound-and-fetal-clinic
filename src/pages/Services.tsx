@@ -31,7 +31,7 @@ const Services = () => {
   const { t } = useLanguage();
   
   const equipmentIcons = [Monitor, Monitor];
-  const equipmentImages = ['/images/clinic-samsung-v7.webp', '/images/ge-voluson-e8-real.webp'];
+  const equipmentImages = ['/images/clinic-samsung-v7.webp', '/images/ge-voluson-e8-real.png'];
   const equipmentUrls = [
     'https://www.samsunghealthcare.com/en/products/UltrasoundSystem/V7/Radiology/v1/main',
     'https://www.gehealthcare.com/products/ultrasound/voluson/voluson-e8'
