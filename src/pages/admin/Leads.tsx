@@ -113,7 +113,7 @@ const Leads = () => {
         const leadToConvert = storedLeads.find((l: AdminLead) => l.id === id) || DEMO_LEADS.find(l => l.id === id);
         if (leadToConvert) {
           const storedAppts = JSON.parse(localStorage.getItem('local_appointments') || '[]');
-          if (!storedAppts.find((a: any) => a.id === `appt-${leadToConvert.id}`)) {
+          if (!storedAppts.find((a: { id: string }) => a.id === `appt-${leadToConvert.id}`)) {
             const newAppt = {
               id: `appt-${leadToConvert.id}`,
               name: leadToConvert.name,

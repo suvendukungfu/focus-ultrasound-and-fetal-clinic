@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/hooks/use-theme';
-import { Menu, X, Calendar, Globe } from 'lucide-react';
+import { Menu, X, Calendar, Globe, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ClinicStatus from './ClinicStatus';
 import BrandLogo from './BrandLogo';

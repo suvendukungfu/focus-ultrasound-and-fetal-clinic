@@ -17,7 +17,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       const saved = localStorage.getItem('lang') as Language;
       if (saved === 'en' || saved === 'hi') return saved;
       // Auto-detect browser language
-      const browserLang = navigator.language || (navigator as any).userLanguage || '';
+      const browserLang = navigator.language || (navigator as { userLanguage?: string }).userLanguage || '';
       return browserLang.startsWith('hi') ? 'hi' : 'en';
     }
     return 'en';
