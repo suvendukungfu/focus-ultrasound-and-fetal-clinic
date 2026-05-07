@@ -5,9 +5,9 @@ export const CLINIC_LNG = 77.4420;
 export const CLINIC_ADDRESS =
   'Shop No. 05 & 06, UGF, Nirala Estate, Noida Extension, Greater Noida West - 201306';
 
-export const CLINIC_PHONE = '+918287655133';
+export const CLINIC_PHONE = '+919870475400';
 export const CLINIC_WHATSAPP_URL =
-  'https://wa.me/918287655133?text=Hello%20I%20want%20to%20book%20an%20appointment';
+  'https://wa.me/919870475400?text=Hello%20I%20want%20to%20book%20an%20appointment';
 
 /** Returns true if the clinic is currently open based on IST time. */
 export function isClinicOpen(): boolean {

@@ -1,0 +1,48 @@
+ M .env
+ M backend/.env
+ M backend/prisma/dev.db
+ M backend/src/core/AppError.ts
+ D public/images/generated/8c795802-5790-44be-b759-e8959103619b
+ M src/App.tsx
+ M src/components/ClinicStatus.tsx
+ M src/components/ClinicTimings.tsx
+ M src/components/CultureCircle.tsx
+ M src/components/CultureSection.tsx
+ M src/components/DoctorsSection.tsx
+ M src/components/EquipmentSection.tsx
+ M src/components/FAQSection.tsx
+ M src/components/Footer.tsx
+ M src/components/Header.tsx
+ M src/components/Hero.tsx
+ M src/components/ReviewCarousel.tsx
+ M src/components/ServicesPreview.tsx
+ M src/components/admin/AdminLayout.tsx
+ M src/components/ui/FeaturedCard.tsx
+ M src/components/ui/TechCard.tsx
+ M src/contexts/AuthContext.tsx
+ M src/index.css
+ M src/pages/About.tsx
+ M src/pages/Culture.tsx
+ M src/pages/Reviews.tsx
+ M src/pages/Services.tsx
+ M src/pages/admin/Appointments.tsx
+ M src/pages/admin/Dashboard.tsx
+ M src/pages/admin/Leads.tsx
+ M src/pages/admin/Login.tsx
+ M src/pages/admin/Reviews.tsx
+ M src/pages/admin/Users.tsx
+ M src/translations/index.ts
+?? clean_build/
+?? lint_output.txt
+?? output_test/
+?? public/images/kub-pelvis-scan.png
+?? scratch/files_to_commit.txt
+?? scratch/scan_ports.js
+?? scratch/test_port.js
+?? src/components/admin/CommandPalette.tsx
+?? src/components/admin/PulseFeed.tsx
+?? src/config/
+?? src/hooks/useAuditLog.ts
+?? src/pages/admin/AuditLog.tsx
+?? src/pages/admin/Profile.tsx
+?? src/types/admin.ts

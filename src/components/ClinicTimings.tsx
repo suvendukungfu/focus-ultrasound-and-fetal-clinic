@@ -76,7 +76,7 @@ const ClinicTimings = () => {
 
             <div className="mt-8 pt-6 border-t border-border/40 flex flex-col sm:flex-row gap-4 items-center justify-center">
               <a
-                href="tel:+918287655133"
+                href="tel:+919870475400"
                 className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4"
               >
                 <Phone className="w-4.5 h-4.5" />

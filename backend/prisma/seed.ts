@@ -7,13 +7,17 @@ async function main() {
   console.log('🌱 Seeding database...');
 
   // Create Admin User
-  const passwordHash = await hash('Focus@Admin2026', 8);
+  const adminEmail = process.env.ADMIN_EMAIL || 'focusclinic2026@gmail.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'focus@Clinic#2026';
+  const passwordHash = await hash(adminPassword, 8);
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@focusultrasound.in' },
-    update: {},
+    where: { email: adminEmail },
+    update: {
+      password: passwordHash,
+    },
     create: {
       name: 'Dr. Admin',
-      email: 'admin@focusultrasound.in',
+      email: adminEmail,
       password: passwordHash,
       role: 'ADMIN',
     },

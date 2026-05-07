@@ -1,0 +1,193 @@
+
+> focus-backend@1.0.0 start
+> ts-node src/server.ts
+
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: SelfHealingService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: DistributedAIOrchestrator[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: LeadScoringService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: BlogDraftService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: MetaDescriptionService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: KeywordSuggestionService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: LeadReplyService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: ReviewsCronService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Registered plugin: AppointmentAutomationService[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[Kernel-GLOBAL-1] Booting Micro-Kernel Architecture...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[EventGateway-GLOBAL-1] Initializing Real-Time Streaming Gateway...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting SelfHealingService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[SelfHealingService] Activating V6 Autonomous Defense System...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] SelfHealingService started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting DistributedAIOrchestrator...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[DistributedAIOrchestrator] Initializing AI Orchestration Engine in region GLOBAL-1...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[DistributedAIOrchestrator] Listening for AI workload requests...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] DistributedAIOrchestrator started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting LeadScoringService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[LeadScoringService] Initializing AI Lead Scoring Engine...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[LeadScoringService] Listening for lead.created events...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] LeadScoringService started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting BlogDraftService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[BlogDraftService] Initialized. OpenAI integration: TEMPLATE_MODE[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[BlogDraftService] Blog Draft Generator is online.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] BlogDraftService started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting MetaDescriptionService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[MetaDescriptionService] Initialized. Mode: Heuristic[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[MetaDescriptionService] Meta Description Writer is online.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] MetaDescriptionService started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting KeywordSuggestionService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[KeywordSuggestionService] Initialized. Mode: LocalKnowledgeBase[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[KeywordSuggestionService] Keyword Suggestion Engine online.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] KeywordSuggestionService started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting LeadReplyService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[LeadReplyService] Initialized. Mode: TemplateTree[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[LeadReplyService] Lead Reply Suggestion Engine online.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] LeadReplyService started successfully.[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ServiceRegistry] Starting ReviewsCronService...[39m
+2026-05-02 18:34:27:3427 [32minfo[39m: [32m[ReviewsCronService] Initialising repeatable jobs...[39m
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+2026-05-02 18:34:27:3427 [31merror[39m: [31mRedis Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)[39m
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+Error: connect EPERM 127.0.0.1:6379 - Local (0.0.0.0:0)
+    at internalConnect (node:net:1169:16)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+    at node:net:1415:9
+    at processTicksAndRejections (node:internal/process/task_queues:85:11) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 6379
+}
+2026-05-02 18:34:27:3427 [31merror[39m: [31m❌ Failed to connect to database (Worker 30419)[39m
+2026-05-02 18:34:27:3427 [31merror[39m: [31mCan't reach database server at `127.0.0.1:5432`[39m
+
+[31mPlease make sure your database server is running at `127.0.0.1:5432`.[39m
+Error: listen EPERM: operation not permitted 0.0.0.0:4001
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2170:7)
+    at app.listen (/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/backend/node_modules/express/lib/application.js:635:24)
+    at bootstrap (/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/backend/src/server.ts:30:9) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 4001
+}

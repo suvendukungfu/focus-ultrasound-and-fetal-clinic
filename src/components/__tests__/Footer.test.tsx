@@ -31,9 +31,9 @@ describe('Footer Component', () => {
   it('renders the correct phone number', () => {
     renderWithProviders(<Footer />);
 
-    const phoneLink = screen.getByText('+91 82876 55133');
+    const phoneLink = screen.getByText('+91 98704 75400');
     expect(phoneLink).toBeInTheDocument();
-    expect(phoneLink.closest('a')).toHaveAttribute('href', 'tel:+918287655133');
+    expect(phoneLink.closest('a')).toHaveAttribute('href', 'tel:+919870475400');
   });
 
   it('renders the clinic email', () => {

@@ -1,0 +1,49 @@
+
+> vite_react_shadcn_ts@0.0.0 lint
+> eslint .
+
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/backend/dist/server.js
+  15465:11  warning  Unused eslint-disable directive (no problems were reported from 'no-param-reassign' or 'no-extra-parens')
+  16064:7   warning  Unused eslint-disable directive (no problems were reported from 'no-eval')
+  17344:9   warning  Unused eslint-disable directive (no problems were reported from 'no-implicit-coercion' or 'no-extra-parens')
+  31985:7   warning  Unused eslint-disable directive (no problems were reported from 'max-statements')
+  33194:7   error    Definition for rule 'valid-jsdoc' was not found                                                               valid-jsdoc
+  33232:7   error    Definition for rule 'valid-jsdoc' was not found                                                               valid-jsdoc
+  33261:7   error    Definition for rule 'valid-jsdoc' was not found                                                               valid-jsdoc
+  49560:9   warning  Unused eslint-disable directive (no problems were reported)
+  54773:15  warning  Unused eslint-disable directive (no problems were reported from 'max-len')
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/badge.tsx
+  29:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/button.tsx
+  47:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/form.tsx
+  129:10  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/navigation-menu.tsx
+  111:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/sidebar.tsx
+  636:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/sonner.tsx
+  27:19  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/components/ui/toggle.tsx
+  37:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/contexts/AuthContext.tsx
+  66:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/contexts/LanguageContext.tsx
+  87:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/suvendusahoo/Desktop/lovable-project-d4931ee6 (2)/clean_build/src/contexts/WhatsAppContext.tsx
+  146:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+✖ 19 problems (3 errors, 16 warnings)
+  0 errors and 6 warnings potentially fixable with the `--fix` option.
+

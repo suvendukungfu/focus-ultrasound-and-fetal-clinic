@@ -10,12 +10,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Hardcoded local admin credentials for offline/development use
 const LOCAL_ADMIN = {
-  email: 'admin@focusultrasound.in',
+  email: import.meta.env.VITE_ADMIN_EMAIL || 'sahoolaxmipriya9560@gmail.com',
   password: 'Focus@Admin2026',
   user: {
     id: 'local-admin-001',
     name: 'Dr. Admin',
-    email: 'admin@focusultrasound.in',
+    email: 'sahoolaxmipriya9560@gmail.com',
     role: 'ADMIN',
   },
   token: 'local-dev-token-focus-clinic',

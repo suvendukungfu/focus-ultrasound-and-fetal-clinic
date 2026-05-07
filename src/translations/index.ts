@@ -379,7 +379,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'services.precision.title': 'Precision',
     'services.precision.subtitle': 'Genomics',
     'services.precision.desc': 'In exclusive partnership with MedGenome, we bring India\'s leading precision medicine to your doorstep.',
-    'services.precision.acc': '99.9%',
+    'services.precision.acc': '',
     
     'services.items': [
       { name: 'USG Abdomen', desc: 'Detailed ultrasound of the abdominal organs including liver, gallbladder, and spleen.' },
@@ -478,7 +478,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'contact.seo.faq': [
       {
         question: "How can I book an appointment at Focus Ultrasound?",
-        answer: "You can book an appointment by calling us at +91 8130881986 or by filling out the online appointment request form on our contact page."
+        answer: "You can book an appointment by calling us at +91 98704 75400 or by filling out the online appointment request form on our contact page."
       },
       {
         question: "What should I bring for my ultrasound appointment?",
@@ -921,7 +921,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'services.precision.title': 'सटीकता',
     'services.precision.subtitle': 'जेनोमिक्स',
     'services.precision.desc': 'मेडजिनोम के साथ विशेष साझेदारी में, हम भारत की अग्रणी सटीक चिकित्सा को आपके दरवाजे पर लाते हैं।',
-    'services.precision.acc': '99.9%',
+    'services.precision.acc': '',
     'services.bookWhatsapp': 'WhatsApp पर बुक करें',
     'services.tech.specs': 'तकनीकी विवरण',
     'services.precision.explore': 'मेडजिनोम एक्सप्लोर करें',
@@ -1024,7 +1024,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'contact.seo.faq': [
       {
         question: "मैं फोकस अल्ट्रासाउंड में अपॉइंटमेंट कैसे बुक कर सकता हूँ?",
-        answer: "आप हमें +91 8130881986 पर कॉल करके या हमारे संपर्क पृष्ठ पर ऑनलाइन अपॉइंटमेंट अनुरोध फॉर्म भरकर अपॉइंटमेंट बुक कर सकते हैं।"
+        answer: "आप हमें +91 98704 75400 पर कॉल करके या हमारे संपर्क पृष्ठ पर ऑनलाइन अपॉइंटमेंट अनुरोध फॉर्म भरकर अपॉइंटमेंट बुक कर सकते हैं।"
       },
       {
         question: "अल्ट्रासाउंड अपॉइंटमेंट के लिए मुझे क्या लाना चाहिए?",
