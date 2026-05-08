@@ -125,7 +125,7 @@ const ServicesPreview = () => {
                       <img loading="lazy"
                         src={service.image}
                         alt={t(service.nameKey)}
-                        className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform [transition-duration:2000ms] ease-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent opacity-90 group-hover:opacity-75 transition-opacity duration-700" />
                       
@@ -170,7 +170,7 @@ const ServicesPreview = () => {
                         aria-label={`${t('services.bookScan')} for ${t(service.nameKey)}`}
                         className="mt-auto group/btn relative flex items-center justify-between w-full px-6 md:px-8 py-4 md:py-5 rounded-2xl md:rounded-[2rem] bg-muted border border-border text-foreground font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] overflow-hidden transition-all duration-500 hover:text-white"
                       >
-                        <div className="absolute inset-0 bg-primary translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-circ" />
+                        <div className="absolute inset-0 bg-primary translate-y-full group-hover/btn:translate-y-0 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] transition-transform duration-500" />
                         <span className="relative z-10">{t('services.bookScan')}</span>
                         <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-2" />
                       </Link>

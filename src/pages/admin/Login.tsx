@@ -7,17 +7,19 @@ import { useToast } from '@/hooks/use-toast';
 import { Lock, Mail, Loader2, Shield, ArrowRight } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { motion, AnimatePresence } from 'framer-motion';
+import { User, UserRole } from '@/types/admin';
 
 // Hardcoded local admin credentials for offline/development use
 const LOCAL_ADMIN = {
-  email: import.meta.env.VITE_ADMIN_EMAIL || 'sahoolaxmipriya9560@gmail.com',
-  password: 'Focus@Admin2026',
+  email: import.meta.env.VITE_ADMIN_EMAIL || 'focusclinic2026@gmail.com',
+  password: import.meta.env.VITE_ADMIN_PASSWORD || 'focus@Clinic#2026',
   user: {
     id: 'local-admin-001',
     name: 'Dr. Admin',
-    email: 'sahoolaxmipriya9560@gmail.com',
-    role: 'ADMIN',
-  },
+    email: 'focusclinic2026@gmail.com',
+    role: 'ADMIN' as const,
+    status: 'ACTIVE' as const,
+  } as User,
   token: 'local-dev-token-focus-clinic',
 };
 
@@ -65,11 +67,12 @@ const AdminLogin = () => {
 
         if (response.ok) {
           const data = await response.json();
-          const userObj = {
+          const userObj: User = {
             id: data.user?.id || 'backend-user',
             name: data.user?.name || 'Admin User',
             email: data.user?.email || email,
-            role: data.user?.role || 'ADMIN'
+            role: (data.user?.role as UserRole) || 'ADMIN',
+            status: 'ACTIVE'
           };
           login(data.token, userObj);
           toast({ title: "Verification Successful", description: "Identity confirmed. Accessing Secure Console." });
