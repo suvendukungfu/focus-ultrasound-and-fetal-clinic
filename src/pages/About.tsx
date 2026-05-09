@@ -212,7 +212,7 @@ const About = () => {
                   <div className={`relative flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-24 items-center`}>
                     {/* Creative Doctor Image Container with Glass Depth */}
                     <div className="lg:w-1/2 relative group">
-                      <div className="relative aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:shadow-glow">
+                      <div className="relative aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-2xl transition-all duration-700 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] group-hover:shadow-glow">
                         <img 
                           src={doctor.image}
                           alt={doctor.name}
