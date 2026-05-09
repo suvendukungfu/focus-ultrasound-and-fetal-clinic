@@ -3,6 +3,11 @@
   publish = "dist"
 
 [[redirects]]
+  from = "/api/v1/*"
+  to = "https://focus-clinic-backend.onrender.com/api/v1/:splat"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

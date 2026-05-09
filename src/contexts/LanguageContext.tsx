@@ -62,7 +62,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
 
     // 3. Fallback
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.warn(`[LanguageContext] Missing translation for key: "${key}" in language: "${language}"`);
     }
     
