@@ -4,7 +4,7 @@
   "description": "Ultra Enterprise Backend for Focus Ultrasound and Fetal Clinic",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "test": "jest --forceExit --detectOpenHandles",
