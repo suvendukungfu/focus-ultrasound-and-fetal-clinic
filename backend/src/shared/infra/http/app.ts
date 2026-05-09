@@ -54,6 +54,19 @@ app.get('/api/v1/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'UP', timestamp: new Date().toISOString() });
 });
 
+// Root route for verification
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).send(`
+    <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+      <h1 style="color: #00a884;">✅ Focus Clinic Backend is Online</h1>
+      <p>The server is running successfully on port 5180.</p>
+      <p>Use <code>/api/v1/health</code> for health check.</p>
+      <hr style="width: 200px; border: 0; border-top: 1px solid #eee; margin: 20px auto;">
+      <p style="color: #666; font-size: 14px;">WhatsApp Webhook URL: <code>/api/v1/integrations/whatsapp/webhook</code></p>
+    </div>
+  `);
+});
+
 // Global Error Handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   Logger.error(err.message);
