@@ -7,15 +7,18 @@
 import { Queue, QueueEvents } from 'bullmq';
 import { Logger } from '../../../core/Logger';
 
-const redisUrl = new URL(process.env.REDIS_URL || 'redis://localhost:6379');
+let redisConnection: Record<string, unknown> | null = null;
 
-export const redisConnection = {
-  host: redisUrl.hostname,
-  port: Number(redisUrl.port || 6379),
-  username: redisUrl.username || undefined,
-  password: redisUrl.password || undefined,
-  db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
-};
+if (process.env.REDIS_URL) {
+  const redisUrl = new URL(process.env.REDIS_URL);
+  redisConnection = {
+    host: redisUrl.hostname,
+    port: Number(redisUrl.port || 6379),
+    username: redisUrl.username || undefined,
+    password: redisUrl.password || undefined,
+    db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
+  };
+}
 
 export const REVIEWS_QUEUE_NAME = 'ReviewsQueue';
 
@@ -29,8 +32,8 @@ let _reviewsQueueEvents: QueueEvents | null = null;
 
 export const getReviewsQueue = () => {
   if (!_reviewsQueue) {
-    if (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL) {
-      Logger.warn('[ReviewsQueue] Skipping Redis connection in development (no REDIS_URL)');
+    if (!process.env.REDIS_URL || !redisConnection) {
+      Logger.warn('[ReviewsQueue] Skipping Redis connection (no REDIS_URL provided).');
       return null;
     }
     
@@ -52,7 +55,7 @@ export const getReviewsQueue = () => {
 
 export const getReviewsQueueEvents = () => {
   if (!_reviewsQueueEvents) {
-    if (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL) return null;
+    if (!process.env.REDIS_URL || !redisConnection) return null;
     
     _reviewsQueueEvents = new QueueEvents(REVIEWS_QUEUE_NAME, {
       connection: redisConnection,
@@ -72,3 +75,4 @@ export const getReviewsQueueEvents = () => {
 // For backward compatibility while we refactor callers
 export const reviewsQueue = getReviewsQueue();
 export const reviewsQueueEvents = getReviewsQueueEvents();
+export { redisConnection };

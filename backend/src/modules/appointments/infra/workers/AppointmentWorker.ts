@@ -2,18 +2,22 @@ import { Worker } from 'bullmq';
 import { Logger } from '../../../../core/Logger';
 import { whatsappService } from '../../../integrations/whatsapp/services/WhatsAppService';
 
-const redisUrl = new URL(process.env.REDIS_URL || 'redis://localhost:6379');
-const connectionOpts = {
-  host: redisUrl.hostname,
-  port: Number(redisUrl.port || 6379),
-  username: redisUrl.username || undefined,
-  password: redisUrl.password || undefined,
-  db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
-};
+let connectionOpts: Record<string, unknown> | null = null;
+
+if (process.env.REDIS_URL) {
+  const redisUrl = new URL(process.env.REDIS_URL);
+  connectionOpts = {
+    host: redisUrl.hostname,
+    port: Number(redisUrl.port || 6379),
+    username: redisUrl.username || undefined,
+    password: redisUrl.password || undefined,
+    db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
+  };
+}
 
 let appointmentWorker: Worker | null = null;
 
-if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
+if (process.env.REDIS_URL && connectionOpts) {
   try {
     appointmentWorker = new Worker('AppointmentAutomation', async job => {
       const { phone, name, date, type } = job.data;
@@ -40,7 +44,7 @@ if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
     Logger.error(`[Worker] Failed to initialize AppointmentAutomation worker: ${initErrorMessage}`);
   }
 } else {
-  Logger.warn('[AppointmentWorker] Skipping initialization in development (no REDIS_URL)');
+  Logger.warn('[AppointmentWorker] Skipping initialization (no REDIS_URL provided).');
 }
 
 export { appointmentWorker };

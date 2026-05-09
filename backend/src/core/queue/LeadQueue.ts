@@ -1,22 +1,26 @@
 import { Queue, Worker, QueueEvents } from 'bullmq';
 import { Logger } from '../Logger';
 
-const redisUrl = new URL(process.env.REDIS_URL || 'redis://localhost:6379');
-const connectionOpts = {
-  host: redisUrl.hostname,
-  port: Number(redisUrl.port || 6379),
-  username: redisUrl.username || undefined,
-  password: redisUrl.password || undefined,
-  db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
-};
+let connectionOpts: Record<string, unknown> | null = null;
 
-export const queueLeadProcessing = (!process.env.REDIS_URL)
+if (process.env.REDIS_URL) {
+  const redisUrl = new URL(process.env.REDIS_URL);
+  connectionOpts = {
+    host: redisUrl.hostname,
+    port: Number(redisUrl.port || 6379),
+    username: redisUrl.username || undefined,
+    password: redisUrl.password || undefined,
+    db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
+  };
+}
+
+export const queueLeadProcessing = (!process.env.REDIS_URL || !connectionOpts)
   ? null as Queue | null
   : new Queue('LeadProcessing', { connection: connectionOpts });
 
 export let worker: Worker | null = null;
 
-if (process.env.REDIS_URL) {
+if (process.env.REDIS_URL && connectionOpts) {
   const queueEvents = new QueueEvents('LeadProcessing', { connection: connectionOpts });
 
   queueEvents.on('completed', ({ jobId }) => {

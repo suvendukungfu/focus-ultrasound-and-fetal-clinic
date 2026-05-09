@@ -94,90 +94,98 @@ async function fetchGoogleReviews(): Promise<GoogleReview[]> {
 
 // ─── Worker ───────────────────────────────────────────────────────────────
 
-export const reviewsWorker = new Worker<Record<string, unknown>, unknown, ReviewJobName>(
-  REVIEWS_QUEUE_NAME,
-  async (job: Job<Record<string, unknown>, unknown, ReviewJobName>) => {
-    Logger.info(`[ReviewsWorker] Processing job "${job.name}" (id=${job.id})`);
+let reviewsWorker: Worker<Record<string, unknown>, unknown, ReviewJobName> | null = null;
 
-    // ── Job 1: Fetch Google Reviews ────────────────────────────────────────
-    if (job.name === 'fetch-google-reviews') {
-      const googleReviews = await fetchGoogleReviews();
+if (process.env.REDIS_URL && redisConnection) {
+  reviewsWorker = new Worker<Record<string, unknown>, unknown, ReviewJobName>(
+    REVIEWS_QUEUE_NAME,
+    async (job: Job<Record<string, unknown>, unknown, ReviewJobName>) => {
+      Logger.info(`[ReviewsWorker] Processing job "${job.name}" (id=${job.id})`);
 
-      if (googleReviews.length === 0) {
-        Logger.info('[ReviewsWorker] No Google reviews to import.');
-        return { imported: 0 };
+      // ── Job 1: Fetch Google Reviews ────────────────────────────────────────
+      if (job.name === 'fetch-google-reviews') {
+        const googleReviews = await fetchGoogleReviews();
+
+        if (googleReviews.length === 0) {
+          Logger.info('[ReviewsWorker] No Google reviews to import.');
+          return { imported: 0 };
+        }
+
+        let imported = 0;
+        for (const gr of googleReviews) {
+          // Only import 4★+ reviews
+          if (gr.rating < 4) continue;
+
+          const externalId = deriveExternalId(gr);
+          await repo.upsertFromGoogle({
+            name: gr.author_name,
+            rating: gr.rating,
+            comment: gr.text,
+            externalId,
+          });
+          imported++;
+        }
+
+        Logger.info(`[ReviewsWorker] Imported/verified ${imported} Google reviews.`);
+        return { imported };
       }
 
-      let imported = 0;
-      for (const gr of googleReviews) {
-        // Only import 4★+ reviews
-        if (gr.rating < 4) continue;
+      // ── Job 2: Rotate Testimonials ─────────────────────────────────────────
+      if (job.name === 'rotate-testimonials') {
+        const approved = await repo.listApproved();
 
-        const externalId = deriveExternalId(gr);
-        await repo.upsertFromGoogle({
-          name: gr.author_name,
-          rating: gr.rating,
-          comment: gr.text,
-          externalId,
+        if (approved.length === 0) {
+          Logger.warn('[ReviewsWorker] No approved reviews found for testimonial rotation.');
+          return { rotated: 0 };
+        }
+
+        // Sort by rating (desc) then by date (desc)
+        const topReviews = approved
+          .sort((a, b) => {
+            if (b.rating !== a.rating) return b.rating - a.rating;
+            return b.createdAt.getTime() - a.createdAt.getTime();
+          })
+          .slice(0, 10); // take top 10
+
+        const snapshot = topReviews.map((r) => {
+          return {
+            id: r.id,
+            name: r.name,
+            rating: r.rating,
+            comment: r.comment ?? '',
+            source: r.source,
+            createdAt: r.createdAt.toISOString(),
+          };
         });
-        imported++;
+
+        await redisClient.set(
+          TESTIMONIALS_CACHE_KEY,
+          JSON.stringify(snapshot),
+          'EX',
+          TESTIMONIALS_TTL_SECONDS
+        );
+
+        Logger.info(
+          `[ReviewsWorker] Rotated ${snapshot.length} testimonials → Redis (TTL ${TESTIMONIALS_TTL_SECONDS}s).`
+        );
+        return { rotated: snapshot.length };
       }
 
-      Logger.info(`[ReviewsWorker] Imported/verified ${imported} Google reviews.`);
-      return { imported };
+      Logger.warn(`[ReviewsWorker] Unknown job name: ${job.name}`);
+    },
+    {
+      connection: redisConnection,
+      concurrency: 1, // reviews jobs are DB-heavy; keep sequential
     }
-
-    // ── Job 2: Rotate Testimonials ─────────────────────────────────────────
-    if (job.name === 'rotate-testimonials') {
-      const approved = await repo.listApproved();
-
-      if (approved.length === 0) {
-        Logger.warn('[ReviewsWorker] No approved reviews found for testimonial rotation.');
-        return { rotated: 0 };
-      }
-
-      // Sort by rating (desc) then by date (desc)
-      const topReviews = approved
-        .sort((a, b) => {
-          if (b.rating !== a.rating) return b.rating - a.rating;
-          return b.createdAt.getTime() - a.createdAt.getTime();
-        })
-        .slice(0, 10); // take top 10
-
-      const snapshot = topReviews.map((r) => {
-        return {
-          id: r.id,
-          name: r.name,
-          rating: r.rating,
-          comment: r.comment ?? '',
-          source: r.source,
-          createdAt: r.createdAt.toISOString(),
-        };
-      });
-
-      await redisClient.set(
-        TESTIMONIALS_CACHE_KEY,
-        JSON.stringify(snapshot),
-        'EX',
-        TESTIMONIALS_TTL_SECONDS
-      );
-
-      Logger.info(
-        `[ReviewsWorker] Rotated ${snapshot.length} testimonials → Redis (TTL ${TESTIMONIALS_TTL_SECONDS}s).`
-      );
-      return { rotated: snapshot.length };
-    }
-
-    Logger.warn(`[ReviewsWorker] Unknown job name: ${job.name}`);
-  },
-  {
-    connection: redisConnection,
-    concurrency: 1, // reviews jobs are DB-heavy; keep sequential
-  }
-);
-
-reviewsWorker.on('failed', (job, err) => {
-  Logger.error(
-    `[ReviewsWorker] Job "${job?.name}" (id=${job?.id}) failed after ${job?.attemptsMade} attempts: ${err.message}`
   );
-});
+
+  reviewsWorker.on('failed', (job, err) => {
+    Logger.error(
+      `[ReviewsWorker] Job "${job?.name}" (id=${job?.id}) failed after ${job?.attemptsMade} attempts: ${err.message}`
+    );
+  });
+} else {
+  Logger.warn('[ReviewsWorker] Skipping initialization (no REDIS_URL provided).');
+}
+
+export { reviewsWorker };

@@ -5,8 +5,8 @@ class RedisCache {
   private client: Redis;
 
   constructor() {
-    if (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL) {
-      Logger.warn('[RedisCache] Skipping Redis connection in development (no REDIS_URL)');
+    if (!process.env.REDIS_URL) {
+      Logger.warn('[RedisCache] No REDIS_URL provided. Using in-memory stub (no caching).');
       this.client = {
         on: () => {},
         get: async () => null,
@@ -18,7 +18,7 @@ class RedisCache {
       return;
     }
 
-    this.client = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+    this.client = new Redis(process.env.REDIS_URL, {
       maxRetriesPerRequest: 3,
       retryStrategy(times) {
         return Math.min(times * 50, 2000);
