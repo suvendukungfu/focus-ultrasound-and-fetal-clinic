@@ -10,13 +10,13 @@ const connectionOpts = {
   db: redisUrl.pathname.length > 1 ? Number(redisUrl.pathname.slice(1)) : undefined,
 };
 
-export const queueLeadProcessing = (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL)
+export const queueLeadProcessing = (!process.env.REDIS_URL)
   ? null as Queue | null
   : new Queue('LeadProcessing', { connection: connectionOpts });
 
 export let worker: Worker | null = null;
 
-if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
+if (process.env.REDIS_URL) {
   const queueEvents = new QueueEvents('LeadProcessing', { connection: connectionOpts });
 
   queueEvents.on('completed', ({ jobId }) => {
@@ -39,5 +39,5 @@ if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
     }
   }, { connection: connectionOpts });
 } else {
-  Logger.warn('[LeadQueue] Skipping LeadProcessing worker initialization in development (no REDIS_URL)');
+  Logger.warn('[LeadQueue] Skipping LeadProcessing initialization (no REDIS_URL provided). Background jobs will be disabled.');
 }

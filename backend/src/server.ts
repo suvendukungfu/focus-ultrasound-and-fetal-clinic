@@ -30,7 +30,7 @@ async function bootstrap() {
   const tryListen = (port: number) => {
     try {
       // Explicitly bind to localhost to avoid EPERM on restricted environments
-      const server = app.listen(port, 'localhost', () => {
+      const server = app.listen(port, '0.0.0.0', () => {
         const addr = server.address();
         const actualPort = typeof addr === 'string' ? addr : addr?.port;
         Logger.info(`🚀 Server worker ${process.pid} running on port ${actualPort}`);
