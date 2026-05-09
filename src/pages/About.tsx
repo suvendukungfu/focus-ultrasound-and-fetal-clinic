@@ -76,11 +76,11 @@ const About = () => {
         </div>
 
         {/* HERO SECTION - NEXT LEVEL DEPTH */}
-        <section className="relative min-h-[90vh] flex items-center pt-32 pb-24 px-6 overflow-hidden">
+        <section className="relative min-h-[90vh] flex items-center pt-24 md:pt-32 pb-16 md:pb-24 px-6 overflow-hidden">
           {/* Background Ambient Glow for Mobile */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] aspect-square bg-primary/5 rounded-full blur-[120px] lg:hidden pointer-events-none" />
 
-          <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
+          <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div className="relative z-10 text-left">
               <MotionReveal delay={0.1} direction="down">
                 <div className="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-glass mb-8">
@@ -94,11 +94,11 @@ const About = () => {
               </MotionReveal>
               
               <MotionReveal delay={0.2}>
-                <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-foreground mb-6 md:mb-8 leading-[0.95] tracking-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-foreground mb-6 md:mb-8 leading-[0.95] tracking-tight">
                   <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/90 to-primary/50">
                     {t('clinic.name')}
                   </span>
-                  <span className="block text-primary/80 italic font-medium text-2xl sm:text-3xl md:text-6xl mt-2">
+                  <span className="block text-primary/80 italic font-medium text-xl sm:text-3xl md:text-6xl mt-2">
                     {t('clinic.tagline')}
                   </span>
                 </h1>
@@ -182,34 +182,34 @@ const About = () => {
         </section>
 
         {/* MEET OUR EXPERTS - CINEMATIC EDITORIAL */}
-        <section className="relative py-40 px-6 overflow-hidden">
+        <section className="relative py-20 md:py-40 px-6 overflow-hidden">
           {/* Subtle background element */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="flex flex-col items-center text-center mb-32">
+            <div className="flex flex-col items-center text-center mb-16 md:mb-32">
               <MotionReveal direction="up" delay={0.1}>
-                <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black tracking-[0.4em] uppercase mb-8">
+                <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black tracking-[0.4em] uppercase mb-8">
                   <Stethoscope className="w-4 h-4" />
                   {t('about.team.badge')}
                 </span>
-                <h2 className="text-4xl md:text-7xl font-black text-foreground mb-8 tracking-tighter leading-[0.95]">
+                <h2 className="text-3xl sm:text-4xl md:text-7xl font-black text-foreground mb-6 md:mb-8 tracking-tighter leading-[0.95]">
                   {t('about.team.title')}
                 </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-medium leading-relaxed opacity-80">
+                <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-medium leading-relaxed opacity-80">
                   {t('about.team.subtitle')}
                 </p>
               </MotionReveal>
             </div>
 
-            <div className="grid gap-40">
+            <div className="grid gap-24 md:gap-40">
               {doctors.map((doctor, index) => (
                 <MotionReveal 
                   key={doctor.name} 
                   delay={0.2} 
                   direction={index % 2 === 0 ? "right" : "left"}
                 >
-                  <div className={`relative flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 lg:gap-24 items-center`}>
+                  <div className={`relative flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-24 items-center`}>
                     {/* Creative Doctor Image Container with Glass Depth */}
                     <div className="lg:w-1/2 relative group">
                       <div className="relative aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:shadow-glow">
@@ -254,12 +254,12 @@ const About = () => {
                             <span className="w-12 h-[2px] bg-primary/30" />
                             {doctor.role}
                           </div>
-                          <h3 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.9] group-hover:text-primary transition-colors duration-500">
+                          <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.9] group-hover:text-primary transition-colors duration-500">
                             {doctor.name}
                           </h3>
                         </div>
                         
-                        <p className="text-2xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-primary/30 pl-8 py-2">
+                        <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-primary/30 pl-6 md:pl-8 py-2">
                           {doctor.qualifications}
                         </p>
                       </div>
@@ -293,12 +293,12 @@ const About = () => {
                       <div className="pt-10">
                         <a
                           href={`mailto:${doctor.email}`}
-                          className="group/btn relative inline-flex items-center gap-5 px-12 py-6 rounded-[2.5rem] bg-foreground text-background font-black text-sm uppercase tracking-widest overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:scale-105 active:scale-95"
+                          className="group/btn relative inline-flex items-center gap-5 px-8 md:px-12 py-5 md:py-6 rounded-2xl md:rounded-[2.5rem] bg-foreground text-background font-black text-xs md:text-sm uppercase tracking-widest overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:scale-105 active:scale-95"
                         >
                           <div className="absolute inset-0 bg-primary translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out" />
-                          <Mail className="w-6 h-6 relative z-10 group-hover/btn:rotate-12 transition-transform duration-500" />
-                          <span className="relative z-10 truncate max-w-[200px] xs:max-w-none">{doctor.email}</span>
-                          <ChevronRight className="w-6 h-6 relative z-10 group-hover/btn:translate-x-1 transition-transform shrink-0" />
+                          <Mail className="w-5 h-5 md:w-6 md:h-6 relative z-10 group-hover/btn:rotate-12 transition-transform duration-500" />
+                          <span className="relative z-10 truncate max-w-[180px] xs:max-w-none">{doctor.email}</span>
+                          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 relative z-10 group-hover/btn:translate-x-1 transition-transform shrink-0" />
                         </a>
                       </div>
                     </div>
@@ -317,16 +317,16 @@ const About = () => {
           <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-secondary/5 blur-[140px] rounded-full pointer-events-none" />
 
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-32">
+            <div className="text-center mb-16 md:mb-32">
               <MotionReveal direction="up">
                 <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black tracking-[0.4em] uppercase mb-8">
                   <Award className="w-4 h-4" />
                   Professional Background
                 </div>
-                <h2 className="text-4xl md:text-8xl font-black text-foreground tracking-tighter mb-8 leading-[0.9] text-glow">
+                <h2 className="text-3xl sm:text-4xl md:text-8xl font-black text-foreground tracking-tighter mb-6 md:mb-8 leading-[0.9] text-glow">
                   Clinical <span className="text-primary/80 italic font-medium">Credentials</span>
                 </h2>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed opacity-70">
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed opacity-70">
                   Documenting the academic heritage and clinical excellence of our medical leadership.
                 </p>
               </MotionReveal>
@@ -337,7 +337,7 @@ const About = () => {
                 <MotionReveal key={index} delay={index * 0.2} direction="up">
                   <div className="group relative">
                     {/* Artistic Card Frame */}
-                    <div className="relative z-10 glass-card p-10 md:p-16 rounded-[4rem] border-white/20 dark:border-white/10 overflow-hidden transition-all duration-700 hover:shadow-glow hover:-translate-y-2">
+                    <div className="relative z-10 glass-card p-6 sm:p-10 md:p-16 rounded-3xl sm:rounded-[4rem] border-white/20 dark:border-white/10 overflow-hidden transition-all duration-700 hover:shadow-glow hover:-translate-y-2">
                       {/* Inner Decorative Elements */}
                       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-primary/10 transition-colors duration-700" />
                       
@@ -402,16 +402,16 @@ const About = () => {
                         </div>
 
                         {/* Footer: Stats & Verification */}
-                        <div className="pt-12 border-t border-border/50 flex flex-wrap justify-between items-center gap-8">
-                          <div className="flex items-center gap-5 px-10 py-5 rounded-[2.5rem] bg-foreground text-background shadow-2xl scale-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden relative">
+                        <div className="pt-8 md:pt-12 border-t border-border/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-8">
+                          <div className="flex items-center gap-4 px-8 py-4 rounded-2xl md:rounded-[2.5rem] bg-foreground text-background shadow-2xl scale-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden relative">
                             <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
-                            <CheckCircle2 className="w-7 h-7 text-primary" />
-                            <span className="text-xl font-black uppercase tracking-tighter whitespace-nowrap">{doc.experience}</span>
+                            <CheckCircle2 className="w-6 h-6 text-primary" />
+                            <span className="text-lg md:text-xl font-black uppercase tracking-tighter whitespace-nowrap">{doc.experience}</span>
                           </div>
                           
-                          <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-primary/5 border border-primary/10">
-                            <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{t('about.credentials.activeStatus')}</span>
+                          <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/5 border border-primary/10">
+                            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em]">{t('about.credentials.activeStatus')}</span>
                           </div>
                         </div>
                       </div>
