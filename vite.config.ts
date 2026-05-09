@@ -7,6 +7,7 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   base: '/',
   build: {
+    target: 'es2015',
     sourcemap: false,
     outDir: 'dist',
     chunkSizeWarningLimit: 650,

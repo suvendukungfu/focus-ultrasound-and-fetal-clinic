@@ -123,7 +123,9 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl border border-white/30 dark:border-white/10 shadow-glass;
+    @apply bg-white/60 dark:bg-slate-900/60 border border-white/30 dark:border-white/10 shadow-glass;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
   }
 
   .premium-shadow {
