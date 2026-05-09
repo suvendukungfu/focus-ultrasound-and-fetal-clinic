@@ -36,21 +36,19 @@ const CultureSection = () => {
           <img
             src="/images/culture/ultrasound-consultation.webp"
             alt="Focus Ultrasound Culture"
-            className="w-full h-full object-cover object-center scale-105"
+          className="w-full h-full object-cover object-center scale-105"
           />
-          {/* Overlays - Consistent with Hero for better mobile visibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/10 to-transparent z-10 md:from-background/70 md:via-background/10 md:to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-20 opacity-40 md:opacity-30" />
+          {/* NO overlays — show full vivid image */}
         </motion.div>
 
         {/* CONTENT GRID */}
-        <div className="relative z-30 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12 flex flex-col md:flex-row justify-between items-center gap-10 md:gap-12 pt-24 md:pt-20">
+        <div className="relative z-30 w-full max-w-7xl mx-auto px-5 sm:px-10 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12 pt-20 pb-16 md:pt-20 md:pb-10">
           {/* LEFT CONTENT */}
           <motion.div
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="w-full md:max-w-2xl space-y-4 md:space-y-8 text-center md:text-left"
+            className="w-full md:max-w-2xl space-y-4 md:space-y-8 text-left"
           >
             <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 backdrop-blur-md border border-primary/20 text-primary text-[9px] md:text-[10px] font-bold tracking-widest uppercase shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -59,7 +57,7 @@ const CultureSection = () => {
             
             <motion.h1 
               variants={itemVariants} 
-              className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-950 dark:text-white tracking-tight leading-[1.05] drop-shadow-md"
+              className="text-[2.2rem] sm:text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.05] [text-shadow:0_2px_12px_rgba(0,0,0,0.6)]"
             >
               <span>{t('culture.titlePart1')} </span>
               <span className="text-primary block md:inline drop-shadow-md">{t('culture.titlePart2')}</span>
@@ -67,7 +65,7 @@ const CultureSection = () => {
             
             <motion.p 
               variants={itemVariants} 
-              className="text-sm sm:text-base md:text-lg text-slate-900 dark:text-slate-100 leading-relaxed max-w-lg mx-auto md:mx-0 font-semibold drop-shadow-sm"
+              className="text-sm sm:text-base md:text-lg text-white leading-relaxed max-w-lg mx-auto md:mx-0 font-semibold [text-shadow:0_1px_8px_rgba(0,0,0,0.7)]"
             >
               {t('culture.description')}
             </motion.p>
@@ -80,7 +78,7 @@ const CultureSection = () => {
                 { icon: Activity, text: t('culture.benefit3') },
                 { icon: Activity, text: t('culture.benefit4') }
               ].map((benefit, i) => (
-                <div key={i} className="px-3 py-1.5 md:px-5 md:py-2.5 rounded-full bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-primary/20 text-slate-950 dark:text-white text-[9px] md:text-[11px] font-bold tracking-wider uppercase flex items-center gap-2 hover:bg-white/80 dark:hover:bg-slate-900/60 hover:border-primary/40 transition-all duration-500 group shadow-sm">
+                <div key={i} className="px-3 py-1.5 md:px-5 md:py-2.5 rounded-full bg-black/30 dark:bg-slate-900/40 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-[11px] font-bold tracking-wider uppercase flex items-center gap-2 hover:bg-black/40 dark:hover:bg-slate-900/60 hover:border-white/40 transition-all duration-500 group shadow-sm">
                   <benefit.icon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary group-hover:scale-110 transition-transform" />
                   <span>{benefit.text}</span>
                 </div>
@@ -93,16 +91,16 @@ const CultureSection = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="w-full md:w-auto grid grid-cols-2 md:flex md:flex-col gap-3 md:gap-4"
+            className="w-full md:w-auto grid grid-cols-2 md:flex md:flex-col gap-2 md:gap-4"
           >
             {[
               { value: '5+', label: language === 'en' ? 'YEARS OF EXCELLENCE' : 'उत्कृष्टता के वर्ष' },
-              { value: '50K+', label: language === 'en' ? 'FAMILIES SERVED' : 'सेवा प्राप्त परिवार' },
+              { value: '1K+', label: language === 'en' ? 'FAMILIES SERVED' : 'सेवा प्राप्त परिवार' },
               { value: '24/7', label: language === 'en' ? 'EMERGENCY CARE' : 'आपातकालीन देखभाल' },
               { value: '100%', label: language === 'en' ? 'PATIENT SATISFACTION' : 'रोगी संतुष्टि' }
             ].map((stat, i) => (
-              <div key={i} className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-4 group hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 text-center md:text-left shadow-premium">
-                <div className="text-2xl md:text-3xl font-black text-primary group-hover:scale-110 transition-transform">{stat.value}</div>
+              <div key={i} className="p-3 md:p-6 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 flex flex-col md:flex-row items-center md:items-center gap-1 md:gap-4 group hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 text-center md:text-left shadow-premium">
+                <div className="text-xl md:text-3xl font-black text-primary group-hover:scale-110 transition-transform">{stat.value}</div>
                 <div className="text-[8px] md:text-[10px] font-bold text-slate-600 dark:text-slate-400 tracking-widest leading-tight uppercase group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{stat.label}</div>
               </div>
             ))}
@@ -111,7 +109,7 @@ const CultureSection = () => {
       </div>
 
       {/* B. SPREAD OUT PHILOSOPHY SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-48 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24 md:py-48 relative">
         {/* Subtle Decorative Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10 animate-pulse" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl -z-10 animate-pulse-slow" />

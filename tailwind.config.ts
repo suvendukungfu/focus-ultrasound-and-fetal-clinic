@@ -14,6 +14,9 @@ export default {
       },
     },
     extend: {
+      screens: {
+        'xs': '390px',
+      },
       fontFamily: {
         display: ['Poppins', 'sans-serif'],
         body: ['Inter', 'sans-serif'],

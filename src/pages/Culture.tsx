@@ -15,7 +15,7 @@ const Culture = () => {
     { label: t('culture.stats.label1'), value: '10+', icon: Users, color: 'text-primary' },
     { label: t('culture.stats.label2'), value: '100%', icon: Zap, color: 'text-emerald-400' },
     { label: t('culture.stats.label3'), value: '4.9', icon: Star, color: 'text-amber-400' },
-    { label: t('culture.stats.label4'), value: '10+', icon: TrendingUp, color: 'text-indigo-400' },
+    { label: t('culture.stats.label4'), value: '5+', icon: TrendingUp, color: 'text-indigo-400' },
   ];
 
   return (

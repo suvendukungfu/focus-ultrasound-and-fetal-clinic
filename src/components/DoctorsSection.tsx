@@ -20,7 +20,7 @@ const DoctorsSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-background" id="doctors">
+    <section className="relative py-16 sm:py-24 md:py-32 overflow-hidden bg-background" id="doctors">
       {/* Premium Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute -top-[10%] -right-[5%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
@@ -29,7 +29,7 @@ const DoctorsSection = () => {
       
       <BackgroundPattern opacity={0.3} />
       
-      <div className="relative z-10 container-narrow mx-auto px-6">
+      <div className="relative z-10 w-full max-w-screen-xl mx-auto px-5 sm:px-8">
         {/* Header Section */}
         <div className="text-center mb-20 md:mb-28">
           <motion.div
@@ -67,13 +67,13 @@ const DoctorsSection = () => {
                 {/* Decorative glow behind card */}
                 <div className={`absolute -inset-4 bg-gradient-to-br from-primary/10 to-secondary/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10`} />
                 
-                <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 lg:gap-20 bg-card/40 backdrop-blur-sm border border-border/50 p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-soft hover:shadow-elevated transition-all duration-500`}>
+                <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-6 lg:gap-20 bg-card/40 backdrop-blur-sm border border-border/50 p-5 sm:p-8 md:p-12 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] shadow-soft hover:shadow-elevated transition-all duration-500`}>
                   
                   {/* Portrait Container */}
                   <div className="w-full lg:w-1/3 flex justify-center">
                     <div className="relative">
                       {/* Photo Frame */}
-                      <div className="relative w-56 h-72 xs:w-64 xs:h-80 md:w-80 md:h-[26rem] rounded-3xl md:rounded-[2rem] overflow-hidden border-4 md:border-8 border-card shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] group-hover:-rotate-1">
+                      <div className="relative w-48 h-64 xs:w-56 xs:h-72 sm:w-64 sm:h-80 md:w-80 md:h-[26rem] rounded-2xl sm:rounded-3xl md:rounded-[2rem] overflow-hidden border-4 md:border-8 border-card shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] group-hover:-rotate-1">
                         <img
                           src={doctor.image}
                           alt={t<string>(`doctors.${doctor.id}.name`)}
