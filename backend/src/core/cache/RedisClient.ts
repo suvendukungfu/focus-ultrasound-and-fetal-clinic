@@ -1,12 +1,15 @@
 import Redis from 'ioredis';
 import { Logger } from '../Logger';
+import { getRedisUrl } from './redisConfig';
 
 class RedisCache {
   private client: Redis;
 
   constructor() {
-    if (!process.env.REDIS_URL) {
-      Logger.warn('[RedisCache] No REDIS_URL provided. Using in-memory stub (no caching).');
+    const redisUrl = getRedisUrl();
+
+    if (!redisUrl) {
+      Logger.warn('[RedisCache] Redis disabled. Using in-memory stub (no caching).');
       this.client = {
         on: () => {},
         get: async () => null,
@@ -18,15 +21,16 @@ class RedisCache {
       return;
     }
 
-    this.client = new Redis(process.env.REDIS_URL, {
-      maxRetriesPerRequest: 3,
+    this.client = new Redis(redisUrl, {
+      lazyConnect: true,
+      maxRetriesPerRequest: 1,
       retryStrategy(times) {
-        return Math.min(times * 50, 2000);
+        return times > 3 ? null : Math.min(times * 250, 1000);
       }
     });
 
     this.client.on('error', (err) => {
-      Logger.error(`Redis Error: ${err.message}`);
+      Logger.warn(`Redis unavailable: ${err.message}`);
     });
 
     this.client.on('connect', () => {

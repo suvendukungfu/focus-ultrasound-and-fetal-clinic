@@ -20,6 +20,7 @@
 import { Worker, Job } from 'bullmq';
 import { Logger } from '../../../core/Logger';
 import { redisClient } from '../../../core/cache/RedisClient';
+import { getRedisUrl } from '../../../core/cache/redisConfig';
 import { REVIEWS_QUEUE_NAME, ReviewJobName, redisConnection } from '../queues/ReviewsQueue';
 import { PrismaReviewsRepository } from '../repositories/implementations/PrismaReviewsRepository';
 
@@ -95,8 +96,9 @@ async function fetchGoogleReviews(): Promise<GoogleReview[]> {
 // ─── Worker ───────────────────────────────────────────────────────────────
 
 let reviewsWorker: Worker<Record<string, unknown>, unknown, ReviewJobName> | null = null;
+const redisUrl = getRedisUrl();
 
-if (process.env.REDIS_URL && redisConnection) {
+if (redisUrl && redisConnection) {
   reviewsWorker = new Worker<Record<string, unknown>, unknown, ReviewJobName>(
     REVIEWS_QUEUE_NAME,
     async (job: Job<Record<string, unknown>, unknown, ReviewJobName>) => {
@@ -185,7 +187,7 @@ if (process.env.REDIS_URL && redisConnection) {
     );
   });
 } else {
-  Logger.warn('[ReviewsWorker] Skipping initialization (no REDIS_URL provided).');
+  Logger.warn('[ReviewsWorker] Skipping initialization.');
 }
 
 export { reviewsWorker };

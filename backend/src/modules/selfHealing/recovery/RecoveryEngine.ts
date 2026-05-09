@@ -3,6 +3,7 @@ import { prisma } from '../../../shared/infra/database/prismaClient';
 import { Logger } from '../../../core/Logger';
 import { worker, queueLeadProcessing } from '../../../core/queue/LeadQueue';
 import { redisClient } from '../../../core/cache/RedisClient';
+import { getRedisUrl } from '../../../core/cache/redisConfig';
 
 export class RecoveryEngine {
   
@@ -29,7 +30,7 @@ export class RecoveryEngine {
   async flushStaleCache() {
     Logger.info(`[Recovery] Executing action: flushRedis`);
     // Clear potentially corrupted lock keys
-    if (process.env.NODE_ENV !== 'development' || process.env.REDIS_URL) {
+    if (getRedisUrl()) {
       await redisClient.flushall();
     }
     
