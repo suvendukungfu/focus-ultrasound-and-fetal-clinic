@@ -53,11 +53,11 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2} duration={0.8}>
-              <h1 className="font-display text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 leading-[1.1] mb-6 md:mb-8 max-w-[15ch] md:max-w-2xl drop-shadow-sm">
+              <h1 className="font-display text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-950 dark:text-white leading-[1.1] mb-6 md:mb-8 max-w-[15ch] md:max-w-2xl drop-shadow-sm">
                 {language === 'en' ? (
                   <>
                     Ultrasound & <span className="text-medical-teal">Fetal Medicine</span> Clinic <br />
-                    <span className="text-xl md:text-3xl lg:text-4xl block mt-3 md:mt-4 font-medium text-slate-700">in Greater Noida West</span>
+                    <span className="text-xl md:text-3xl lg:text-4xl block mt-3 md:mt-4 font-medium text-slate-700 dark:text-slate-300">in Greater Noida West</span>
                   </>
                 ) : (
                   <>
@@ -69,7 +69,7 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4} duration={0.8}>
-              <p className="text-slate-800 text-base md:text-xl font-body leading-relaxed mb-8 md:mb-10 max-w-2xl drop-shadow-sm">
+              <p className="text-slate-800 dark:text-slate-200 text-base md:text-xl font-body leading-relaxed mb-8 md:mb-10 max-w-2xl drop-shadow-sm">
                 {language === 'en' 
                   ? "Experience the highest standard of fetal ultrasound and medicine in a serene, professional environment dedicated to you and your baby's well-being."
                   : "आपके और आपके बच्चे की भलाई के लिए समर्पित एक शांत, पेशेवर वातावरण में भ्रूण अल्ट्रासाउंड और चिकित्सा के उच्चतम मानक का अनुभव करें।"}
@@ -87,7 +87,7 @@ const Hero = () => {
                   <ArrowRight className="w-4 md:w-5 h-4 md:h-5" />
                 </Link>
                 <a
-                  href="https://wa.me/918287655133?text=Hello%2C%20I%20would%20like%20to%20book%20an%20ultrasound%20appointment."
+                  href="https://wa.me/919870475400?text=Hello%2C%20I%20would%20like%20to%20book%20an%20ultrasound%20appointment."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-500 text-white hover:bg-green-600 px-6 md:px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-semibold shadow-glow flex items-center justify-center gap-2 transform transition-transform hover:-translate-y-1"
@@ -101,19 +101,19 @@ const Hero = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.8} duration={0.8}>
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-6 border-t border-slate-100 pt-8 md:pt-10">
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-6 border-t border-slate-100 dark:border-white/10 pt-8 md:pt-10">
                 {[
                   { value: '5000+', label: language === 'en' ? 'Happy Families' : 'खुश परिवार', icon: Heart },
                   { value: '5+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
                   { value: '4.9★', label: language === 'en' ? 'Expert Rating' : 'विशेषज्ञ रेटिंग', icon: Star },
                 ].map((m) => (
                   <div key={m.label} className="flex items-center gap-3">
-                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-medical-soft flex items-center justify-center">
+                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-medical-soft dark:bg-slate-900/40 flex items-center justify-center">
                       <m.icon className="w-4 md:w-5 h-4 md:h-5 text-medical-teal" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-display text-lg md:text-xl font-bold text-slate-950 leading-tight">{m.value}</span>
-                      <span className="text-slate-600 text-xs md:text-sm font-medium">{m.label}</span>
+                      <span className="font-display text-lg md:text-xl font-bold text-slate-950 dark:text-white leading-tight">{m.value}</span>
+                      <span className="text-slate-600 dark:text-slate-400 text-xs md:text-sm font-medium">{m.label}</span>
                     </div>
                   </div>
                 ))}

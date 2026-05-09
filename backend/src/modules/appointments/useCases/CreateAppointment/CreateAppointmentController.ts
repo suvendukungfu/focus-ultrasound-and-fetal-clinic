@@ -46,7 +46,7 @@ Service: ${serviceName}
 Date: ${new Date(appointmentWithExtras.date).toLocaleString()}
 Message: ${appointmentWithExtras.notes || 'N/A'}`;
 
-      const whatsappUrl = `https://wa.me/918287655133?text=${encodeURIComponent(messageText)}`;
+      const whatsappUrl = `https://wa.me/919870475400?text=${encodeURIComponent(messageText)}`;
 
       return response.status(201).json({
         success: true,

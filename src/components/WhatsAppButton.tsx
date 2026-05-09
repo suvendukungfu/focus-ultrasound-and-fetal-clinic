@@ -8,7 +8,7 @@ export const WhatsAppButton = () => {
   
   return (
     <motion.a
-      href="https://wa.me/918287655133?text=Hello%2C%20I%20would%20like%20to%20book%20an%20ultrasound%20appointment."
+      href="https://wa.me/919870475400?text=Hello%2C%20I%20would%20like%20to%20book%20an%20ultrasound%20appointment."
       target="_blank"
       rel="noopener noreferrer"
       initial={{ scale: 0, opacity: 0 }}

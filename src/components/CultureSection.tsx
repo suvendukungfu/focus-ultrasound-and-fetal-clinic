@@ -59,7 +59,7 @@ const CultureSection = () => {
             
             <motion.h1 
               variants={itemVariants} 
-              className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-950 tracking-tight leading-[1.05] drop-shadow-md"
+              className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-950 dark:text-white tracking-tight leading-[1.05] drop-shadow-md"
             >
               <span>{t('culture.titlePart1')} </span>
               <span className="text-primary block md:inline drop-shadow-md">{t('culture.titlePart2')}</span>
@@ -67,7 +67,7 @@ const CultureSection = () => {
             
             <motion.p 
               variants={itemVariants} 
-              className="text-sm sm:text-base md:text-lg text-slate-900 leading-relaxed max-w-lg mx-auto md:mx-0 font-semibold drop-shadow-sm"
+              className="text-sm sm:text-base md:text-lg text-slate-900 dark:text-slate-100 leading-relaxed max-w-lg mx-auto md:mx-0 font-semibold drop-shadow-sm"
             >
               {t('culture.description')}
             </motion.p>
@@ -80,7 +80,7 @@ const CultureSection = () => {
                 { icon: Activity, text: t('culture.benefit3') },
                 { icon: Activity, text: t('culture.benefit4') }
               ].map((benefit, i) => (
-                <div key={i} className="px-3 py-1.5 md:px-5 md:py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-primary/20 text-slate-950 text-[9px] md:text-[11px] font-bold tracking-wider uppercase flex items-center gap-2 hover:bg-white/80 hover:border-primary/40 transition-all duration-500 group shadow-sm">
+                <div key={i} className="px-3 py-1.5 md:px-5 md:py-2.5 rounded-full bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-primary/20 text-slate-950 dark:text-white text-[9px] md:text-[11px] font-bold tracking-wider uppercase flex items-center gap-2 hover:bg-white/80 dark:hover:bg-slate-900/60 hover:border-primary/40 transition-all duration-500 group shadow-sm">
                   <benefit.icon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary group-hover:scale-110 transition-transform" />
                   <span>{benefit.text}</span>
                 </div>
@@ -101,9 +101,9 @@ const CultureSection = () => {
               { value: '24/7', label: language === 'en' ? 'EMERGENCY CARE' : 'आपातकालीन देखभाल' },
               { value: '100%', label: language === 'en' ? 'PATIENT SATISFACTION' : 'रोगी संतुष्टि' }
             ].map((stat, i) => (
-              <div key={i} className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200/50 flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-4 group hover:bg-white transition-all duration-300 text-center md:text-left shadow-premium">
+              <div key={i} className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-4 group hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 text-center md:text-left shadow-premium">
                 <div className="text-2xl md:text-3xl font-black text-primary group-hover:scale-110 transition-transform">{stat.value}</div>
-                <div className="text-[8px] md:text-[10px] font-bold text-slate-600 tracking-widest leading-tight uppercase group-hover:text-slate-900 transition-colors">{stat.label}</div>
+                <div className="text-[8px] md:text-[10px] font-bold text-slate-600 dark:text-slate-400 tracking-widest leading-tight uppercase group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{stat.label}</div>
               </div>
             ))}
           </motion.div>

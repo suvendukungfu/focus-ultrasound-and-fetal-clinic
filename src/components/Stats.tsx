@@ -96,7 +96,7 @@ const Stats = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
               whileHover={{ scale: 1.05 }}
-              className="glass-effect relative overflow-hidden rounded-[2rem] p-8 border border-white/60 shadow-soft flex flex-col items-center text-center transition-all duration-300 hover:shadow-elevated bg-white/40"
+              className="relative overflow-hidden rounded-[2rem] p-8 border border-white/60 dark:border-white/10 shadow-soft flex flex-col items-center text-center transition-all duration-300 hover:shadow-elevated bg-white/40 dark:bg-slate-900/40 backdrop-blur-md"
             >
               {/* Soft Gradient Blob Background for Premium Look */}
               <div className={`absolute -top-12 -right-12 w-40 h-40 rounded-full blur-[60px] ${stat.bg} opacity-60`} />
@@ -104,10 +104,10 @@ const Stats = () => {
               <div className={`w-16 h-16 rounded-2xl ${stat.bg} ${stat.border} border flex items-center justify-center mb-6 relative z-10`}>
                 <stat.icon className={`w-8 h-8 ${stat.color}`} />
               </div>
-              <span className="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-2 drop-shadow-sm relative z-10">
+              <span className="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-2 drop-shadow-sm relative z-10">
                 <AnimatedCounter value={stat.value} />
               </span>
-              <span className="text-slate-600 font-semibold uppercase tracking-widest text-sm relative z-10">
+              <span className="text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-widest text-sm relative z-10">
                 {language === 'en' ? stat.label : stat.labelHi}
               </span>
             </motion.div>

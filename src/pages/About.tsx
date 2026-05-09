@@ -98,7 +98,7 @@ const About = () => {
                   <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/90 to-primary/50">
                     {t('clinic.name')}
                   </span>
-                  <span className="block text-primary/80 italic font-medium text-xl sm:text-3xl md:text-6xl mt-2">
+                  <span className="block text-primary/80 italic font-medium text-lg sm:text-2xl md:text-4xl lg:text-5xl mt-2 leading-tight">
                     {t('clinic.tagline')}
                   </span>
                 </h1>
@@ -254,7 +254,7 @@ const About = () => {
                             <span className="w-12 h-[2px] bg-primary/30" />
                             {doctor.role}
                           </div>
-                          <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.9] group-hover:text-primary transition-colors duration-500">
+                          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter leading-[0.9] group-hover:text-primary transition-colors duration-500">
                             {doctor.name}
                           </h3>
                         </div>
@@ -275,14 +275,14 @@ const About = () => {
                           <span className="w-8 h-[2px] bg-primary" />
                           {t('about.expertiseTitle')}
                         </h4>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-2 md:gap-3">
                           {doctor.expertise.map((item, i) => (
                             <motion.span 
                               key={item}
                               initial={{ opacity: 0, y: 10 }}
                               whileInView={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.1 * i }}
-                              className="px-6 py-3 rounded-2xl bg-card border border-border hover:border-primary/50 text-foreground text-[11px] font-bold uppercase tracking-wider shadow-sm hover:bg-primary hover:text-white transition-all duration-500 cursor-default"
+                              className="px-4 md:px-6 py-2 md:py-3 rounded-xl md:rounded-2xl bg-card border border-border hover:border-primary/50 text-foreground text-[10px] md:text-[11px] font-bold uppercase tracking-wider shadow-sm hover:bg-primary hover:text-white transition-all duration-500 cursor-default"
                             >
                               {item}
                             </motion.span>
@@ -293,12 +293,12 @@ const About = () => {
                       <div className="pt-10">
                         <a
                           href={`mailto:${doctor.email}`}
-                          className="group/btn relative inline-flex items-center gap-5 px-8 md:px-12 py-5 md:py-6 rounded-2xl md:rounded-[2.5rem] bg-foreground text-background font-black text-xs md:text-sm uppercase tracking-widest overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:scale-105 active:scale-95"
+                          className="group/btn relative inline-flex items-center gap-4 md:gap-5 px-6 md:px-12 py-4 md:py-6 rounded-xl md:rounded-[2.5rem] bg-foreground text-background font-black text-[10px] md:text-sm uppercase tracking-widest overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:scale-105 active:scale-95"
                         >
                           <div className="absolute inset-0 bg-primary translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out" />
-                          <Mail className="w-5 h-5 md:w-6 md:h-6 relative z-10 group-hover/btn:rotate-12 transition-transform duration-500" />
-                          <span className="relative z-10 truncate max-w-[180px] xs:max-w-none">{doctor.email}</span>
-                          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 relative z-10 group-hover/btn:translate-x-1 transition-transform shrink-0" />
+                          <Mail className="w-4 h-4 md:w-6 md:h-6 relative z-10 group-hover/btn:rotate-12 transition-transform duration-500" />
+                          <span className="relative z-10 truncate max-w-[150px] xs:max-w-none">{doctor.email}</span>
+                          <ChevronRight className="w-4 h-4 md:w-6 md:h-6 relative z-10 group-hover/btn:translate-x-1 transition-transform shrink-0" />
                         </a>
                       </div>
                     </div>
@@ -323,10 +323,10 @@ const About = () => {
                   <Award className="w-4 h-4" />
                   Professional Background
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-8xl font-black text-foreground tracking-tighter mb-6 md:mb-8 leading-[0.9] text-glow">
+                <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-foreground tracking-tighter mb-6 md:mb-8 leading-[0.9] text-glow">
                   Clinical <span className="text-primary/80 italic font-medium">Credentials</span>
                 </h2>
-                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed opacity-70">
+                <p className="text-lg md:text-xl text-muted-foreground dark:text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
                   Documenting the academic heritage and clinical excellence of our medical leadership.
                 </p>
               </MotionReveal>
@@ -337,7 +337,7 @@ const About = () => {
                 <MotionReveal key={index} delay={index * 0.2} direction="up">
                   <div className="group relative">
                     {/* Artistic Card Frame */}
-                    <div className="relative z-10 glass-card p-6 sm:p-10 md:p-16 rounded-3xl sm:rounded-[4rem] border-white/20 dark:border-white/10 overflow-hidden transition-all duration-700 hover:shadow-glow hover:-translate-y-2">
+                    <div className="relative z-10 glass-card p-6 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[4rem] border-white/20 dark:border-white/10 overflow-hidden transition-all duration-700 hover:shadow-glow hover:-translate-y-2">
                       {/* Inner Decorative Elements */}
                       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-primary/10 transition-colors duration-700" />
                       
@@ -367,7 +367,7 @@ const About = () => {
                         {/* Body: Registrations & Former Experience */}
                         <div className="grid md:grid-cols-2 gap-12">
                           <div className="space-y-6">
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/60 flex items-center gap-2">
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
                               <span className="w-6 h-[1px] bg-primary/40" />
                               {t('about.credentials.registrationLabel')}
                             </p>
@@ -384,7 +384,7 @@ const About = () => {
                           </div>
 
                           <div className="space-y-6">
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/60 flex items-center gap-2">
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
                               <span className="w-6 h-[1px] bg-primary/40" />
                               {t('about.credentials.formerlyLabel')}
                             </p>
@@ -403,10 +403,10 @@ const About = () => {
 
                         {/* Footer: Stats & Verification */}
                         <div className="pt-8 md:pt-12 border-t border-border/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-8">
-                          <div className="flex items-center gap-4 px-8 py-4 rounded-2xl md:rounded-[2.5rem] bg-foreground text-background shadow-2xl scale-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden relative">
+                          <div className="flex items-center gap-2 md:gap-4 px-4 md:px-8 py-2.5 md:py-4 rounded-xl md:rounded-[2.5rem] bg-foreground text-background shadow-2xl scale-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden relative">
                             <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
-                            <CheckCircle2 className="w-6 h-6 text-primary" />
-                            <span className="text-lg md:text-xl font-black uppercase tracking-tighter whitespace-nowrap">{doc.experience}</span>
+                            <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6 text-primary shrink-0" />
+                            <span className="text-[10px] sm:text-sm md:text-xl font-black uppercase tracking-tighter">{doc.experience}</span>
                           </div>
                           
                           <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/5 border border-primary/10">
@@ -419,12 +419,12 @@ const About = () => {
 
                     {/* Aesthetic Floating Badge for each doctor */}
                     <motion.div 
-                      animate={{ y: [0, -15, 0], rotate: [0, 2, 0] }}
+                      animate={{ y: [0, -10, 0], rotate: [0, 2, 0] }}
                       transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                      className={`absolute -top-10 ${index % 2 === 0 ? '-right-10' : '-left-10'} w-32 h-32 rounded-full glass-card border-primary/20 flex-col items-center justify-center text-center z-20 shadow-glow pointer-events-none hidden md:flex`}
+                      className={`absolute -top-4 sm:-top-6 ${index % 2 === 0 ? '-right-2 sm:-right-6' : '-left-2 sm:-left-6'} w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full glass-card border-primary/20 flex flex-col items-center justify-center text-center z-20 shadow-glow pointer-events-none`}
                     >
-                      <ShieldCheck className="w-8 h-8 text-primary mb-1" />
-                      <span className="text-[8px] font-black uppercase tracking-widest text-foreground">Verified<br/>Expert</span>
+                      <ShieldCheck className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary mb-0.5 md:mb-1" />
+                      <span className="text-[6px] sm:text-[7px] md:text-[8px] font-black uppercase tracking-widest text-foreground leading-tight">Verified<br/>Expert</span>
                     </motion.div>
                   </div>
                 </MotionReveal>

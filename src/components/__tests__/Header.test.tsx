@@ -64,7 +64,7 @@ describe('Header Component', () => {
 
     const whatsappLink = screen.getByLabelText('Contact via WhatsApp');
     expect(whatsappLink).toBeInTheDocument();
-    expect(whatsappLink).toHaveAttribute('href', 'https://wa.me/918287655133');
+    expect(whatsappLink).toHaveAttribute('href', 'https://wa.me/919870475400');
     expect(whatsappLink).toHaveAttribute('target', '_blank');
   });
 

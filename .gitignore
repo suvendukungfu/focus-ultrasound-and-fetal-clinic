@@ -36,3 +36,4 @@ Library/
 .DS_Store
 
 .vercel
+\n.env\n*.db\nbackend/.env\nbackend/prisma/*.db

@@ -368,8 +368,8 @@ Message: ${formData.message}
                         <a href="tel:+919870475400" className="text-foreground font-bold text-sm hover:text-primary transition-colors block">
                           +91 98704 75400
                         </a>
-                        <a href="mailto:info.fufc@gmail.com" className="text-muted-foreground text-xs hover:text-primary transition-colors">
-                          info.fufc@gmail.com
+                        <a href="mailto:focusclinic2026@gmail.com" className="text-muted-foreground text-xs hover:text-primary transition-colors">
+                          focusclinic2026@gmail.com
                         </a>
                       </div>
                     </div>

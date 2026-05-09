@@ -36,12 +36,13 @@ describe('Footer Component', () => {
     expect(phoneLink.closest('a')).toHaveAttribute('href', 'tel:+919870475400');
   });
 
-  it('renders the clinic email', () => {
+  it('renders the correct clinic email', () => {
     renderWithProviders(<Footer />);
 
-    const emailLink = screen.getByText('info.fufc@gmail.com');
+    const emailLink = screen.getByText('focusclinic2026@gmail.com');
     expect(emailLink).toBeInTheDocument();
-    expect(emailLink.closest('a')).toHaveAttribute('href', 'mailto:info.fufc@gmail.com');
+    expect(emailLink.closest('a')).toHaveAttribute('href', 'mailto:focusclinic2026@gmail.com');
+    expect(screen.queryByText('info.fufc@gmail.com')).not.toBeInTheDocument();
   });
 
   it('renders the clinic address', () => {

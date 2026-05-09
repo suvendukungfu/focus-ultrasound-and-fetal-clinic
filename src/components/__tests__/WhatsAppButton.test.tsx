@@ -34,7 +34,7 @@ describe('WhatsAppButton Component', () => {
     renderWithProviders(<WhatsAppButton />);
 
     const button = screen.getByLabelText('Book via WhatsApp');
-    expect(button.getAttribute('href')).toContain('wa.me/918287655133');
+    expect(button.getAttribute('href')).toContain('wa.me/919870475400');
   });
 
   it('opens in a new tab', () => {

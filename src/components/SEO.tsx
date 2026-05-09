@@ -103,8 +103,8 @@ interface SEOProps {
       "alternateName": "FUFC",
       "description": "Expert fetal medicine and ultrasound diagnostic center specializing in high-risk pregnancy scans and prenatal care.",
       "url": "https://focusultrasound.in",
-      "telephone": "+918287655133",
-      "email": "info.fufc@gmail.com",
+      "telephone": "+919870475400",
+      "email": "focusclinic2026@gmail.com",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Shop No. 05 & 06, UGF, Nirala Estate, Noida Extension",

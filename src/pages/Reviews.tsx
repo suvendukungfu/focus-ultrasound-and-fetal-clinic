@@ -149,7 +149,7 @@ const Reviews = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-[4rem] overflow-hidden bg-foreground text-background shadow-2xl p-10 md:p-24"
+              className="relative rounded-[4rem] overflow-hidden bg-slate-950 dark:bg-slate-900/90 shadow-2xl p-10 md:p-24 border border-white/5"
             >
               <div className="absolute top-0 right-0 w-full h-full opacity-20 pointer-events-none">
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary to-transparent" />

@@ -11,8 +11,8 @@ describe('SEO Structured Data', () => {
       '@context': 'https://schema.org',
       '@type': 'MedicalClinic',
       name: 'Focus Ultrasound & Fetal Clinic',
-      telephone: '+918287655133',
-      email: 'info.fufc@gmail.com',
+      telephone: '+919870475400',
+      email: 'focusclinic2026@gmail.com',
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Shop No. 05 & 06, UGF, Nirala Estate, Noida Extension',
@@ -27,7 +27,7 @@ describe('SEO Structured Data', () => {
     });
 
     it('should contain the updated phone number', () => {
-      expect(schemaData.telephone).toBe('+918287655133');
+      expect(schemaData.telephone).toBe('+919870475400');
     });
 
     it('should have the correct address', () => {

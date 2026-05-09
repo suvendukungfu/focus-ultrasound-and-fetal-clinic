@@ -67,7 +67,7 @@ describe('WhatsAppContext', () => {
     const { result } = renderHook(() => useWhatsApp(), { wrapper });
 
     const url = result.current.buildUrl();
-    expect(url).toContain('https://wa.me/918287655133');
+    expect(url).toContain('https://wa.me/919870475400');
     expect(url).toContain('text=');
   });
 

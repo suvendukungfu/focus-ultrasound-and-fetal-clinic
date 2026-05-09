@@ -428,7 +428,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
       role: 'Consultant Radiologist & Fetal Medicine',
       university: '(University of Barcelona)',
       registration: ['UPMC No - 103538'],
-      experience: '5+ Years Experience',
+      experience: '10+ Years Experience',
       formerly: ['Safdarjung Hospital, New Delhi', 'AIIMS, Patna']
     },
     'about.credentials.doc2': {
@@ -437,7 +437,7 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
       role: 'Consultant Radiologist & Fetal Medicine',
       university: '(University of Barcelona)',
       registration: ['UPMC No - 84598', 'DMC No - 94287'],
-      experience: '5+ Years Experience',
+      experience: '10+ Years Experience',
       formerly: ['King George’s Medical University, Lucknow', 'Safdarjung Hospital, New Delhi']
     },
     'culture.seo.title': 'Our Culture & Clinical Excellence | Focus Ultrasound and Fetal Clinic',

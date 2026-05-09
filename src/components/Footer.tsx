@@ -111,8 +111,8 @@ const Footer = () => {
                 <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
                   <Mail className="w-4 h-4 text-primary" />
                 </div>
-                <a href="mailto:info.fufc@gmail.com" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm font-medium">
-                  info.fufc@gmail.com
+                <a href="mailto:focusclinic2026@gmail.com" className="text-muted-foreground hover:text-primary transition-colors font-body text-sm font-medium">
+                  focusclinic2026@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-3 group">

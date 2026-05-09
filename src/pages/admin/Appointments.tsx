@@ -59,7 +59,7 @@ interface AdminAppointment {
 }
 
 const DEMO_APPOINTMENTS: AdminAppointment[] = [
-  { id: '1', name: 'Priya Sharma', phone: '+91 8287655133', service: 'NT Scan', date: new Date().toISOString(), status: 'CONFIRMED', whatsappStatus: 'DELIVERED' },
+  { id: '1', name: 'Priya Sharma', phone: '+91 9870475400', service: 'NT Scan', date: new Date().toISOString(), status: 'CONFIRMED', whatsappStatus: 'DELIVERED' },
   { id: '2', name: 'Anita Verma', phone: '+91 9876543210', service: 'Anomaly Scan', date: new Date(Date.now() + 86400000).toISOString(), status: 'PENDING', whatsappStatus: 'SENT' },
   { id: '3', name: 'Sunita Devi', phone: '+91 8765432100', service: '3D/4D Ultrasound', date: new Date(Date.now() + 172800000).toISOString(), status: 'CONFIRMED', whatsappStatus: 'DELIVERED' },
   { id: '4', name: 'Rekha Gupta', phone: '+91 7654321000', service: 'Growth Scan', date: new Date(Date.now() - 86400000).toISOString(), status: 'COMPLETED', whatsappStatus: 'DELIVERED' },
