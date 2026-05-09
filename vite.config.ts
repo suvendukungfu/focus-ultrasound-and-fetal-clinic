@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
+// VITE_API_URL="/api/v1"
 export default defineConfig(({ mode }) => ({
   base: '/',
   build: {
@@ -16,6 +16,12 @@ export default defineConfig(({ mode }) => ({
     host: "0.0.0.0",
     hmr: {
       overlay: false,
+    },
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:5180',
+        changeOrigin: true,
+      },
     },
   },
   plugins: [

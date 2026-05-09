@@ -101,9 +101,10 @@ const Reviews = () => {
                   <motion.a
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    href={import.meta.env.VITE_GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"}
+                    href="https://maps.app.goo.gl/uZcBgPPcEbSUrHR48?g_st=iw"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Review Focus Ultrasound & Fetal Clinic on Google"
                     className="inline-flex items-center gap-3 h-16 px-10 bg-foreground text-background rounded-2xl font-bold text-sm hover:bg-primary transition-all duration-500 shadow-xl shadow-primary/10"
                   >
                     <GoogleIcon />
@@ -303,9 +304,10 @@ const Reviews = () => {
                       {t<string>('reviews.firstReview')}
                     </p>
                     <a 
-                      href={import.meta.env.VITE_GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"} 
+                      href="https://maps.app.goo.gl/uZcBgPPcEbSUrHR48?g_st=iw"
                       target="_blank" 
                       rel="noopener noreferrer" 
+                      aria-label="Review Focus Ultrasound & Fetal Clinic on Google"
                       className="inline-flex items-center justify-center gap-4 h-16 px-10 bg-foreground text-background rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-all duration-500"
                     >
                       <GoogleIcon />
@@ -334,9 +336,10 @@ const Reviews = () => {
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-6">
                 <a 
-                  href={import.meta.env.VITE_GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"} 
+                  href="https://maps.app.goo.gl/uZcBgPPcEbSUrHR48?g_st=iw"
                   target="_blank" 
                   rel="noopener noreferrer" 
+                  aria-label="Review Focus Ultrasound & Fetal Clinic on Google"
                   className="inline-flex items-center justify-center gap-4 h-16 px-10 bg-white text-primary rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-foreground hover:text-white transition-all duration-500 shadow-xl"
                 >
                   <GoogleIcon />

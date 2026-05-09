@@ -220,11 +220,10 @@ const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ reviews }) => {
           <motion.a
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.98 }}
-            href={import.meta.env.VITE_GOOGLE_PLACE_ID 
-              ? `https://search.google.com/local/writereview?placeid=${import.meta.env.VITE_GOOGLE_PLACE_ID}` 
-              : "https://www.google.com/maps/search/?api=1&query=Focus+Ultrasound+Fetal+Clinic"}
+            href="https://maps.app.goo.gl/uZcBgPPcEbSUrHR48?g_st=iw"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Review Focus Ultrasound & Fetal Clinic on Google"
             className="inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-white transition-all duration-500 shadow-elevated"
           >
             <GoogleIcon />
