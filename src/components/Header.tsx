@@ -60,9 +60,40 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu on Escape key press
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+    
+    if (isMenuOpen) {
+      window.addEventListener('keydown', handleEscape);
+    }
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isMenuOpen]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   const navItems = [
     { key: 'nav.home', href: '/' },
@@ -77,60 +108,59 @@ const Header = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isScrolled 
-          ? 'py-3 bg-white/70 dark:bg-black/60 backdrop-blur-md border-b border-black/[0.05] dark:border-white/[0.05] shadow-sm' 
-          : 'py-5 bg-transparent border-b border-transparent'
+          ? 'py-2 lg:py-3 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-b border-black/5 dark:border-white/5 shadow-sm shadow-black/5' 
+          : 'py-4 lg:py-6 bg-gradient-to-b from-white/60 to-transparent dark:from-slate-950/60 dark:to-transparent border-b border-transparent'
       }`}
     >
       <div className="max-w-[1300px] mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo Section - Aligned Far Left */}
-          <div className="flex-shrink-0 flex justify-start items-center">
-            <Link to="/" className="flex items-center gap-2 md:gap-4 group" aria-label="Focus Ultrasound & Fetal Clinic - Home">
-              <div className="relative">
+          <div className="flex-shrink-0 flex justify-start items-center z-20">
+            <Link to="/" className="flex items-center gap-3 md:gap-5 group" aria-label="Focus Ultrasound & Fetal Clinic - Home">
+              <div className="relative transform md:scale-125 origin-left group-hover:scale-[1.3] transition-transform duration-500 ease-out">
                 <BrandLogo size="sm" />
-                <motion.div 
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute -inset-1 bg-primary/20 rounded-full blur-md -z-10"
-                />
               </div>
-              <div className="flex flex-col">
-                <span className="text-sm md:text-xl font-display font-black tracking-tighter leading-none text-slate-900 dark:text-white transition-colors duration-300">
+              <div className="flex flex-col ml-1 md:ml-3">
+                <span className="text-lg md:text-[22px] font-display font-black tracking-tight leading-none text-slate-900 dark:text-white transition-colors duration-300">
                   {language === 'en' ? 'FOCUS ULTRASOUND' : 'फोकस अल्ट्रासाउंड'}
                 </span>
-                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-0.5 md:mt-1 opacity-90">
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-primary mt-1 opacity-90">
                   {language === 'en' ? '& Fetal Clinic' : '& फीटल क्लिनिक'}
                 </span>
               </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation - Centered */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2" role="navigation" aria-label="Main navigation">
+          {/* Desktop Navigation - Perfectly Centered */}
+          <nav className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-2 z-10" role="navigation" aria-label="Main navigation">
             {navItems.map((item) => (
               <Link
                 key={item.key}
                 to={item.href}
-                className={`relative px-3 xl:px-5 py-2 text-[10px] xl:text-[11px] font-black uppercase tracking-widest transition-all duration-300 ${
-                  isActive(item.href) ? 'text-primary' : 'text-slate-700 dark:text-slate-300 hover:text-primary'
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                className={`group relative px-3 xl:px-5 py-2.5 text-[10px] xl:text-[11px] font-black uppercase tracking-widest transition-all duration-300 ${
+                  isActive(item.href) ? 'text-primary' : 'text-slate-600 dark:text-slate-300 hover:text-primary'
                 }`}
               >
                 {isActive(item.href) && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute inset-0 bg-primary/5 rounded-full -z-10 border border-primary/10"
-                    transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                    className="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-full -z-10 border border-primary/10 dark:border-primary/20"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                {t(item.key)}
+                <span className="relative z-10">{t(item.key)}</span>
+                {!isActive(item.href) && (
+                  <span className="absolute inset-x-4 bottom-1 h-[2px] bg-primary/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                )}
               </Link>
             ))}
           </nav>
 
           {/* Right Side Actions - Right Aligned */}
-          <div className="flex items-center justify-end gap-1.5 md:gap-3">
+          <div className="flex items-center justify-end gap-2 md:gap-3 z-20 flex-shrink-0">
             <div className="hidden xl:block">
               <ClinicStatus />
             </div>
@@ -142,18 +172,16 @@ const Header = () => {
             <button
               onClick={toggleLanguage}
               aria-label={`Switch language to ${language === 'en' ? 'Hindi' : 'English'}`}
-              className="flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/5 border border-black/5 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+              className="relative w-9 h-9 rounded-full bg-slate-900/5 dark:bg-white/5 border border-black/5 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300 flex items-center justify-center overflow-hidden text-primary"
+              title={language === 'en' ? 'Switch to Hindi' : 'Switch to English'}
             >
-              <Globe className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
-              <span className="text-[9px] md:text-[10px] font-black text-slate-900 dark:text-white">
-                {language.toUpperCase()}
-              </span>
+              <Globe className="w-4 h-4" />
             </button>
 
             {/* CTA Button */}
             <Link
               to="/contact"
-              className="hidden sm:flex items-center gap-2 bg-primary text-white px-4 md:px-8 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest shadow-sm hover:scale-105 hover:shadow-md transition-all duration-300"
+              className="hidden sm:flex items-center gap-2 bg-primary text-white px-5 md:px-8 py-2.5 md:py-3 rounded-full text-[10px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
               aria-label="Book appointment"
             >
               <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
@@ -164,11 +192,26 @@ const Header = () => {
             {/* Mobile Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={isMenuOpen ? 'Close mobile menu' : 'Open mobile menu'}
               aria-expanded={isMenuOpen}
-              className={`lg:hidden p-2.5 rounded-xl transition-all active:scale-90 ${isScrolled ? 'bg-black/5 dark:bg-white/10' : 'bg-black/10 dark:bg-white/20 text-slate-900 dark:text-white'}`}
+              aria-controls="mobile-menu"
+              className={`lg:hidden p-2.5 rounded-full transition-all duration-300 active:scale-90 ${
+                isScrolled 
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700' 
+                  : 'bg-black/5 dark:bg-white/10 text-slate-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20'
+              }`}
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <AnimatePresence mode="wait" initial={false}>
+                {isMenuOpen ? (
+                  <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <X className="w-5 h-5" aria-hidden="true" />
+                  </motion.div>
+                ) : (
+                  <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Menu className="w-5 h-5" aria-hidden="true" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </button>
           </div>
         </div>
@@ -181,8 +224,10 @@ const Header = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden mt-4 overflow-hidden"
-              role="navigation"
-              aria-label="Mobile navigation"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+              id="mobile-menu"
             >
               <div className="p-6 md:p-8 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-[2rem] md:rounded-[2.5rem] border border-black/5 dark:border-white/10 shadow-2xl flex flex-col gap-1 md:gap-2">
                 {navItems.map((item, idx) => (
@@ -195,6 +240,7 @@ const Header = () => {
                     <Link
                       to={item.href}
                       onClick={() => setIsMenuOpen(false)}
+                      aria-current={isActive(item.href) ? 'page' : undefined}
                       className={`text-xl md:text-2xl font-black uppercase tracking-[0.2em] py-4 md:py-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between group transition-all duration-300 ${
                         isActive(item.href) ? 'text-primary' : 'text-slate-900 dark:text-white'
                       }`}

@@ -32,7 +32,7 @@ const Hero = () => {
           src="/images/mother_baby_hero.webp"
           fetchPriority="high"
           alt="Joyful mother lifting her baby in a sunlit room"
-          className="w-full h-full object-cover object-center md:object-[95%_center] scale-105"
+          className="w-full h-full object-cover object-center [transform:scaleX(-1)_scale(1.05)]"
         />
         {/* Soft Sophisticated Gradient - Enhanced for mobile visibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/10 to-transparent md:from-background/70 md:via-background/10 md:to-transparent" />

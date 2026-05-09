@@ -19,8 +19,18 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const IDLE_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = localStorage.getItem('auth_user');
+    if (storedUser) {
+      try {
+        return JSON.parse(storedUser);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('auth_token'));
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -32,21 +42,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('last_activity');
     navigate('/admin/login');
   }, [navigate]);
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('auth_token');
-    const storedUser = localStorage.getItem('auth_user');
-
-    if (storedToken && storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setToken(storedToken);
-        setUser(parsedUser);
-      } catch (e) {
-        logout();
-      }
-    }
-  }, [logout]);
 
   // Idle Timeout Logic
   useEffect(() => {
