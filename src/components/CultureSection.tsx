@@ -11,7 +11,8 @@ const CultureSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const containerVariants: Variants = {
@@ -31,20 +32,21 @@ const CultureSection = () => {
     <section className="relative bg-background overflow-hidden">
       {/* A. FLAGSHIP CULTURE HERO */}
       <div ref={containerRef} className="relative w-full min-h-[100dvh] flex items-center overflow-hidden">
-        {/* BACKGROUND IMAGE - Now with Parallax */}
-        <motion.div style={{ y: y1, opacity }} className="absolute inset-0 w-full h-full z-0">
+        {/* BACKGROUND IMAGE - Enhanced Parallax */}
+        <motion.div style={{ y: y1, opacity }} className="absolute inset-0 w-full h-[120%] -top-[10%] z-0">
           <img
             src="/images/culture/ultrasound-consultation.webp"
             alt="Focus Ultrasound Culture"
-          className="w-full h-full object-cover object-center scale-105"
+            className="w-full h-full object-cover object-center scale-110 shadow-inner"
           />
-          {/* NO overlays — show full vivid image */}
+          <div className="absolute inset-0 bg-black/20 z-10" />
         </motion.div>
 
         {/* CONTENT GRID */}
         <div className="relative z-30 w-full max-w-7xl mx-auto px-5 sm:px-10 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12 pt-20 pb-16 md:pt-20 md:pb-10">
-          {/* LEFT CONTENT */}
+          {/* LEFT CONTENT - Slight reverse parallax */}
           <motion.div
+            style={{ y: y2 }}
             initial="hidden"
             animate="visible"
             variants={containerVariants}
@@ -88,16 +90,17 @@ const CultureSection = () => {
 
           {/* RIGHT CONTENT: STATS CARDS */}
           <motion.div 
+            style={{ y: y2 }}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             className="w-full md:w-auto grid grid-cols-2 md:flex md:flex-col gap-2 md:gap-4"
           >
             {[
-              { value: '5+', label: language === 'en' ? 'YEARS OF EXCELLENCE' : 'उत्कृष्टता के वर्ष' },
-              { value: '1K+', label: language === 'en' ? 'FAMILIES SERVED' : 'सेवा प्राप्त परिवार' },
-              { value: '24/7', label: language === 'en' ? 'EMERGENCY CARE' : 'आपातकालीन देखभाल' },
-              { value: '100%', label: language === 'en' ? 'PATIENT SATISFACTION' : 'रोगी संतुष्टि' }
+              { value: '10+', label: t('culture.stats.years') },
+              { value: '1K+', label: t('culture.stats.families') },
+              { value: '24/7', label: t('culture.stats.emergency') },
+              { value: '100%', label: t('culture.stats.satisfaction') }
             ].map((stat, i) => (
               <div key={i} className="p-3 md:p-6 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-white/10 flex flex-col md:flex-row items-center md:items-center gap-1 md:gap-4 group hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 text-center md:text-left shadow-premium">
                 <div className="text-xl md:text-3xl font-black text-primary group-hover:scale-110 transition-transform">{stat.value}</div>

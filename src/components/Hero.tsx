@@ -49,7 +49,13 @@ const Hero = () => {
           {/* Content Column */}
           <div className="lg:col-span-7 xl:col-span-6">
             <MotionReveal delay={0.1} duration={0.8}>
-              <BrandLogo size="lg" className="mb-3 md:mb-6" />
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="mb-3 md:mb-6"
+              >
+                <BrandLogo size="lg" />
+              </motion.div>
             </MotionReveal>
 
             <MotionReveal delay={0.2} duration={0.8}>
@@ -104,7 +110,7 @@ const Hero = () => {
               <div className="flex flex-wrap items-center gap-x-5 gap-y-4 border-t border-slate-100 dark:border-white/10 pt-6 md:pt-10">
                 {[
                   { value: '5000+', label: language === 'en' ? 'Happy Families' : 'खुश परिवार', icon: Heart },
-                  { value: '5+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
+                  { value: '10+', label: language === 'en' ? 'Years of Trust' : 'विश्वास के वर्ष', icon: Award },
                   { value: '4.9★', label: language === 'en' ? 'Expert Rating' : 'विशेषज्ञ रेटिंग', icon: Star },
                 ].map((m) => (
                   <div key={m.label} className="flex items-center gap-2.5">

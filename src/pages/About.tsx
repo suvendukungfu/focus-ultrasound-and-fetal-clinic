@@ -94,11 +94,11 @@ const About = () => {
               </MotionReveal>
               
               <MotionReveal delay={0.2}>
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-foreground mb-6 md:mb-8 leading-[0.95] tracking-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black text-foreground mb-6 md:mb-8 leading-[0.95] tracking-tight">
                   <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/90 to-primary/50">
                     {t('clinic.name')}
                   </span>
-                  <span className="block text-primary/80 italic font-medium text-lg sm:text-2xl md:text-4xl lg:text-5xl mt-2 leading-tight">
+                  <span className="block text-primary/80 italic font-medium text-base sm:text-2xl md:text-4xl lg:text-5xl mt-2 leading-tight">
                     {t('clinic.tagline')}
                   </span>
                 </h1>
@@ -254,12 +254,12 @@ const About = () => {
                             <span className="w-12 h-[2px] bg-primary/30" />
                             {doctor.role}
                           </div>
-                          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter leading-[0.9] group-hover:text-primary transition-colors duration-500">
+                          <h3 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter leading-[0.9] group-hover:text-primary transition-colors duration-500">
                             {doctor.name}
                           </h3>
                         </div>
                         
-                        <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-primary/30 pl-6 md:pl-8 py-2">
+                        <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-primary/30 pl-5 md:pl-8 py-2">
                           {doctor.qualifications}
                         </p>
                       </div>
@@ -323,7 +323,7 @@ const About = () => {
                   <Award className="w-4 h-4" />
                   Professional Background
                 </div>
-                <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-foreground tracking-tighter mb-6 md:mb-8 leading-[0.9] text-glow">
+                <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-foreground tracking-tighter mb-6 md:mb-8 leading-[0.9] text-glow">
                   Clinical <span className="text-primary/80 italic font-medium">Credentials</span>
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground dark:text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
@@ -337,7 +337,7 @@ const About = () => {
                 <MotionReveal key={index} delay={index * 0.2} direction="up">
                   <div className="group relative">
                     {/* Artistic Card Frame */}
-                    <div className="relative z-10 glass-card p-6 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[4rem] border-white/20 dark:border-white/10 overflow-hidden transition-all duration-700 hover:shadow-glow hover:-translate-y-2">
+                    <div className="relative z-10 glass-card p-5 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[4rem] border-white/20 dark:border-white/10 overflow-hidden transition-all duration-700 hover:shadow-glow hover:-translate-y-2">
                       {/* Inner Decorative Elements */}
                       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-primary/10 transition-colors duration-700" />
                       
@@ -354,7 +354,7 @@ const About = () => {
                           </div>
 
                           <div className="space-y-4">
-                            <h3 className="text-3xl md:text-4xl font-black text-foreground tracking-tight leading-none group-hover:text-primary transition-colors">
+                            <h3 className="text-2xl md:text-4xl font-black text-foreground tracking-tight leading-none group-hover:text-primary transition-colors">
                               {doc.name}
                             </h3>
                             <div className="space-y-2">
@@ -406,7 +406,7 @@ const About = () => {
                           <div className="flex items-center gap-2 md:gap-4 px-4 md:px-8 py-2.5 md:py-4 rounded-xl md:rounded-[2.5rem] bg-foreground text-background shadow-2xl scale-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden relative">
                             <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
                             <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6 text-primary shrink-0" />
-                            <span className="text-[10px] sm:text-sm md:text-xl font-black uppercase tracking-tighter">{doc.experience}</span>
+                            <span className="text-[9px] xs:text-[10px] sm:text-sm md:text-xl font-black uppercase tracking-tighter">{doc.experience}</span>
                           </div>
                           
                           <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/5 border border-primary/10">

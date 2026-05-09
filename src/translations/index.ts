@@ -249,6 +249,10 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'culture.benefit2': 'Experienced Doctors',
     'culture.benefit3': 'Advanced Technology',
     'culture.benefit4': 'Comfortable Environment',
+    'culture.stats.years': 'YEARS OF EXCELLENCE',
+    'culture.stats.families': 'FAMILIES SERVED',
+    'culture.stats.emergency': 'EMERGENCY CARE',
+    'culture.stats.satisfaction': 'PATIENT SATISFACTION',
 
     // Gallery
     'gallery.badge': 'The Clinic Experience',
@@ -807,6 +811,10 @@ export const translations: Record<Language, { [key: string]: TranslationValue }>
     'culture.benefit2': 'अनुभवी डॉक्टर',
     'culture.benefit3': 'उन्नत तकनीक',
     'culture.benefit4': 'आरामदायक वातावरण',
+    'culture.stats.years': 'उत्कृष्टता के वर्ष',
+    'culture.stats.families': 'सेवा प्राप्त परिवार',
+    'culture.stats.emergency': 'आपातकालीन देखभाल',
+    'culture.stats.satisfaction': 'रोगी संतुष्टि',
 
     // Gallery
     'gallery.badge': 'क्लिनिक का अनुभव',
